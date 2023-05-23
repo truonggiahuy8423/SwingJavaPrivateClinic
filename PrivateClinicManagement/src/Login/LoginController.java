@@ -28,8 +28,7 @@ public class LoginController {
             {
                 this.view.dispose();
                 adminRole.view.MainView mainViewforAdmin = new MainView();
-                mainViewforAdmin.setLocationRelativeTo(null);
-                mainViewforAdmin.setResizable(false);
+                
                 mainViewforAdmin.setVisible(true);
                 JOptionPane.showMessageDialog(mainViewforAdmin, "Login successfully!", "", JOptionPane.INFORMATION_MESSAGE);
             }

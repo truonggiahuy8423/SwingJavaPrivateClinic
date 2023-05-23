@@ -16,10 +16,8 @@ public class MainViewController {
     }
     public void logout()
     {
-        
-    }
-    public boolean validate()
-    {
-        return true;
+        this.view.dispose();
+        LoginView loginView = new LoginView();
+        loginView.setVisible(true);
     }
 }

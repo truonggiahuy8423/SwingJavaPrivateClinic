@@ -19,11 +19,16 @@ public class PrivateClinicManagement {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+//        JFrame f = new JFrame();
+//        f.setSize(500, 500);
+//        JLabel lb = null;
+//        f.getContentPane().add(lb = new JLabel("lkk"));
+//        ImageIcon i = new ImageIcon
+//        lb.setIcon(new ImageIcon("patient.jpg"));
+//        f.setVisible(true);
+       
         LoginView loginView = new LoginView();
-        loginView.setVisible(true);
-         
-      
+        loginView.setVisible(true);      
     }
     
 }
