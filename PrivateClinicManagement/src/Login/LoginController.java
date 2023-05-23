@@ -4,6 +4,9 @@
  */
 package Login;
 
+import javax.swing.JOptionPane;
+import adminRole.view.MainView;
+
 /**
  *
  * @author GIAHUY
@@ -17,7 +20,28 @@ public class LoginController {
     
     public void login()
     {
-        System.out.println("Login.LoginController.login()");
+        //check account trong database
+        if (true)
+        {
+            // check account là Admin/Docter/Receptionist
+            if (true)
+            {
+                this.view.dispose();
+                adminRole.view.MainView mainViewforAdmin = new MainView();
+                mainViewforAdmin.setLocationRelativeTo(null);
+                mainViewforAdmin.setResizable(false);
+                mainViewforAdmin.setVisible(true);
+                JOptionPane.showMessageDialog(mainViewforAdmin, "Login successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if (false)
+            {}
+            else
+            {}
+        }
+        else
+        {
+            
+        }
     }
     
 }
