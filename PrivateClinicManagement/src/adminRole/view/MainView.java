@@ -7,6 +7,7 @@ import adminRole.controller.MainViewController;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 /**
  *
  * @author GIAHUY
@@ -20,17 +21,13 @@ public class MainView extends javax.swing.JFrame {
     private JPanel[] paneList;
     private MainViewController controller;
             
-    private ImageIcon getScaleIcon(String s)
-    {
-        return new ImageIcon((new ImageIcon(getClass().getResource(s))).getImage().getScaledInstance(1000, 1000, Image.SCALE_SMOOTH));
-    }
+    
     public MainView() {
         initComponents();
         
         //set listener for event
-        //ImageIcon i = getClass().getResourceAsStream("patient.jpg");
-        patientSwitchPaneButton.addActionListener(e -> switchPane(0)); patientSwitchPaneButton.setIcon(getScaleIcon("/iconsource/patient.jpg"));
-        appointmentSwitchPaneButton.addActionListener(e -> switchPane(1));
+        patientSwitchPaneButton.addActionListener(e -> switchPane(0)); 
+        appointmentSwitchPaneButton.addActionListener(e -> switchPane(1)); 
         resultSwitchPaneButton.addActionListener(e -> switchPane(2));
         employeeSwitchPaneButton.addActionListener(e -> switchPane(3));
         scheduleSwitchPaneButton.addActionListener(e -> switchPane(4));
@@ -42,15 +39,15 @@ public class MainView extends javax.swing.JFrame {
             controller.logout();
         });
         
-        //set components
+        //set properties for components
+        this.setTitle("Private Clinic Management");
         this.setLocationRelativeTo(null);
         this.setSize(1550, 830); 
         this.setResizable(false);
         
-        
-        this.controller = new MainViewController(this);
-        this.paneList = new JPanel[9];
-        paneList[0] = new JPanel(); //patient
+        this.controller = new MainViewController(this); // controller
+        this.paneList = new JPanel[9]; 
+        paneList[0] = new PatientPage(); //patient
         paneList[1] = new JPanel(); //appointment
         paneList[2] = new JPanel(); //
         paneList[3] = new JPanel();
@@ -61,9 +58,25 @@ public class MainView extends javax.swing.JFrame {
         paneList[8] = new JPanel();
         
         patientSwitchPaneButton.setBackground(Color.WHITE);
-        patientSwitchPaneButton.setBorder(BorderFactory.createEmptyBorder(
-                0, 0, 0, 0));
-        paneList[0].setBackground(new Color(255, 255, 255));
+        appointmentSwitchPaneButton.setBackground(Color.WHITE);
+        resultSwitchPaneButton.setBackground(Color.WHITE);
+        employeeSwitchPaneButton.setBackground(Color.WHITE);
+        scheduleSwitchPaneButton.setBackground(Color.WHITE);
+        medicineSwitchPaneButton.setBackground(Color.WHITE);
+        attendanceSwitchPaneButton.setBackground(Color.WHITE);
+        statisticSwitchPaneButton.setBackground(Color.WHITE);
+        settingSwitchPaneButton.setBackground(Color.WHITE);
+        logoutButton.setBackground(Color.WHITE);
+
+
+        //paneList[0].setBackground(new Color(255, 255, 0));
+        paneList[1].setBackground(new Color(255, 0, 255));
+        paneList[2].setBackground(new Color(0, 255, 255));
+        paneList[4].setBackground(new Color(255, 0, 255));
+        paneList[5].setBackground(new Color(255, 255, 100));
+        paneList[6].setBackground(new Color(255, 100, 255));
+        paneList[7].setBackground(new Color(100, 255, 255));
+        paneList[8].setBackground(new Color(255, 200, 255));
         this.switchPane(0);
         
     }
@@ -110,8 +123,9 @@ public class MainView extends javax.swing.JFrame {
 
         patientSwitchPaneButton.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         patientSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
-        patientSwitchPaneButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsource/patient.jpg"))); // NOI18N
+        patientSwitchPaneButton.setText("Patient");
         patientSwitchPaneButton.setToolTipText("");
+        patientSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         patientSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         patientSwitchPaneButton.setMaximumSize(new java.awt.Dimension(50, 50));
         patientSwitchPaneButton.setMinimumSize(new java.awt.Dimension(50, 50));
@@ -124,6 +138,7 @@ public class MainView extends javax.swing.JFrame {
         appointmentSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         appointmentSwitchPaneButton.setText("Appointment ");
         appointmentSwitchPaneButton.setToolTipText("");
+        appointmentSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         appointmentSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         appointmentSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         appointmentSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -135,6 +150,7 @@ public class MainView extends javax.swing.JFrame {
         attendanceSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         attendanceSwitchPaneButton.setText("Attendance");
         attendanceSwitchPaneButton.setToolTipText("");
+        attendanceSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         attendanceSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         attendanceSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         attendanceSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -151,6 +167,7 @@ public class MainView extends javax.swing.JFrame {
         resultSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         resultSwitchPaneButton.setText("Result ");
         resultSwitchPaneButton.setToolTipText("");
+        resultSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         resultSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         resultSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         resultSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -162,6 +179,7 @@ public class MainView extends javax.swing.JFrame {
         settingSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         settingSwitchPaneButton.setText("Setting ");
         settingSwitchPaneButton.setToolTipText("");
+        settingSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         settingSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         settingSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         settingSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -178,6 +196,7 @@ public class MainView extends javax.swing.JFrame {
         employeeSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         employeeSwitchPaneButton.setText("Employee ");
         employeeSwitchPaneButton.setToolTipText("");
+        employeeSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         employeeSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         employeeSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         employeeSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -194,6 +213,7 @@ public class MainView extends javax.swing.JFrame {
         scheduleSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         scheduleSwitchPaneButton.setText("Schedule");
         scheduleSwitchPaneButton.setToolTipText("");
+        scheduleSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         scheduleSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         scheduleSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         scheduleSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -210,6 +230,7 @@ public class MainView extends javax.swing.JFrame {
         medicineSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         medicineSwitchPaneButton.setText("Medicine");
         medicineSwitchPaneButton.setToolTipText("");
+        medicineSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         medicineSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         medicineSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         medicineSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -226,6 +247,7 @@ public class MainView extends javax.swing.JFrame {
         statisticSwitchPaneButton.setForeground(new java.awt.Color(153, 204, 255));
         statisticSwitchPaneButton.setText("Statistic");
         statisticSwitchPaneButton.setToolTipText("");
+        statisticSwitchPaneButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         statisticSwitchPaneButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         statisticSwitchPaneButton.setMaximumSize(new java.awt.Dimension(80, 80));
         statisticSwitchPaneButton.setMinimumSize(new java.awt.Dimension(80, 80));
@@ -240,8 +262,10 @@ public class MainView extends javax.swing.JFrame {
 
         logoutButton.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         logoutButton.setForeground(new java.awt.Color(255, 51, 51));
+        logoutButton.setText("Logout");
+        logoutButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jPanel1.add(logoutButton);
-        logoutButton.setBounds(1410, 10, 80, 30);
+        logoutButton.setBounds(1410, 10, 70, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1540, 50);

@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Login;
+import Model.UserModel;
+import java.awt.Color;
 import javax.swing.*;
 /**
  *
@@ -19,6 +21,7 @@ public class LoginView extends javax.swing.JFrame {
         this.controller = new LoginController(this);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.loginButton.setBackground(Color.white);
         this.loginButton.addActionListener(e -> {
           
             UserModel user = new UserModel(this.accountField.getText(), String.copyValueOf(this.passwordField.getPassword()));
@@ -54,7 +57,7 @@ public class LoginView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(100, 180, 250));
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
         accountField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,7 +74,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2.setText("Account:");
 
         loginButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        loginButton.setForeground(new java.awt.Color(100, 180, 250));
+        loginButton.setForeground(new java.awt.Color(153, 204, 255));
         loginButton.setText("Login");
 
         jLabel3.setBackground(new java.awt.Color(150, 150, 242));
