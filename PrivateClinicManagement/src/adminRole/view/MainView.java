@@ -39,6 +39,7 @@ public class MainView extends javax.swing.JFrame {
             controller.logout();
         });
         
+        
         //set properties for components
         this.setTitle("Private Clinic Management");
         this.setLocationRelativeTo(null);

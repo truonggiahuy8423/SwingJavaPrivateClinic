@@ -65,6 +65,10 @@ public class PatientListTab extends javax.swing.JPanel {
         dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Adress"});
         
         // set action event
+        addButton.addActionListener(e -> {
+            
+        });
+        
         // load data
         queryData("select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient");
         displayData();

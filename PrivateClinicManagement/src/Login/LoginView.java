@@ -5,6 +5,8 @@
 package Login;
 import Model.UserModel;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 /**
  *
@@ -18,10 +20,13 @@ public class LoginView extends javax.swing.JFrame {
      */
     public LoginView() {
         initComponents();
+        // set properties
         this.controller = new LoginController(this);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.loginButton.setBackground(Color.white);
+        // set action
+        
         this.loginButton.addActionListener(e -> {
           
             UserModel user = new UserModel(this.accountField.getText(), String.copyValueOf(this.passwordField.getPassword()));
