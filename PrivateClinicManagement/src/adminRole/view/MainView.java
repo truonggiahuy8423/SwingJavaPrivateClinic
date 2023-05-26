@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package adminRole.view;
+import Login.LoginView;
 import adminRole.controller.MainViewController;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 /**
@@ -38,6 +41,15 @@ public class MainView extends javax.swing.JFrame {
         logoutButton.addActionListener(e -> {
             controller.logout();
         });
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int choice = JOptionPane.showConfirmDialog(MainView.this, "Do you want to close the program?", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                if (choice == JOptionPane.OK_OPTION)
+                    MainView.this.dispose();
+            }         
+        });
         
         
         //set properties for components
@@ -67,6 +79,7 @@ public class MainView extends javax.swing.JFrame {
         attendanceSwitchPaneButton.setBackground(Color.WHITE);
         statisticSwitchPaneButton.setBackground(Color.WHITE);
         settingSwitchPaneButton.setBackground(Color.WHITE);
+        
         logoutButton.setBackground(Color.WHITE);
 
 
