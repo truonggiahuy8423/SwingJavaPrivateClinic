@@ -4,6 +4,13 @@
  */
 package adminRole.view;
 
+import Model.Schedule;
+import adminRole.controller.SchedulePageController;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author GIAHUY
@@ -13,9 +20,53 @@ public class SchedulePage extends javax.swing.JPanel {
     /**
      * Creates new form SchedulePage
      */
+    private SchedulePageController controller;
+    private List<Schedule> listOfSchedule;
+    private DefaultTableModel dataOftable;
+    
+        @Override
+    public String toString() {
+        return "Schedule List"; 
+    } 
+    
+    // Load các record của schedule vào list
+    private void queryData(String sql){
+        dataOftable.setNumRows(0);
+        listOfSchedule.removeAll(listOfSchedule);
+        controller.queryData(sql, this.listOfSchedule);
+    }
+    
+    // Load từ list vào bảng
+    private void displayData(){
+        for (Schedule p : this.listOfSchedule){
+            dataOftable.addRow(new Object[] {p.getScheduleID(), p.getScheduleDate(), p.getState(), p.getNextOrinalNumber(), p.getServiceID(), p.getRoomID(), p.getEmployeeID()});
+            System.out.println(p.getScheduleID() + " " + p.getScheduleDate() + " " + p.getState() + " " + p.getNextOrinalNumber() + " " + p.getServiceID() + " " + p.getRoomID() + " " + p.getEmployeeID());
+        }
+    }
+    
     public SchedulePage() {
         initComponents();
-    }
+        //init components
+        controller = new SchedulePageController(this);
+        listOfSchedule = new ArrayList<>();
+
+        //set properties components
+        addButton.setBackground(Color.white);
+        deleteButton.setBackground(Color.white);
+        searchButton.setBackground(Color.WHITE);
+        sortButton.setBackground(Color.WHITE);
+        dataOftable = (DefaultTableModel)this.tableOfSchedule.getModel();
+        dataOftable.setColumnIdentifiers(new Object[]{"Schedule ID", "Date", "State", "Next Orinal Number", "Service", "Room", "Employee"});
+
+        // load data
+//        queryData("select SCHEDULE_ID, SCHEDULE_DATE, STATE, NEXT_ORDINAL_NUMBER, SERVICE_ID, ROOM_ID, EMPLOYEE_ID from SCHEDULE");
+        queryData("select * from schedule");
+//        queryData("select * from student");
+        displayData();
+    }    
+    
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,19 +77,125 @@ public class SchedulePage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableOfSchedule = new javax.swing.JTable();
+        addButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        sortButton = new javax.swing.JButton();
+        searchTextField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+
+        tableOfSchedule.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tableOfSchedule);
+
+        addButton.setText("Add");
+        addButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Delete");
+        deleteButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        sortButton.setText("Sort");
+        sortButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        sortButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortButtonActionPerformed(evt);
+            }
+        });
+
+        searchTextField.setText("Schedule ID");
+
+        searchButton.setText("Search");
+        searchButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1230, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1218, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sortButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 763, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(12, 12, 12)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addButton)
+                        .addComponent(deleteButton)
+                        .addComponent(sortButton)
+                        .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchButton))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                    .addGap(12, 12, 12)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void sortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sortButtonActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchTextField;
+    private javax.swing.JButton sortButton;
+    private javax.swing.JTable tableOfSchedule;
     // End of variables declaration//GEN-END:variables
 }
