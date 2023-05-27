@@ -33,7 +33,7 @@ public class PatientListTab extends javax.swing.JPanel {
     private DefaultTableModel dataOftable;
     private String convert_calendar(Calendar c)
     {
-        return "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
+        return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
     }
     @Override
     public String toString() {
@@ -41,19 +41,22 @@ public class PatientListTab extends javax.swing.JPanel {
     } 
     private void queryData(String sql) // load các record của patient vào list (Lưu ý thứ tự và các cột của câu query phải trùng khớp với lúc lấy data từ ResultSet)
     {
-        dataOftable.setNumRows(0);
         listOfPatient.removeAll(listOfPatient);
-        controller.queryData(sql, this.listOfPatient);
+        controller.queryData(sql, this.listOfPatient); 
             //Patient p = null;
         
     }
     private void displayData() // load từ list vào bảng
     {
+        dataOftable.setRowCount(0);
+        
         for (Patient p : this.listOfPatient)
             {
-                dataOftable.addRow(new Object[] {p.getPatientId(), p.getFullname(), p.getFullname(), p.getPhone(),
-                    convert_calendar(p.getBirthday()), convert_calendar(p.getRegistrationDay()), convert_calendar(p.getInsuranceExpiration()), p.getAddress()});
+                dataOftable.addRow(new Object[] {p.getPatientId() , p.getFullname(), p.getFullname(), p.getPhone(),
+                    convert_calendar(p.getBirthday()), convert_calendar(p.getRegistrationDay()), convert_calendar(p.getInsuranceExpiration()), 
+                    p.getAddress() == null ? "None" : p.getAddress(), p.getUnderlyingDisease() == null ? "None" : p.getUnderlyingDisease()});
             }
+        
     }
     public void refreshData()
     {
@@ -66,21 +69,27 @@ public class PatientListTab extends javax.swing.JPanel {
         controller = new PatientListTabController(this);
         this.parent = parent;
         listOfPatient = new ArrayList<>();
-        
         //set properties components
+        tableOfPatient.setModel(new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+            
+        } );
         addButton.setBackground(Color.white);
         deleteButton.setBackground(Color.white);
         searchButton.setBackground(Color.WHITE);
         sortButton.setBackground(Color.WHITE);
-        dataOftable = (DefaultTableModel)this.tableOfPatient.getModel();
-        dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Adress"});
+        dataOftable = (DefaultTableModel)this.tableOfPatient.getModel(); 
+        dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Adress", "Underlying Disease"});
         refreshButton.setBackground(Color.WHITE);
         // set action event
         addButton.addActionListener(e -> {
-            AddPatientForm form = new AddPatientForm(null, true); 
+            AddPatientForm form = new AddPatientForm(null, true, this); 
             form.setVisible(true);
         });
-        
+           
         // load data
         refreshData();
     }    

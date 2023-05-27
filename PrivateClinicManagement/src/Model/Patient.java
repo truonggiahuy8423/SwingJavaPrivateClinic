@@ -11,16 +11,16 @@ package Model;
 import java.util.Calendar;
 import java.util.Date;
 public class Patient {
-    private long patientId;
+    private Long patientId;
     private String fullname;
-    private long phone;
+    private String phone;
     private Calendar birthday;
     private Calendar registrationDay;
     private Calendar insuranceExpiration;
     private String address;
     private String underlyingDisease;
     public Patient(){}
-    public Patient(long patientId, String fullname, long phone, Calendar birthday, Calendar registrationDay, Calendar insuranceExpiration, String address, String underlyingDisease) {
+    public Patient(Long patientId, String fullname, String phone, Calendar birthday, Calendar registrationDay, Calendar insuranceExpiration, String address, String underlyingDisease) {
         this.patientId = patientId;
         this.fullname = fullname;
         this.phone = phone;
@@ -29,18 +29,18 @@ public class Patient {
         this.insuranceExpiration = insuranceExpiration;
         this.address = address;
         this.underlyingDisease = underlyingDisease;
-        birthday.setLenient(false);
-        registrationDay.setLenient(false);
-        insuranceExpiration.setLenient(false);
+        //birthday.setLenient(false);
+        //registrationDay.setLenient(false);
+        //insuranceExpiration.setLenient(false);
     }
 
     // Getters and Setters for the properties
-
-    public long getPatientId() {
+    
+    public Long getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(long patientId) {
+    public void setPatientId(Long patientId) {
         this.patientId = patientId;
     }
 
@@ -52,11 +52,11 @@ public class Patient {
         this.fullname = fullname;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
