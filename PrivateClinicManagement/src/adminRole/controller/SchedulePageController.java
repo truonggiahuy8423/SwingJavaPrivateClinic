@@ -24,28 +24,43 @@ public class SchedulePageController {
          this.view = view;
     }
     
-    public boolean queryData(String sql, List<Schedule> listOfPatient){
+    public void queryData(String sql, List<Schedule> listOfPatient){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "C##HELEN", "khanh123");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
-//            ResultSet result = statement.executeQuery(sql);
-            System.out.println(result.getLong(1)+ "  " + result.getDate(2)+ "  " + result.getString(3)+ "  " + result.getLong(4)+ "  " + result.getLong(5)+ "  " + result.getLong(6)+ "  " + result.getLong(7));
             while (result.next()){
                 Schedule p = new Schedule(result.getLong(1), result.getDate(2), result.getString(3), result.getLong(4), result.getLong(5), result.getLong(6), result.getLong(7));
                 listOfPatient.add(p);
-                System.out.println(result.getLong(1)+ "  " + result.getDate(2)+ "  " + result.getString(3)+ "  " + result.getLong(4)+ "  " + result.getLong(5)+ "  " + result.getLong(6)+ "  " + result.getLong(7));
-//                System.out.println(result.getInt(1) + "  " + result.getString(2) + "  " + result.getString(3) + "  " + result.getString(4) );
             }
             connection.close();
         } 
         catch (SQLException | ClassNotFoundException e){
-            return false; 
+            System.out.println(e.toString()); 
         }
         finally{
-            return true;
+            System.out.println("Successful"); 
+        }        
+    }
+    
+    public void addData(String sql, List<Schedule> listOfPatient){
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Statement statement = connection.createStatement() ;  
+            System.out.println(sql);
+            statement.executeUpdate(sql);
+            
+            connection.close();
+        } 
+        catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.toString()); 
+        }
+        finally{
+            System.out.println("Successful"); 
         }        
     }
 }
