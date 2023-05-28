@@ -24,16 +24,18 @@ public class SchedulePageController {
          this.view = view;
     }
     
-    public void queryData(String sql, List<Schedule> listOfPatient){
+    public void queryData(String sql, List<Schedule> listOfSchedule){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
+
             while (result.next()){
-                Schedule p = new Schedule(result.getLong(1), result.getDate(2), result.getString(3), result.getLong(4), result.getLong(5), result.getLong(6), result.getLong(7));
-                listOfPatient.add(p);
+                java.util.Date  utilDate = new java.util.Date(result.getDate(2).getTime());
+                Schedule p = new Schedule(result.getLong(1), utilDate, result.getString(3), result.getLong(4), result.getLong(5), result.getLong(6), result.getLong(7));
+                listOfSchedule.add(p);
             }
             connection.close();
         } 
@@ -45,11 +47,11 @@ public class SchedulePageController {
         }        
     }
     
-    public void addData(String sql, List<Schedule> listOfPatient){
+    public void executeData(String sql){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Statement statement = connection.createStatement() ;  
             System.out.println(sql);
             statement.executeUpdate(sql);
@@ -63,4 +65,6 @@ public class SchedulePageController {
             System.out.println("Successful"); 
         }        
     }
+    
+
 }

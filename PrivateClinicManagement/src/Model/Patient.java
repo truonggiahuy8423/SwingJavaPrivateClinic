@@ -8,18 +8,19 @@ package Model;
  *
  * @author GIAHUY
  */import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 public class Patient {
     private long patientId;
     private String fullname;
     private long phone;
-    private Date birthday;
-    private Date registrationDay;
-    private Date insuranceExpiration;
+    private Calendar birthday;
+    private Calendar registrationDay;
+    private Calendar insuranceExpiration;
     private String address;
     private String underlyingDisease;
     public Patient(){}
-    public Patient(long patientId, String fullname, long phone, Date birthday, Date registrationDay, Date insuranceExpiration, String address, String underlyingDisease) {
+    public Patient(long patientId, String fullname, long phone, Calendar birthday, Calendar registrationDay, Calendar insuranceExpiration, String address, String underlyingDisease) {
         this.patientId = patientId;
         this.fullname = fullname;
         this.phone = phone;
@@ -28,6 +29,9 @@ public class Patient {
         this.insuranceExpiration = insuranceExpiration;
         this.address = address;
         this.underlyingDisease = underlyingDisease;
+        birthday.setLenient(false);
+        registrationDay.setLenient(false);
+        insuranceExpiration.setLenient(false);
     }
 
     // Getters and Setters for the properties
@@ -56,29 +60,32 @@ public class Patient {
         this.phone = phone;
     }
 
-    public Date getBirthday() {
+    public Calendar getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public Date getRegistrationDay() {
+    public Calendar getRegistrationDay() {
         return registrationDay;
     }
 
-    public void setRegistrationDay(Date registrationDay) {
-        this.registrationDay = registrationDay;
-    }
-
-    public Date getInsuranceExpiration() {
+    public Calendar getInsuranceExpiration() {
         return insuranceExpiration;
     }
 
-    public void setInsuranceExpiration(Date insuranceExpiration) {
+    public void setBirthday(Calendar birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setRegistrationDay(Calendar registrationDay) {
+        this.registrationDay = registrationDay;
+    }
+
+    public void setInsuranceExpiration(Calendar insuranceExpiration) {
         this.insuranceExpiration = insuranceExpiration;
     }
+    
+    
+   
 
     public String getAddress() {
         return address;
@@ -95,4 +102,5 @@ public class Patient {
     public void setUnderlyingDisease(String underlyingDisease) {
         this.underlyingDisease = underlyingDisease;
     }
+    
 }

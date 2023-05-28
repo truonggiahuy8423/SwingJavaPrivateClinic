@@ -7,6 +7,8 @@ import Model.UserModel;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 /**
  *
@@ -21,8 +23,8 @@ public class LoginView extends javax.swing.JFrame {
     public LoginView() {
         initComponents();
         // set properties
+        this.setResizable(false);
         this.controller = new LoginController(this);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.loginButton.setBackground(Color.white);
         // set action
@@ -39,6 +41,15 @@ public class LoginView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Account or password is not allowed to be empty!","Fail to log in",JOptionPane.OK_OPTION);
             }
             
+        });
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int choice = JOptionPane.showConfirmDialog(LoginView.this, "Do you want to close the program?", "", JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE);
+                if (choice == JOptionPane.OK_OPTION)
+                    LoginView.this.dispose();
+            }         
         });
     }
     

@@ -16,6 +16,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Locale;
 /**
  *
  * @author GIAHUY
@@ -29,6 +31,10 @@ public class PatientListTab extends javax.swing.JPanel {
     private PatientPage parent;
     private List<Patient> listOfPatient;
     private DefaultTableModel dataOftable;
+    private String convert_calendar(Calendar c)
+    {
+        return "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
+    }
     @Override
     public String toString() {
         return "Patient List"; 
@@ -46,8 +52,13 @@ public class PatientListTab extends javax.swing.JPanel {
         for (Patient p : this.listOfPatient)
             {
                 dataOftable.addRow(new Object[] {p.getPatientId(), p.getFullname(), p.getFullname(), p.getPhone(),
-                p.getBirthday(), p.getRegistrationDay(), p.getInsuranceExpiration(), p.getAddress()});
+                    convert_calendar(p.getBirthday()), convert_calendar(p.getRegistrationDay()), convert_calendar(p.getInsuranceExpiration()), p.getAddress()});
             }
+    }
+    public void refreshData()
+    {
+        queryData("select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient");
+        displayData();
     }
     public PatientListTab(PatientPage parent) {
         initComponents();
@@ -63,15 +74,15 @@ public class PatientListTab extends javax.swing.JPanel {
         sortButton.setBackground(Color.WHITE);
         dataOftable = (DefaultTableModel)this.tableOfPatient.getModel();
         dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Adress"});
-        
+        refreshButton.setBackground(Color.WHITE);
         // set action event
         addButton.addActionListener(e -> {
-            
+            AddPatientForm form = new AddPatientForm(null, true); 
+            form.setVisible(true);
         });
         
         // load data
-        queryData("select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient");
-        displayData();
+        refreshData();
     }    
     
 
@@ -87,6 +98,7 @@ public class PatientListTab extends javax.swing.JPanel {
         sortButton = new javax.swing.JButton();
         searchTextField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(1230, 759));
         setMinimumSize(new java.awt.Dimension(1230, 759));
@@ -139,6 +151,14 @@ public class PatientListTab extends javax.swing.JPanel {
             }
         });
 
+        refreshButton.setText("Refresh");
+        refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,6 +172,8 @@ public class PatientListTab extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(sortButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,7 +190,8 @@ public class PatientListTab extends javax.swing.JPanel {
                     .addComponent(deleteButton)
                     .addComponent(sortButton)
                     .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton))
+                    .addComponent(searchButton)
+                    .addComponent(refreshButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
                 .addContainerGap())
@@ -191,11 +214,16 @@ public class PatientListTab extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchButtonActionPerformed
 
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JButton sortButton;
