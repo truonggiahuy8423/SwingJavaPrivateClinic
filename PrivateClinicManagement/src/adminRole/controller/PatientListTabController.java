@@ -13,16 +13,17 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.List;
-/**
- *
- * @author GIAHUY
- */
+import java.sql.PreparedStatement;
+
+
 public class PatientListTabController {
     private PatientListTab view;
 
-    public PatientListTabController(PatientListTab view) {
+    public PatientListTabController(PatientListTab view)
+    {
          this.view = view;
     }
+    
     public boolean queryData(String sql, List<Patient> listOfPatient)
     {
         try
@@ -35,13 +36,30 @@ public class PatientListTabController {
             //System.out.println(connection.isClosed());
             statement = connection.createStatement() ;  
             result = statement.executeQuery(sql);
-            //System.out.println(rs.next());
-             while (result.next())
+            //System.out.println(rs.next()); 
+            while (result.next())
             {
-                Calendar birthday = Calendar.getInstance(); birthday.setTimeInMillis(result.getDate(4).getTime());
-                Calendar regis_date = Calendar.getInstance(); regis_date.setTimeInMillis(result.getDate(5).getTime());
-                Calendar expi_date = Calendar.getInstance(); regis_date.setTimeInMillis(result.getDate(6).getTime());
-                Patient p = new Patient(result.getLong(1), result.getString(2), result.getLong(3), birthday, regis_date, 
+
+                Calendar birthday = null;
+                if (result.getDate(4) != null)
+                {
+                    birthday = Calendar.getInstance();
+                    birthday.setTimeInMillis(result.getDate(4).getTime());
+                }
+                Calendar regis_date =null;
+                if (result.getDate(5) != null)
+                {
+                    regis_date = Calendar.getInstance();
+                    regis_date.setTimeInMillis(result.getDate(5).getTime());
+                }
+                Calendar expi_date = null; 
+                if (result.getDate(6) != null)
+                {
+                    expi_date = Calendar.getInstance();
+                    expi_date.setTimeInMillis(result.getDate(6).getTime());
+                }
+                Patient p = new Patient(result.getLong(1), result.getString(2), result.getString(3), birthday, regis_date, 
+
                         expi_date, result.getString(7), result.getString(8));
                 listOfPatient.add(p);
             }
@@ -53,8 +71,13 @@ public class PatientListTabController {
         }
         catch (ClassNotFoundException e)
         { 
+
+            System.out.println(e);
             return false;
         }
+        catch (Exception e)
+        { e.printStackTrace();}
+
         finally{ 
             return true;
         }        
@@ -67,15 +90,28 @@ public class PatientListTabController {
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "AD";  // Replace with your username
             String password = "88888888";  // Replace with your password
+
+            String sqlInsert = "insert into patient(patient_id, fullname, phone, birthday, "
+                    + "registration_day, insurance_expiration, address, underlying_disease) values(68, ?, ?, ?, ?, ?, ?, ?)";
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            Statement statement = connection.createStatement();
-            String sqlInsert = "insert into patient values(" + patient.getPatientId() + ", " + patient.getFullname() + ", " + patient.getPhone() + ", " +
-                    patient.getBirthday() + ", " + patient.getRegistrationDay() + ", " + patient.getInsuranceExpiration() + ", " + patient.getAddress() + ", " + patient.getUnderlyingDisease();
-            statement.executeUpdate(sqlInsert); // co van de o day
+            PreparedStatement statement = connection.prepareStatement(sqlInsert);
+            statement.setString(1, patient.getFullname());
+            statement.setString(2, patient.getPhone());
+            statement.setDate(3, patient.getBirthday() == null ? null : new java.sql.Date(patient.getBirthday().getTimeInMillis()));
+            statement.setDate(4, patient.getRegistrationDay() == null ? null : new java.sql.Date(patient.getRegistrationDay().getTimeInMillis()));
+            statement.setDate(5, patient.getInsuranceExpiration() == null ? null : new java.sql.Date(patient.getInsuranceExpiration().getTimeInMillis()));
+            statement.setString(6, patient.getAddress());
+            statement.setString(7, patient.getUnderlyingDisease());
+            statement.executeUpdate(); // co van de o day
+
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
+
+        
     }
+    
+
 }
 
