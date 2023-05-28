@@ -17,9 +17,11 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.Calendar;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+
 import java.util.Locale;
 /**
  *
@@ -39,6 +41,7 @@ public class PatientListTab extends javax.swing.JPanel {
     private PatientPage parent;
     private List<Patient> listOfPatient;
     private DefaultTableModel dataOftable;
+
     private void sortPatientList()
     {
         switch (this.sortMode) {
@@ -95,6 +98,7 @@ public class PatientListTab extends javax.swing.JPanel {
     private String convert_calendar(Calendar c)
     {
         return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
+
     }
     @Override
     public String toString() {
@@ -113,9 +117,11 @@ public class PatientListTab extends javax.swing.JPanel {
         
         for (Patient p : this.listOfPatient)
             {
+
                 dataOftable.addRow(new Object[] {p.getPatientId() , p.getFullname(), p.getFullname(), p.getPhone(),
                     convert_calendar(p.getBirthday()), convert_calendar(p.getRegistrationDay()), convert_calendar(p.getInsuranceExpiration()), 
                     p.getAddress() == null ? "None" : p.getAddress(), p.getUnderlyingDisease() == null ? "None" : p.getUnderlyingDisease()});
+
             }
         
     }
@@ -123,6 +129,11 @@ public class PatientListTab extends javax.swing.JPanel {
     {
         queryData("select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient");
         sortPatientList();
+        displayData();
+    }
+    public void refreshData()
+    {
+        queryData("select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient");
         displayData();
     }
     public PatientListTab(PatientPage parent) {
@@ -142,6 +153,7 @@ public class PatientListTab extends javax.swing.JPanel {
         addButton.setBackground(Color.white);
         deleteButton.setBackground(Color.white);
         searchButton.setBackground(Color.WHITE);
+
         sortChooser.setBackground(Color.WHITE);
         dataOftable = (DefaultTableModel)this.tableOfPatient.getModel(); 
         dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Adress", "Underlying Disease"});
@@ -175,6 +187,7 @@ public class PatientListTab extends javax.swing.JPanel {
                 sortMode = ID_DESC;
             }
             refreshData();
+
         });
         // load data
         refreshData();
@@ -193,7 +206,9 @@ public class PatientListTab extends javax.swing.JPanel {
         searchTextField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         refreshButton = new javax.swing.JButton();
+
         sortChooser = new javax.swing.JComboBox<>();
+
 
         setMaximumSize(new java.awt.Dimension(1230, 759));
         setMinimumSize(new java.awt.Dimension(1230, 759));
@@ -246,7 +261,9 @@ public class PatientListTab extends javax.swing.JPanel {
             }
         });
 
+
         sortChooser.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -261,9 +278,11 @@ public class PatientListTab extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
                         .addComponent(sortChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+
                         .addGap(18, 18, 18)
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -273,6 +292,7 @@ public class PatientListTab extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -282,6 +302,7 @@ public class PatientListTab extends javax.swing.JPanel {
                         .addComponent(searchButton)
                         .addComponent(refreshButton))
                     .addComponent(sortChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
                 .addContainerGap())

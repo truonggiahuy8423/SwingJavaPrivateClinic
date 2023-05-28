@@ -13,14 +13,18 @@ import java.util.Date;
 public class Patient {
     private Long patientId;
     private String fullname;
+
     private String phone;
+
     private Calendar birthday;
     private Calendar registrationDay;
     private Calendar insuranceExpiration;
     private String address;
     private String underlyingDisease;
     public Patient(){}
+
     public Patient(Long patientId, String fullname, String phone, Calendar birthday, Calendar registrationDay, Calendar insuranceExpiration, String address, String underlyingDisease) {
+
         this.patientId = patientId;
         this.fullname = fullname;
         this.phone = phone;
@@ -29,9 +33,11 @@ public class Patient {
         this.insuranceExpiration = insuranceExpiration;
         this.address = address;
         this.underlyingDisease = underlyingDisease;
-        //birthday.setLenient(false);
-        //registrationDay.setLenient(false);
-        //insuranceExpiration.setLenient(false);
+
+        birthday.setLenient(false);
+        registrationDay.setLenient(false);
+        insuranceExpiration.setLenient(false);
+
     }
 
     // Getters and Setters for the properties

@@ -39,6 +39,7 @@ public class PatientListTabController {
             //System.out.println(rs.next()); 
             while (result.next())
             {
+
                 Calendar birthday = null;
                 if (result.getDate(4) != null)
                 {
@@ -58,6 +59,7 @@ public class PatientListTabController {
                     expi_date.setTimeInMillis(result.getDate(6).getTime());
                 }
                 Patient p = new Patient(result.getLong(1), result.getString(2), result.getString(3), birthday, regis_date, 
+
                         expi_date, result.getString(7), result.getString(8));
                 listOfPatient.add(p);
             }
@@ -69,11 +71,13 @@ public class PatientListTabController {
         }
         catch (ClassNotFoundException e)
         { 
+
             System.out.println(e);
             return false;
         }
         catch (Exception e)
         { e.printStackTrace();}
+
         finally{ 
             return true;
         }        
@@ -86,6 +90,7 @@ public class PatientListTabController {
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "AD";  // Replace with your username
             String password = "88888888";  // Replace with your password
+
             String sqlInsert = "insert into patient(patient_id, fullname, phone, birthday, "
                     + "registration_day, insurance_expiration, address, underlying_disease) values(68, ?, ?, ?, ?, ?, ?, ?)";
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -98,13 +103,15 @@ public class PatientListTabController {
             statement.setString(6, patient.getAddress());
             statement.setString(7, patient.getUnderlyingDisease());
             statement.executeUpdate(); // co van de o day
+
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
+
         
     }
     
-    
+
 }
 

@@ -64,7 +64,7 @@ public class MainView extends javax.swing.JFrame {
         paneList[1] = new JPanel(); //appointment
         paneList[2] = new JPanel(); //
         paneList[3] = new JPanel();
-        paneList[4] = new JPanel();
+        paneList[4] = new SchedulePage();
         paneList[5] = new JPanel();
         paneList[6] = new JPanel();
         paneList[7] = new JPanel();
@@ -86,7 +86,7 @@ public class MainView extends javax.swing.JFrame {
         //paneList[0].setBackground(new Color(255, 255, 0));
         paneList[1].setBackground(new Color(255, 0, 255));
         paneList[2].setBackground(new Color(0, 255, 255));
-        paneList[4].setBackground(new Color(255, 0, 255));
+//        paneList[4].setBackground(new Color(255, 0, 255));
         paneList[5].setBackground(new Color(255, 255, 100));
         paneList[6].setBackground(new Color(255, 100, 255));
         paneList[7].setBackground(new Color(100, 255, 255));

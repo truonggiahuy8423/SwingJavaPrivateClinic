@@ -3,9 +3,11 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[757, 588]"/>
     </Property>
+
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -41,7 +43,9 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
+
         <Component class="javax.swing.JTextArea" name="underlyingDisease">
+
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -58,9 +62,11 @@
           </Border>
         </Property>
       </Properties>
+
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
       </Events>
+
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="560" y="510" width="70" height="-1"/>
@@ -82,7 +88,9 @@
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JTextField" name="iyear">
+
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[64, 22]"/>
@@ -94,7 +102,9 @@
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JTextField" name="imon">
+
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[64, 22]"/>
@@ -106,7 +116,9 @@
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JTextField" name="bmon">
+
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[64, 22]"/>
@@ -118,7 +130,9 @@
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JTextField" name="byear">
+
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[64, 22]"/>
@@ -130,7 +144,9 @@
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JTextField" name="iday">
+
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[64, 22]"/>
@@ -142,7 +158,9 @@
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JTextField" name="bday">
+
       <Properties>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[64, 22]"/>
@@ -210,6 +228,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+
           <AbsoluteConstraints x="40" y="50" width="110" height="-1"/>
         </Constraint>
       </Constraints>
@@ -222,19 +241,23 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JTextField" name="phone">
+
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="180" y="100" width="348" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JTextField" name="address">
+
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="180" y="160" width="515" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
+
     <Component class="javax.swing.JLabel" name="nameNoti1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -298,5 +321,6 @@
         </Constraint>
       </Constraints>
     </Component>
+
   </SubComponents>
 </Form>
