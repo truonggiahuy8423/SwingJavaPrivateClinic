@@ -30,7 +30,8 @@ public class PrivateClinicManagement {
 //        p.add(t);
 //        f.setContentPane(p); f.setVisible(true);
         LoginView loginView = new LoginView();
-        loginView.setVisible(true);      
+        loginView.setVisible(true);
+        
 //        Calendar d = Calendar.getInstance(); java.sql.Date dd;
 //        System.out.println((dd = new java.sql.Date(d.getTimeInMillis())).getTime()); 
 //        d.setTimeInMillis(dd.getTime());

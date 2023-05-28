@@ -19,9 +19,11 @@ import java.sql.PreparedStatement;
 public class PatientListTabController {
     private PatientListTab view;
 
-    public PatientListTabController(PatientListTab view) {
+    public PatientListTabController(PatientListTab view)
+    {
          this.view = view;
     }
+    
     public boolean queryData(String sql, List<Patient> listOfPatient)
     {
         try
@@ -102,5 +104,7 @@ public class PatientListTabController {
         }
         
     }
+    
+    
 }
 
