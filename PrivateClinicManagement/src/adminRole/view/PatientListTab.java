@@ -131,11 +131,7 @@ public class PatientListTab extends javax.swing.JPanel {
         sortPatientList();
         displayData();
     }
-    public void refreshData()
-    {
-        queryData("select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient");
-        displayData();
-    }
+    
     public PatientListTab(PatientPage parent) {
         initComponents();
         //init components
