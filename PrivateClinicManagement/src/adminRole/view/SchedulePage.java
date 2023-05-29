@@ -5,7 +5,13 @@
 package adminRole.view;
 
 import Model.Schedule;
+import Model.Room;
+import Model.Service;
+import Model.Employee;
 import adminRole.controller.SchedulePageController;
+import  adminRole.controller.RoomController;
+import  adminRole.controller.ServiceController;
+import  adminRole.controller.EmployeeController;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +30,9 @@ public class SchedulePage extends javax.swing.JPanel {
      * Creates new form SchedulePage
      */
     private SchedulePageController controller;
+    private RoomController roomController;
+    private ServiceController serviceController;
+    private EmployeeController employeeController;    
     private List<Schedule> listOfSchedule;
     private DefaultTableModel dataOftable;
     
@@ -45,6 +54,8 @@ public class SchedulePage extends javax.swing.JPanel {
         dataOftable.setColumnIdentifiers(new Object[]{"Schedule ID", "Date", "State", "Next Orinal Number", "Service", "Room", "Employee"});
         
         // load data
+        setUpData();
+        queryData("select * from schedule");
         displayData();
     }    
     
@@ -52,7 +63,47 @@ public class SchedulePage extends javax.swing.JPanel {
     public String toString() {
         return "Schedule List"; 
     } 
-    
+    // Set up data combobox 
+   private void setUpData(){
+        List<Schedule> ccbSchedule = new ArrayList();
+        List<Room> ccbRoom = new ArrayList();
+        List<Service> ccbService = new ArrayList();
+        List<Employee> ccbEmployee = new ArrayList();
+        ccbSchedule.clear();
+        ccbRoom.clear();
+        ccbService.clear();
+        ccbEmployee.clear();
+        
+        txtScheduleID.removeAllItems();
+        txtRoom.removeAllItems();
+        txtService.removeAllItems();
+        txtDoctor.removeAllItems();
+
+        roomController = new RoomController();
+        serviceController = new ServiceController();
+        employeeController = new EmployeeController();
+        controller.queryData("select * from schedule",ccbSchedule);
+        roomController.queryData("select * from room",ccbRoom);
+        employeeController.queryData("select * from employee",ccbEmployee);
+        serviceController.queryData("select * from service", ccbService);
+        
+        for(Schedule p: ccbSchedule){
+            txtScheduleID.addItem(String.valueOf(p.getScheduleID()));
+        }
+       
+        for(Room p: ccbRoom){
+            txtRoom.addItem(String.valueOf(p.getRoomID()));
+        }
+              
+        for(Service p: ccbService){
+            txtService.addItem(String.valueOf(p.getServiceID()));
+        }
+                     
+        for(Employee p: ccbEmployee){
+            txtDoctor.addItem(String.valueOf(p.getEmployeeID()));
+        }
+   } 
+   
     // Load các record của schedule vào list
     private void queryData(String sql){
         dataOftable.setNumRows(0);
@@ -69,7 +120,7 @@ public class SchedulePage extends javax.swing.JPanel {
     
     // Load từ list vào bảng
     private void displayData(){
-        queryData("select * from schedule");
+//        queryData("select * from schedule");
         for (Schedule p : listOfSchedule){
             dataOftable.addRow(new Object[] {p.getScheduleID(), p.getScheduleDate(), p.getState(), p.getNextOrinalNumber(), 
                 p.getServiceID(), p.getRoomID(), p.getEmployeeID()});
@@ -88,17 +139,18 @@ public class SchedulePage extends javax.swing.JPanel {
         boolean check = false; // Check if the "where" condition statement has queried an attribute yet, then add "OR" for the following query
         
         // Check if textField is empty or not, then create query statement
-        String scheduleID = !(txtScheduleID.getText().length() <= 0) ? " SCHEDULE_ID = " + txtScheduleID.getText() : "-1";
+        String scheduleID = !(txtScheduleID.getSelectedItem() == null) ? " SCHEDULE_ID = " + txtScheduleID.getSelectedItem() : "-1";
         String dateString = txtDate.getDate() != null ? "SCHEDULE_DATE = \'" + convertDate(txtDate.getDate()) + "\'" : "-1";
-        String state = !(txtState.getText().length() <= 0) ? " STATE = \'" + txtState.getText() + "\'": "-1"; 
-        String nextOrinalNumber = !(txtNextOrinalNumber.getText().length() <= 0) ? "NEXT_ORDINAL_NUMBER = " + txtNextOrinalNumber.getText() : "-1";
-        String service = !(txtService.getText().length() <= 0) ? " SERVICE_ID = " + txtService.getText() : "-1";
-        String room = !(txtRoom.getText().length() <= 0) ? " ROOM_ID = " +  txtRoom.getText() : "-1";
-        String doctor = !(txtDoctor.getText().length() <= 0) ? " EMPLOYEE_ID = " + txtDoctor.getText() : "-1";
-        
+        String state = !(txtState.getSelectedItem() == null) ? " STATE = \'" + txtState.getSelectedItem() + "\'": "-1"; 
+        String nextOrinalNumber = !(txtNextOrinalNumber.getSelectedItem() == null) ? "NEXT_ORDINAL_NUMBER = " + txtNextOrinalNumber.getSelectedItem() : "-1";
+        String service = !(txtService.getSelectedItem() == null) ? " SERVICE_ID = " + txtService.getSelectedItem() : "-1";
+        String room = !(txtRoom.getSelectedItem() == null) ? " ROOM_ID = " +  txtRoom.getSelectedItem() : "-1";
+        String doctor = !(txtDoctor.getSelectedItem() == null) ? " EMPLOYEE_ID = " + txtDoctor.getSelectedItem() : "-1";
+//        
         // Create sql statement
         String sqlWhere = "";
         String[] txtData = {scheduleID, dateString, state, nextOrinalNumber, service, room, doctor};
+//        String[] txtData = {scheduleID};
         for(int i = 0; i < 7; i++){
             if(!txtData[i].equals("-1")){
                 if(!check){
@@ -133,22 +185,22 @@ public class SchedulePage extends javax.swing.JPanel {
         btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        txtScheduleID = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtDoctor = new javax.swing.JTextField();
-        txtRoom = new javax.swing.JTextField();
-        txtService = new javax.swing.JTextField();
         txtDate = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
-        txtState = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtNextOrinalNumber = new javax.swing.JTextField();
         btnRefresh = new javax.swing.JButton();
+        txtScheduleID = new javax.swing.JComboBox<>();
+        txtDoctor = new javax.swing.JComboBox<>();
+        txtRoom = new javax.swing.JComboBox<>();
+        txtService = new javax.swing.JComboBox<>();
+        txtState = new javax.swing.JComboBox<>();
+        txtNextOrinalNumber = new javax.swing.JComboBox<>();
 
         tbSchedule.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -210,6 +262,8 @@ public class SchedulePage extends javax.swing.JPanel {
 
         jLabel5.setText("Service:");
 
+        txtDate.setMaxSelectableDate(new java.util.Date(253370743281000L));
+
         jLabel6.setText("State:");
 
         jLabel7.setText("Next Orinal Number:");
@@ -222,58 +276,68 @@ public class SchedulePage extends javax.swing.JPanel {
             }
         });
 
+        txtScheduleID.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtDoctor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtRoom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtService.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtState.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtNextOrinalNumber.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(118, 118, 118)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtScheduleID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(80, 80, 80)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtService, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtScheduleID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(117, 117, 117)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtRoom, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDoctor, 0, 150, Short.MAX_VALUE))
+                .addGap(117, 117, 117)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtService, 0, 150, Short.MAX_VALUE)
+                    .addComponent(txtState, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNextOrinalNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1431, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1578, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -281,29 +345,29 @@ public class SchedulePage extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtScheduleID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)
+                    .addComponent(jLabel7)
+                    .addComponent(txtScheduleID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
                     .addComponent(txtNextOrinalNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(jLabel4)
-                        .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
-                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnDelete)
                         .addComponent(btnSearch)
                         .addComponent(btnAdd)
                         .addComponent(btnUpdate)
-                        .addComponent(btnRefresh))
+                        .addComponent(btnRefresh)
+                        .addComponent(txtRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(674, Short.MAX_VALUE))
+                .addContainerGap(677, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(102, 102, 102)
@@ -324,9 +388,9 @@ public class SchedulePage extends javax.swing.JPanel {
                                 dateString                                                +
                                 "\', \'Available\'"                                         + ", " + 
                                 String.valueOf(autoGenerateNumber)  + ", " + 
-                                txtService.getText()                                  + ", " + 
-                                txtRoom.getText()                                     + ", " + 
-                                txtDoctor.getText()                                    + 
+                                txtService.getSelectedItem()                                  + ", " + 
+                                txtRoom.getSelectedItem()                                     + ", " + 
+                                txtDoctor.getSelectedItem()                                    + 
                             ")";
         executeData(sql);
         displayData();
@@ -346,13 +410,14 @@ public class SchedulePage extends javax.swing.JPanel {
         String sql = "update schedule "
                         + "set "
                                 + "SCHEDULE_DATE = \'" + convertDate(txtDate.getDate()) + "\', "
-                                + "STATE = \'" +txtState.getText()+"\', "
-                                + "SERVICE_ID = " + txtService.getText() + ", "
-                                + "ROOM_ID = " + txtRoom.getText() + ", "
-                                + "EMPLOYEE_ID =" + txtDoctor.getText()
+                                + "STATE = \'" +txtState.getSelectedItem()+"\', "
+                                + "SERVICE_ID = " + txtService.getSelectedItem() + ", "
+                                + "ROOM_ID = " + txtRoom.getSelectedItem() + ", "
+                                + "EMPLOYEE_ID =" + txtDoctor.getSelectedItem()
                         + "where "
-                                + "SCHEDULE_ID = " + txtScheduleID.getText();
+                                + "SCHEDULE_ID = " + txtScheduleID.getSelectedItem();
         executeData(sql);
+        queryData("select * from schedule");
         displayData();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -374,12 +439,12 @@ public class SchedulePage extends javax.swing.JPanel {
         int n = tbSchedule.getSelectedRow();
 //        txtDate.setDate(convertString(String.valueOf(tbSchedule.getValueAt(n, 1))));
         
-        txtScheduleID.setText(String.valueOf((tbSchedule.getValueAt(n, 0))));
-        txtState.setText(String.valueOf((tbSchedule.getValueAt(n, 2))));
-        txtNextOrinalNumber.setText(String.valueOf((tbSchedule.getValueAt(n, 3))));
-        txtService.setText(String.valueOf((tbSchedule.getValueAt(n, 4))));
-        txtRoom.setText(String.valueOf((tbSchedule.getValueAt(n, 5))));
-        txtDoctor.setText(String.valueOf((tbSchedule.getValueAt(n, 6))));
+        txtScheduleID.setSelectedItem(tbSchedule.getValueAt(n, 0));
+        txtState.setSelectedItem(tbSchedule.getValueAt(n, 2));
+        txtNextOrinalNumber.setSelectedItem(tbSchedule.getValueAt(n, 3));
+        txtService.setSelectedItem(tbSchedule.getValueAt(n, 4));
+        txtRoom.setSelectedItem(tbSchedule.getValueAt(n, 5));
+        txtDoctor.setSelectedItem(tbSchedule.getValueAt(n, 6));
         
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
@@ -413,11 +478,11 @@ public class SchedulePage extends javax.swing.JPanel {
     private org.jdatepicker.impl.SqlDateModel sqlDateModel1;
     private javax.swing.JTable tbSchedule;
     private com.toedter.calendar.JDateChooser txtDate;
-    private javax.swing.JTextField txtDoctor;
-    private javax.swing.JTextField txtNextOrinalNumber;
-    private javax.swing.JTextField txtRoom;
-    private javax.swing.JTextField txtScheduleID;
-    private javax.swing.JTextField txtService;
-    private javax.swing.JTextField txtState;
+    private javax.swing.JComboBox<String> txtDoctor;
+    private javax.swing.JComboBox<String> txtNextOrinalNumber;
+    private javax.swing.JComboBox<String> txtRoom;
+    private javax.swing.JComboBox<String> txtScheduleID;
+    private javax.swing.JComboBox<String> txtService;
+    private javax.swing.JComboBox<String> txtState;
     // End of variables declaration//GEN-END:variables
 }

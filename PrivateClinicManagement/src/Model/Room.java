@@ -9,5 +9,19 @@ package Model;
  * @author GIAHUY
  */
 public class Room {
+    private long roomID;
     
+    public Room(){}
+    
+    public Room(long roomID){
+        this.roomID = roomID;
+    }
+    
+    public long getRoomID(){
+        return this.roomID;
+    }
+    
+    public void setRoomID(long roomID){
+        this.roomID = roomID;
+    }
 }
