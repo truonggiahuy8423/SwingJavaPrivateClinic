@@ -157,7 +157,7 @@ public class AddPatientForm extends javax.swing.JDialog {
                         insExpiDate, saddress, sunderlyingdisease);
                 try {
                     new PatientListTabController(null).addPatient(patient);
-                    JOptionPane.showMessageDialog(null, "Add new patient successfully!", "", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(null, "Add new patient successfully!", "", JOptionPane.INFORMATION_MESSAGE);
                     parent2.refreshData();
                     this.dispose();
                 } catch (SQLException ex)

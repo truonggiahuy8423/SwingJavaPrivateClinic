@@ -8,15 +8,29 @@ package adminRole.view;
  *
  * @author GIAHUY
  */
-public class PatientTab extends javax.swing.JPanel {
+public class PatientTab extends javax.swing.JPanel implements Tab{
 
     /**
      * Creates new form PatientTab
      */
-    public PatientTab() {
-        initComponents();
-    }
+    private Long patient_id;
 
+    @Override
+    public String toString() {
+        return "Patient " + String.format("%08d", patient_id); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
+    public PatientTab(Long id, PatientPage parent) {
+        this.patient_id = id;
+        initComponents();
+        jDateChooser1.setDate(null);
+        closeTabButton.addActionListener(e -> {
+            parent.getTabbedPane().remove(parent.getTabbedPane().getSelectedIndex());
+        });
+    }
+    @Override
+    public void refreshData() {
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,24 +40,132 @@ public class PatientTab extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setMaximumSize(new java.awt.Dimension(1230, 759));
-        setMinimumSize(new java.awt.Dimension(1230, 759));
-        setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1230, 759));
+        jTextField1 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        closeTabButton = new javax.swing.JButton();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1230, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1230, Short.MAX_VALUE)
-        );
+        setMaximumSize(new java.awt.Dimension(1230, 718));
+        setMinimumSize(new java.awt.Dimension(1230, 718));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1230, 718));
+        setLayout(null);
+
+        jTextField1.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(jTextField1);
+        jTextField1.setBounds(180, 240, 60, 30);
+
+        jDateChooser1.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(jDateChooser1);
+        jDateChooser1.setBounds(860, 100, 207, 30);
+
+        jDateChooser3.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(jDateChooser3);
+        jDateChooser3.setBounds(860, 170, 207, 30);
+
+        jDateChooser4.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(jDateChooser4);
+        jDateChooser4.setBounds(860, 30, 207, 30);
+
+        jLabel1.setText("Patient ID:");
+        add(jLabel1);
+        jLabel1.setBounds(80, 40, 100, 16);
+
+        jLabel2.setText("Full Name:");
+        add(jLabel2);
+        jLabel2.setBounds(80, 110, 130, 16);
+
+        jLabel3.setText("Phone:");
+        add(jLabel3);
+        jLabel3.setBounds(80, 180, 130, 16);
+
+        jLabel4.setText("Age:");
+        add(jLabel4);
+        jLabel4.setBounds(80, 250, 90, 16);
+
+        jLabel5.setText("Birthday:");
+        add(jLabel5);
+        jLabel5.setBounds(720, 40, 130, 16);
+
+        jLabel6.setText("Register Date:");
+        add(jLabel6);
+        jLabel6.setBounds(720, 110, 120, 16);
+
+        jLabel7.setText("Insurance Exipiration:");
+        add(jLabel7);
+        jLabel7.setBounds(720, 180, 180, 16);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(10, 330, 1210, 380);
+
+        closeTabButton.setBackground(new java.awt.Color(255, 51, 0));
+        closeTabButton.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        closeTabButton.setForeground(new java.awt.Color(255, 255, 255));
+        closeTabButton.setText("X");
+        closeTabButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        closeTabButton.setBorderPainted(false);
+        add(closeTabButton);
+        closeTabButton.setBounds(1200, 0, 20, 20);
+
+        jTextField6.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(jTextField6);
+        jTextField6.setBounds(180, 100, 270, 30);
+
+        jTextField2.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(jTextField2);
+        jTextField2.setBounds(180, 170, 270, 30);
+
+        jTextField3.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(jTextField3);
+        jTextField3.setBounds(180, 30, 170, 30);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton closeTabButton;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser3;
+    private com.toedter.calendar.JDateChooser jDateChooser4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
+
+    
 }

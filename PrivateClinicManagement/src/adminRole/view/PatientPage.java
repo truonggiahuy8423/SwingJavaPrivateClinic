@@ -5,7 +5,9 @@
 package adminRole.view;
 
 import adminRole.controller.PatientPageController;
+import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -21,11 +23,19 @@ public class PatientPage extends javax.swing.JPanel {
     {
         this.tabbedPane.add(tab, tab.toString());
     }
+    
+    public JTabbedPane getTabbedPane() {
+        return tabbedPane;
+    }
+    
     public PatientPage() {
         initComponents();
         controller = new PatientPageController(this);
-        addNewTab(new PatientListTab(this));
         
+        addNewTab(new PatientListTab(this));
+        tabbedPane.addChangeListener(e -> {
+            ((Tab)tabbedPane.getSelectedComponent()).refreshData();
+        });
     }
 
     /**

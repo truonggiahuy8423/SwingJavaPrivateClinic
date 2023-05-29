@@ -10,7 +10,7 @@ package Model;
  */import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-public class Patient {
+public class Patient{
     private Long patientId;
     private String fullname;
 
@@ -22,7 +22,10 @@ public class Patient {
     private String address;
     private String underlyingDisease;
     public Patient(){}
-
+    public Patient(Long id)
+    {
+        this.patientId = id;
+    }
     public Patient(Long patientId, String fullname, String phone, Calendar birthday, Calendar registrationDay, Calendar insuranceExpiration, String address, String underlyingDisease) {
 
         this.patientId = patientId;
@@ -34,9 +37,7 @@ public class Patient {
         this.address = address;
         this.underlyingDisease = underlyingDisease;
 
-        birthday.setLenient(false);
-        registrationDay.setLenient(false);
-        insuranceExpiration.setLenient(false);
+        
 
     }
 
@@ -108,5 +109,13 @@ public class Patient {
     public void setUnderlyingDisease(String underlyingDisease) {
         this.underlyingDisease = underlyingDisease;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.patientId == ((Patient)obj).patientId;
+    }
+   
+    
+    
     
 }
