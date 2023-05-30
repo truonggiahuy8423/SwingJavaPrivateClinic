@@ -26,6 +26,8 @@ import java.util.Comparator;
 
 import java.util.Locale;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 /**
  *
  * @author GIAHUY
@@ -76,6 +78,9 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                 Collections.sort(listOfPatient, new Comparator<Patient>() {
             @Override
             public int compare(Patient o1, Patient o2) {
+                if (o1.getRegistrationDay() == null && o2.getRegistrationDay() == null) return 0;
+                if (o1.getRegistrationDay() == null && o2.getRegistrationDay() != null) return 1;
+                if (o1.getRegistrationDay() != null && o2.getRegistrationDay() == null) return -1;
                 if (o1.getRegistrationDay().getTimeInMillis() < o2.getRegistrationDay().getTimeInMillis())
                     return 1;
                 else if (o1.getRegistrationDay().getTimeInMillis() > o2.getRegistrationDay().getTimeInMillis())
@@ -88,6 +93,9 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                 Collections.sort(listOfPatient, new Comparator<Patient>() {
             @Override
             public int compare(Patient o1, Patient o2) {
+                if (o1.getRegistrationDay() == null && o2.getRegistrationDay() == null) return 0;
+                if (o1.getRegistrationDay() == null && o2.getRegistrationDay() != null) return 1;
+                if (o1.getRegistrationDay() != null && o2.getRegistrationDay() == null) return -1;
                 if (o1.getRegistrationDay().getTimeInMillis() > o2.getRegistrationDay().getTimeInMillis())
                     return 1;
                 else if (o1.getRegistrationDay().getTimeInMillis() < o2.getRegistrationDay().getTimeInMillis())
@@ -110,7 +118,9 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
     private void queryData(String sql) // load các record của patient vào list (Lưu ý thứ tự và các cột của câu query phải trùng khớp với lúc lấy data từ ResultSet)
     {
         listOfPatient.removeAll(listOfPatient);
-        controller.queryData(sql, this.listOfPatient); 
+        try {
+            controller.queryData(sql, this.listOfPatient); 
+        } catch (SQLException e) {e.printStackTrace();} catch (Exception e) {e.printStackTrace();}
             //Patient p = null;
         
     }
@@ -150,10 +160,14 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             }
             
         } );
+        sortChooser.addItem("Newest");
+        sortChooser.addItem("Oldest");
+        sortChooser.addItem("ID ASC");
+        sortChooser.addItem("ID DESC");
+        sortChooser.setSelectedIndex(0);
         addButton.setBackground(Color.white);
         deleteButton.setBackground(Color.white);
         searchButton.setBackground(Color.WHITE);
-
         sortChooser.setBackground(Color.WHITE);
         dataOftable = (DefaultTableModel)this.tableOfPatient.getModel(); 
         dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Adress", "Underlying Disease"});
@@ -164,12 +178,6 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             form.setVisible(true);
         });
         refreshButton.addActionListener(e -> {refreshData();});
-        deleteButton.addActionListener(e -> {});
-        sortChooser.addItem("Newest");
-        sortChooser.addItem("Oldest");
-        sortChooser.addItem("ID ASC");
-        sortChooser.addItem("ID DESC");
-        sortChooser.setSelectedIndex(0);
         sortChooser.addItemListener(e -> {
             if (((String)PatientListTab.this.sortChooser.getSelectedItem()).equals("Newest"))
             {
@@ -206,6 +214,8 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                 {
                     JOptionPane.showMessageDialog(this, "Patient information no longer exists", "", JOptionPane.INFORMATION_MESSAGE); 
                 }
+                sortMode = NEWEST;
+                //tableOfPatient.get
                 refreshData();
             }
             else 
@@ -219,10 +229,11 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                 if (e.getClickCount() == 2)
                 {
                     Long id = (Long)tableOfPatient.getValueAt(tableOfPatient.getSelectedRow(), 0);
-                    refreshData();
+                    queryData("select * from Patient");
                     if (listOfPatient.indexOf(new Patient(id)) == -1)
                     {
                         JOptionPane.showMessageDialog(parent, "Patient doesn't exist", "",  JOptionPane.INFORMATION_MESSAGE);
+                        refreshData();
                     } else 
                     {
                         parent.addNewTab(new PatientTab(id, parent));
@@ -232,10 +243,32 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             }
             
         });
+        
+        searchButton.addActionListener(e -> {
+            if (!isNumber(searchTextField.getText())) 
+            {
+                JOptionPane.showMessageDialog(parent, "Patient id format is invalid!", "", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            String sql = "select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, adress, underlying_disease from patient "
+                    +(searchTextField.getText().equals("") ? "" : ("where patient_id = " + searchTextField.getText()));
+            //System.out.println(sql);
+            queryData(sql);
+            displayData();
+        });
         // load data
         refreshData();
     }    
-    
+    private boolean isNumber(String s)
+    {
+        for (char c : s.toCharArray())
+        {
+            if (!(c >= 48 && c <= 57))
+                return false;
+        }
+        return true;
+    }
 
     
     @SuppressWarnings("unchecked")

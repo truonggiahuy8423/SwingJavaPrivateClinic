@@ -87,16 +87,16 @@ public class AddPatientForm extends javax.swing.JDialog {
             insuranceExpiration.setText("");
             boolean formatIsOk = true;
             // check name format
-            String sname = name.getText();
-            if (sname.equals("") || !checkName(sname)) {
-                this.nameNoti1.setText("Name field must not be empty");
+            String sname = name.getText(); boolean c = sname.equals("");
+            if (c || !checkName(sname)) {
+                this.nameNoti1.setText(c ? "Name field must not be empty" : "Name format is invalid");
                 formatIsOk = false;
             }
         
             // check phone format
-            String sphone = phone.getText();
-            if (sphone.equals("") || !phoneCheck(sphone)) {
-                phoneNoti1.setText("Phone format is invalid");
+            String sphone = phone.getText(); c = sphone.equals("");
+            if (c || !phoneCheck(sphone)) {
+                phoneNoti1.setText(c ? "Phone must not be empty" : "Phone format is invalid");
                 formatIsOk = false;
             }
             
