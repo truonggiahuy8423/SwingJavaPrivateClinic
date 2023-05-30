@@ -141,7 +141,7 @@ public class SchedulePage extends javax.swing.JPanel {
     // Load từ list vào bảng
     private void displayData(){
         dataOftable.setNumRows(0);
-        queryData("select * from schedule");
+//        queryData("select * from schedule order by schedule_id asc");
 
         for (Schedule p : listOfSchedule){
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
@@ -344,12 +344,12 @@ public class SchedulePage extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(15, 15, 15)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(15, 15, 15)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
@@ -391,7 +391,7 @@ public class SchedulePage extends javax.swing.JPanel {
                         .addComponent(cbbRoom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbbState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(677, Short.MAX_VALUE))
+                .addContainerGap(679, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(102, 102, 102)
@@ -421,6 +421,7 @@ public class SchedulePage extends javax.swing.JPanel {
             cbbNextOrinalNumber.addItem(String.valueOf(autoGenerateNumber));
             executeData(sql);
             setUpComboboxData();
+            queryData("select * from schedule order by schedule_id asc");
             displayData();
         }
         catch(NullPointerException e){
@@ -463,7 +464,7 @@ public class SchedulePage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        queryData("select * from schedule  by schedule_id asc");
+        queryData("select * from schedule order by schedule_id asc");
         setUpComboboxData();
         displayData();
     }//GEN-LAST:event_btnRefreshActionPerformed
