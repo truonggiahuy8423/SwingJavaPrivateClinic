@@ -9,5 +9,19 @@ package Model;
  * @author GIAHUY
  */
 public class Service {
+    private long serviceID;
     
+    public Service(){}
+    
+    public Service(long serviceID){
+        this.serviceID = serviceID;
+    }
+    
+    public long getServiceID(){
+        return this.serviceID;
+    }
+    
+    public void setServiceID(long serviceID){
+        this.serviceID = serviceID;
+    }
 }

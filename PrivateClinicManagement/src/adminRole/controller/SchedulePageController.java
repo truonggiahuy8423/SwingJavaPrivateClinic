@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,7 +32,7 @@ public class SchedulePageController {
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
-
+            System.out.println(sql);
             while (result.next()){
                 java.util.Date  utilDate = new java.util.Date(result.getDate(2).getTime());
                 Schedule p = new Schedule(result.getLong(1), utilDate, result.getString(3), result.getLong(4), result.getLong(5), result.getLong(6), result.getLong(7));
@@ -40,7 +41,7 @@ public class SchedulePageController {
             connection.close();
         } 
         catch (SQLException | ClassNotFoundException e){
-            System.out.println(e.toString()); 
+            JOptionPane.showMessageDialog(null, e.toString() + "\n" + sql);
         }
         finally{
             System.out.println("Successful"); 
@@ -59,7 +60,8 @@ public class SchedulePageController {
             connection.close();
         } 
         catch (SQLException | ClassNotFoundException e){
-            System.out.println(e.toString()); 
+            JOptionPane.showMessageDialog(null, e.toString() + "\n" + sql);
+            
         }
         finally{
             System.out.println("Successful"); 

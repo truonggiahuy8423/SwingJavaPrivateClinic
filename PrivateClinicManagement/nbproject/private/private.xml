@@ -3,14 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/PatientTabController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Appointment.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientTab.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/privateclinicmanagement/PrivateClinicManagement.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientListTab.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/PatientListTabController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientPage.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AddPatientForm.java</file>
+            <file>file:/D:/NetBeansProject/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/SchedulePage.java</file>
+            <file>file:/D:/NetBeansProject/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/SchedulePageController.java</file>
+
         </group>
     </open-files>
 </project-private>
