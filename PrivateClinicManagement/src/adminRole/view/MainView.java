@@ -57,6 +57,7 @@ public class MainView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setSize(1550, 830); 
         this.setResizable(false);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         this.controller = new MainViewController(this); // controller
         this.paneList = new JPanel[9]; 
