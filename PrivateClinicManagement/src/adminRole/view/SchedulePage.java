@@ -116,9 +116,6 @@ public class SchedulePage extends javax.swing.JPanel {
         for(Employee p: dataEmployee){
             cbbDoctor.addItem(String.valueOf(p.getEmployeeID()));
         }
-        
-        
-
    } 
    
     // Load các record của schedule vào list
@@ -127,7 +124,7 @@ public class SchedulePage extends javax.swing.JPanel {
         controller.queryData(sql, this.listOfSchedule);
     }
     
-    // Used for Add, Delete and Update features
+    // Add, Delete and Update data from/into database
     private void executeData(String sql){
         this.listOfSchedule.clear();
         controller.executeData(sql);
