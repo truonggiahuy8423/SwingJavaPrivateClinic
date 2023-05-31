@@ -6,7 +6,11 @@
         <group>
             <file>file:/D:/NetBeansProject/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/SchedulePage.java</file>
             <file>file:/D:/NetBeansProject/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/SchedulePageController.java</file>
+<<<<<<< HEAD
             <file>file:/D:/NetBeansProject/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Schedule.java</file>
+=======
+
+>>>>>>> e8bf9ebdc843a096df973f0eef66c0fd1c97fe03
         </group>
     </open-files>
 </project-private>

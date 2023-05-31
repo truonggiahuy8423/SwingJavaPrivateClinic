@@ -4,7 +4,16 @@
  */
 package adminRole.view;
 
+
+import Model.Patient;
+import adminRole.controller.PatientListTabController;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 
 /**
  *
@@ -15,60 +24,205 @@ public class AddPatientForm extends javax.swing.JDialog {
     /**
      * Creates new form NewJDialog
      */
-    public AddPatientForm(java.awt.Frame parent, boolean modal) {
+
+
+    private boolean checkName(String s)
+    {
+        for (int i = 0;i<s.length(); i++)
+        {
+            if ((s.charAt(i) >= 48 && s.charAt(i) <= 57)) return false;
+        }
+        return true;
+    }
+    private boolean phoneCheck(String s)
+    {
+        if (s.length() != 10) return false;
+        for (int i = 0;i<s.length(); i++)
+        {
+            if (!(s.charAt(i) >= 48 && s.charAt(i) <= 57)) return false;
+        }
+        return true;
+    }
+    public AddPatientForm(java.awt.Frame parent, boolean modal, PatientListTab parent2) {
         super(parent, modal);
         initComponents();
         
         saveButton.setBackground(Color.WHITE);
         cancelButton.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
+
+        name.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {nameNoti1.setText("");
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {nameNoti1.setText("");
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    nameNoti1.setText("");
+                }
+            });
+            phone.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {phoneNoti1.setText("");
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {phoneNoti1.setText("");
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    phoneNoti1.setText("");
+                }
+            });
+        saveButton.addActionListener(e -> {
+            
+            nameNoti1.setText("");
+            birthdayNoti1.setText("");
+            phoneNoti1.setText("");
+            insuranceExpiration.setText("");
+            boolean formatIsOk = true;
+            // check name format
+            String sname = name.getText(); boolean c = sname.equals("");
+            if (c || !checkName(sname)) {
+                this.nameNoti1.setText(c ? "Name field must not be empty" : "Name format is invalid");
+                formatIsOk = false;
+            }
+        
+            // check phone format
+            String sphone = phone.getText(); c = sphone.equals("");
+            if (c || !phoneCheck(sphone)) {
+                phoneNoti1.setText(c ? "Phone must not be empty" : "Phone format is invalid");
+                formatIsOk = false;
+            }
+            
+            
+            String saddress = address.getText();
+            String sunderlyingdisease = underlyingDisease.getText();
+            
+            // check birthday format
+            Calendar birthday = null;
+            if (!(bday.getText().equals("") || bmon.getText().equals("") || byear.getText().equals("")))
+            {
+                try {
+                    Integer day = Integer.valueOf(bday.getText());
+                    Integer mon = Integer.valueOf(bmon.getText());
+                    Integer year = Integer.valueOf(byear.getText());
+                    birthday = Calendar.getInstance();
+                    birthday.setLenient(false);
+                    birthday.set(year, mon, day);
+                    birthday.getTime();
+                } catch (NumberFormatException ex)
+                {
+                    birthdayNoti1.setText("Invalid value format"); 
+                    formatIsOk = false;
+                } catch (IllegalArgumentException exx)
+                {
+                    birthdayNoti1.setText("Invalid date"); 
+                    formatIsOk = false;
+                }  
+            }
+            //check insurance date format
+            Calendar insExpiDate = null;
+            if (!(iday.getText().equals("") || imon.getText().equals("") || iyear.getText().equals("")))
+            {
+                try {
+                    Integer day = Integer.valueOf(iday.getText());
+                    Integer mon = Integer.valueOf(imon.getText());
+                    Integer year = Integer.valueOf(iyear.getText());
+                    insExpiDate = Calendar.getInstance();
+                    insExpiDate.setLenient(false);
+                    insExpiDate.set(year, mon, day);
+                    insExpiDate.getTime();
+                } catch (NumberFormatException ex)
+                {
+                    insuranceExpiration.setText("Invalid value format"); 
+                    formatIsOk = false;
+                } catch (IllegalArgumentException exx)
+                {
+                    insuranceExpiration.setText("Invalid date"); 
+                    formatIsOk = false;
+                }  
+            }
+            
+            
+            if (formatIsOk)
+            {
+                Calendar regisDate = Calendar.getInstance(); regisDate.setTimeInMillis(System.currentTimeMillis());
+                Patient patient = new Patient(null, sname, sphone, birthday, regisDate,
+                        insExpiDate, saddress, sunderlyingdisease);
+                try {
+                    new PatientListTabController(null).addPatient(patient);
+                    JOptionPane.showMessageDialog(null, "Add new patient successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                    parent2.refreshData();
+                    this.dispose();
+                } catch (SQLException ex)
+                {
+                    JOptionPane.showMessageDialog(null, "Error: " + ex.toString(),"", JOptionPane.OK_OPTION);
+                } catch (Exception ee) {ee.printStackTrace();}
+                
+            }
+        });
+
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+
+        underlyingDisease = new javax.swing.JTextArea();
         cancelButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        iyear = new javax.swing.JTextField();
+        imon = new javax.swing.JTextField();
+        bmon = new javax.swing.JTextField();
+        byear = new javax.swing.JTextField();
+        iday = new javax.swing.JTextField();
+        bday = new javax.swing.JTextField();
+
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+
+        name = new javax.swing.JTextField();
+        phone = new javax.swing.JTextField();
+        address = new javax.swing.JTextField();
+        nameNoti1 = new javax.swing.JLabel();
+        phoneNoti1 = new javax.swing.JLabel();
+        birthdayNoti1 = new javax.swing.JLabel();
+        insuranceExpiration = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(757, 588));
         setMinimumSize(new java.awt.Dimension(757, 588));
-        setPreferredSize(new java.awt.Dimension(757, 588));
         setResizable(false);
         getContentPane().setLayout(null);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        underlyingDisease.setColumns(20);
+        underlyingDisease.setRows(5);
+        jScrollPane1.setViewportView(underlyingDisease);
+
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(180, 370, 480, 108);
 
         cancelButton.setText("Cancel");
         cancelButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
         getContentPane().add(cancelButton);
         cancelButton.setBounds(560, 510, 70, 20);
 
@@ -77,29 +231,31 @@ public class AddPatientForm extends javax.swing.JDialog {
         getContentPane().add(saveButton);
         saveButton.setBounds(650, 510, 70, 20);
 
-        jTextField11.setMaximumSize(new java.awt.Dimension(64, 22));
-        getContentPane().add(jTextField11);
-        jTextField11.setBounds(550, 300, 68, 30);
 
-        jTextField10.setMaximumSize(new java.awt.Dimension(64, 22));
-        getContentPane().add(jTextField10);
-        jTextField10.setBounds(370, 300, 68, 30);
+        iyear.setMaximumSize(new java.awt.Dimension(64, 22));
+        getContentPane().add(iyear);
+        iyear.setBounds(550, 300, 64, 30);
 
-        jTextField9.setMaximumSize(new java.awt.Dimension(64, 22));
-        getContentPane().add(jTextField9);
-        jTextField9.setBounds(370, 230, 68, 30);
+        imon.setMaximumSize(new java.awt.Dimension(64, 22));
+        getContentPane().add(imon);
+        imon.setBounds(370, 300, 64, 30);
 
-        jTextField7.setMaximumSize(new java.awt.Dimension(64, 22));
-        getContentPane().add(jTextField7);
-        jTextField7.setBounds(550, 230, 68, 30);
+        bmon.setMaximumSize(new java.awt.Dimension(64, 22));
+        getContentPane().add(bmon);
+        bmon.setBounds(370, 230, 64, 30);
 
-        jTextField8.setMaximumSize(new java.awt.Dimension(64, 22));
-        getContentPane().add(jTextField8);
-        jTextField8.setBounds(180, 300, 68, 30);
+        byear.setMaximumSize(new java.awt.Dimension(64, 22));
+        getContentPane().add(byear);
+        byear.setBounds(550, 230, 64, 30);
 
-        jTextField6.setMaximumSize(new java.awt.Dimension(64, 22));
-        getContentPane().add(jTextField6);
-        jTextField6.setBounds(180, 230, 68, 30);
+        iday.setMaximumSize(new java.awt.Dimension(64, 22));
+        getContentPane().add(iday);
+        iday.setBounds(180, 300, 64, 30);
+
+        bday.setMaximumSize(new java.awt.Dimension(64, 22));
+        getContentPane().add(bday);
+        bday.setBounds(180, 230, 64, 30);
+
 
         jLabel5.setText("Insurance Expiration:");
         getContentPane().add(jLabel5);
@@ -123,62 +279,59 @@ public class AddPatientForm extends javax.swing.JDialog {
 
         jLabel1.setText("Name:");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(40, 40, 110, 16);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(180, 30, 348, 30);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(180, 100, 348, 30);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(180, 160, 515, 30);
+
+        jLabel1.setBounds(40, 50, 110, 16);
+        getContentPane().add(name);
+        name.setBounds(180, 40, 348, 30);
+        getContentPane().add(phone);
+        phone.setBounds(180, 100, 348, 30);
+        getContentPane().add(address);
+        address.setBounds(180, 160, 515, 30);
+
+        nameNoti1.setBackground(new java.awt.Color(204, 204, 204));
+        nameNoti1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        nameNoti1.setForeground(new java.awt.Color(255, 51, 51));
+        getContentPane().add(nameNoti1);
+        nameNoti1.setBounds(180, 70, 240, 16);
+
+        phoneNoti1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        phoneNoti1.setForeground(new java.awt.Color(255, 51, 51));
+        getContentPane().add(phoneNoti1);
+        phoneNoti1.setBounds(180, 130, 300, 16);
+
+        birthdayNoti1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        birthdayNoti1.setForeground(new java.awt.Color(255, 51, 51));
+        getContentPane().add(birthdayNoti1);
+        birthdayNoti1.setBounds(180, 260, 300, 16);
+
+        insuranceExpiration.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        insuranceExpiration.setForeground(new java.awt.Color(255, 51, 51));
+        getContentPane().add(insuranceExpiration);
+        insuranceExpiration.setBounds(180, 330, 300, 16);
+
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddPatientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddPatientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddPatientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddPatientForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AddPatientForm dialog = new AddPatientForm(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField address;
+    private javax.swing.JTextField bday;
+    private javax.swing.JLabel birthdayNoti1;
+    private javax.swing.JTextField bmon;
+    private javax.swing.JTextField byear;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JTextField iday;
+    private javax.swing.JTextField imon;
+    private javax.swing.JLabel insuranceExpiration;
+    private javax.swing.JTextField iyear;
+
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -186,16 +339,13 @@ public class AddPatientForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+
+    private javax.swing.JTextField name;
+    private javax.swing.JLabel nameNoti1;
+    private javax.swing.JTextField phone;
+    private javax.swing.JLabel phoneNoti1;
     private javax.swing.JButton saveButton;
+    private javax.swing.JTextArea underlyingDisease;
+
     // End of variables declaration//GEN-END:variables
 }
