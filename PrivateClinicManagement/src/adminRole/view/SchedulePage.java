@@ -50,7 +50,7 @@ public class SchedulePage extends javax.swing.JPanel {
         btnSearch.setBackground(Color.WHITE);
         btnUpdate.setBackground(Color.WHITE);
         btnRefresh.setBackground(Color.WHITE);
-        
+        txtNextOrinalNumber.setEditable(false);
         dataOftable = (DefaultTableModel)this.tbSchedule.getModel();
         dataOftable.setColumnIdentifiers(new Object[]{"Schedule ID", "Date", "State", "Next Orinal Number", "Service", "Room", "Employee"});
         
@@ -82,7 +82,6 @@ public class SchedulePage extends javax.swing.JPanel {
         
         cbbScheduleID.removeAllItems();
         cbbState.removeAllItems();
-        cbbNextOrinalNumber.removeAllItems();
         cbbService.removeAllItems();
         cbbRoom.removeAllItems();
         cbbDoctor.removeAllItems();
@@ -104,10 +103,6 @@ public class SchedulePage extends javax.swing.JPanel {
         
         for(Schedule p: dataSchedule){
             cbbScheduleID.addItem(String.valueOf(p.getScheduleID()));
-        }
-        
-       for(Schedule p: dataNextOrinalNumber){
-            cbbNextOrinalNumber.addItem(String.valueOf(p. getNextOrinalNumber()));
         }
        
        for(Service p: dataService){
@@ -166,7 +161,7 @@ public class SchedulePage extends javax.swing.JPanel {
         String scheduleID = !(cbbScheduleID.getSelectedItem() == null) ? " SCHEDULE_ID = " + cbbScheduleID.getSelectedItem() : "-1";
         String dateString = txtDate.getDate() != null ? "SCHEDULE_DATE = \'" + convertDate(txtDate.getDate()) + "\'" : "-1";
         String state = !(cbbState.getSelectedItem() == null) ? " STATE = \'" + cbbState.getSelectedItem() + "\'": "-1"; 
-        String nextOrinalNumber = !(cbbNextOrinalNumber.getSelectedItem() == null) ? "NEXT_ORDINAL_NUMBER = " + cbbNextOrinalNumber.getSelectedItem() : "-1";
+        String nextOrinalNumber = !(txtNextOrinalNumber.getText().length() <= 0) ? "NEXT_ORDINAL_NUMBER = " + txtNextOrinalNumber.getText() : "-1";
         String service = !(cbbService.getSelectedItem() == null) ? " SERVICE_ID = " + cbbService.getSelectedItem() : "-1";
         String room = !(cbbRoom.getSelectedItem() == null) ? " ROOM_ID = " +  cbbRoom.getSelectedItem() : "-1";
         String doctor = !(cbbDoctor.getSelectedItem() == null) ? " EMPLOYEE_ID = " + cbbDoctor.getSelectedItem() : "-1";
@@ -224,7 +219,7 @@ public class SchedulePage extends javax.swing.JPanel {
         cbbRoom = new javax.swing.JComboBox<>();
         cbbService = new javax.swing.JComboBox<>();
         cbbState = new javax.swing.JComboBox<>();
-        cbbNextOrinalNumber = new javax.swing.JComboBox<>();
+        txtNextOrinalNumber = new javax.swing.JTextField();
 
         tbSchedule.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -310,8 +305,6 @@ public class SchedulePage extends javax.swing.JPanel {
 
         cbbState.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        cbbNextOrinalNumber.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -342,7 +335,7 @@ public class SchedulePage extends javax.swing.JPanel {
                     .addComponent(cbbService, 0, 150, Short.MAX_VALUE)
                     .addComponent(cbbState, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)
@@ -354,7 +347,7 @@ public class SchedulePage extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbNextOrinalNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtNextOrinalNumber)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118))
@@ -367,7 +360,7 @@ public class SchedulePage extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
@@ -376,8 +369,8 @@ public class SchedulePage extends javax.swing.JPanel {
                     .addComponent(cbbScheduleID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbNextOrinalNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                    .addComponent(txtNextOrinalNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
@@ -402,9 +395,6 @@ public class SchedulePage extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try{
-            // Create next ID and nextOrinalNumber
-            long autoGenerateNumber = (long)(this.listOfSchedule.size()+1);
-
             String dateString = convertDate(txtDate.getDate());
 
             // add data to database
@@ -417,8 +407,6 @@ public class SchedulePage extends javax.swing.JPanel {
                                     cbbRoom.getSelectedItem()                      + ", " + 
                                     cbbDoctor.getSelectedItem()                     + 
                                 ")";
-            cbbScheduleID.addItem(String.valueOf(autoGenerateNumber));
-            cbbNextOrinalNumber.addItem(String.valueOf(autoGenerateNumber));
             executeData(sql);
             setUpComboboxData();
             queryData("select * from schedule order by schedule_id asc");
@@ -483,11 +471,8 @@ public class SchedulePage extends javax.swing.JPanel {
                 cbbState.setSelectedIndex(i);
             }
         }
-        for(int i = 0; i < cbbNextOrinalNumber.getItemCount(); i++){
-            if(cbbNextOrinalNumber.getItemAt(i).equalsIgnoreCase(tbSchedule.getValueAt(n, 3).toString())){
-                cbbNextOrinalNumber.setSelectedIndex(i);
-            }
-        }
+        
+        txtNextOrinalNumber.setText(String.valueOf((tbSchedule.getValueAt(n, 3))));
 
         for(int i = 0; i < cbbService.getItemCount(); i++){
             if(cbbService.getItemAt(i).equalsIgnoreCase(tbSchedule.getValueAt(n, 4).toString())){
@@ -524,7 +509,6 @@ public class SchedulePage extends javax.swing.JPanel {
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbbDoctor;
-    private javax.swing.JComboBox<String> cbbNextOrinalNumber;
     private javax.swing.JComboBox<String> cbbRoom;
     private javax.swing.JComboBox<String> cbbScheduleID;
     private javax.swing.JComboBox<String> cbbService;
@@ -544,5 +528,6 @@ public class SchedulePage extends javax.swing.JPanel {
     private org.jdatepicker.impl.SqlDateModel sqlDateModel1;
     private javax.swing.JTable tbSchedule;
     private com.toedter.calendar.JDateChooser txtDate;
+    private javax.swing.JTextField txtNextOrinalNumber;
     // End of variables declaration//GEN-END:variables
 }
