@@ -67,7 +67,7 @@ public class PatientTabController {
             result2 = statement2.executeQuery(sql);
             while (result2.next())
             {
-                
+                Appointment appointment = new Appointment();
             }
         }
         catch (ClassNotFoundException e)

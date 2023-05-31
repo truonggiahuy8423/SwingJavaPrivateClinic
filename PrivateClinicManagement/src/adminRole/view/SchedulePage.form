@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
-  <NonVisualComponents>
-    <Component class="org.jdatepicker.util.JDatePickerUtil" name="jDatePickerUtil1">
-    </Component>
-    <Component class="org.jdatepicker.util.JDatePickerUtil" name="jDatePickerUtil2">
-    </Component>
-    <Component class="org.jdatepicker.JDateComponentFactory" name="jDateComponentFactory1">
-    </Component>
-    <Component class="org.jdatepicker.util.JDatePickerUtil" name="jDatePickerUtil3">
-    </Component>
-    <Component class="org.jdatepicker.impl.SqlDateModel" name="sqlDateModel1">
-    </Component>
-  </NonVisualComponents>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -59,10 +47,14 @@
                   <Component id="cbbService" pref="150" max="32767" attributes="0"/>
                   <Component id="cbbState" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="162" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="102" attributes="0">
-
+              <EmptySpace pref="119" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cbbNextOrinalNumber" min="-2" pref="150" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="btnSearch" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="btnAdd" min="-2" pref="55" max="-2" attributes="0"/>
@@ -70,17 +62,11 @@
                       <Component id="btnDelete" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="btnUpdate" min="-2" pref="55" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtNextOrinalNumber" max="32767" attributes="0"/>
-
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnRefresh" min="-2" pref="55" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
-              <Component id="btnRefresh" min="-2" pref="55" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -107,7 +93,7 @@
               </Group>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -121,7 +107,7 @@
                   </Group>
                   <Component id="txtDate" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="679" max="32767" attributes="0"/>
+              <EmptySpace pref="681" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -340,8 +326,20 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtNextOrinalNumber">
-
+    <Component class="javax.swing.JComboBox" name="cbbNextOrinalNumber">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
