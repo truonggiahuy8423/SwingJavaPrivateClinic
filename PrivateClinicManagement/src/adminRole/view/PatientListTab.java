@@ -170,7 +170,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
         searchButton.setBackground(Color.WHITE);
         sortChooser.setBackground(Color.WHITE);
         dataOftable = (DefaultTableModel)this.tableOfPatient.getModel(); 
-        dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Adress", "Underlying Disease"});
+        dataOftable.setColumnIdentifiers(new Object[]{"Patient ID", "Full name", "Last name", "Phone", "Birthday", "Registration Date", "Insurance Expiration", "Address", "Underlying Disease"});
         refreshButton.setBackground(Color.WHITE);
         // set action event
         addButton.addActionListener(e -> {
