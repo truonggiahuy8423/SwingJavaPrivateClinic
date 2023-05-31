@@ -141,7 +141,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
     @Override
     public void refreshData()
     {
-        queryData("select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, adress, underlying_disease from patient");
+        queryData("select patient_id, full_name, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient");
         sortPatientList();
         displayData();
     }
@@ -251,7 +251,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                 return;
             }
             
-            String sql = "select patient_id, fullname, phone, birthday, registration_day, insurance_expiration, adress, underlying_disease from patient "
+            String sql = "select patient_id, full_name, phone, birthday, registration_day, insurance_expiration, address, underlying_disease from patient "
                     +(searchTextField.getText().equals("") ? "" : ("where patient_id = " + searchTextField.getText()));
             //System.out.println(sql);
             queryData(sql);

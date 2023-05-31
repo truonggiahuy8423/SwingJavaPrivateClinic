@@ -26,7 +26,6 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txtDate" min="-2" pref="150" max="-2" attributes="0"/>
                   <Component id="cbbScheduleID" min="-2" pref="150" max="-2" attributes="0"/>
-
               </Group>
               <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -51,6 +50,7 @@
               <EmptySpace pref="162" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
+
                       <Component id="btnSearch" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="btnAdd" min="-2" pref="55" max="-2" attributes="0"/>
@@ -63,11 +63,10 @@
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtNextOrinalNumber" max="32767" attributes="0"/>
+
                   </Group>
               </Group>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
-              <Component id="btnRefresh" min="-2" pref="55" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -108,8 +107,7 @@
                   </Group>
                   <Component id="txtDate" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="679" max="32767" attributes="0"/>
-
+              <EmptySpace pref="681" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -229,7 +227,6 @@
           <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,-26,112,121,38,85,104,120"/>
         </Property>
       </Properties>
-
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -329,25 +326,8 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-<<<<<<< HEAD
     <Component class="javax.swing.JTextField" name="txtNextOrinalNumber">
-=======
-    <Component class="javax.swing.JComboBox" name="cbbNextOrinalNumber">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="0"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-            <EtchetBorder/>
-          </Border>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
 
->>>>>>> e8bf9ebdc843a096df973f0eef66c0fd1c97fe03
     </Component>
   </SubComponents>
 </Form>

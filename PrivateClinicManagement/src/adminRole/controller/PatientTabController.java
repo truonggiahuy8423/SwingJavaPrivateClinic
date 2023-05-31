@@ -66,7 +66,9 @@ public class PatientTabController {
             statement2 = connection.createStatement();
             result2 = statement2.executeQuery(sql);
             while (result2.next())
-            {}
+            {
+                
+            }
         }
         catch (ClassNotFoundException e)
         {
