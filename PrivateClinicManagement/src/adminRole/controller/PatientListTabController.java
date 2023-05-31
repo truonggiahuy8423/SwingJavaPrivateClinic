@@ -90,8 +90,8 @@ public class PatientListTabController {
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "AD";  // Replace with your username
             String password = "88888888";  // Replace with your password
-            String sqlInsert = "insert into patient(patient_id, fullname, phone, birthday, "
-                    + "registration_day, insurance_expiration, adress, underlying_disease) values(patient_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlInsert = "insert into patient(patient_id, full_name, phone, birthday, "
+                    + "registration_day, insurance_expiration, address, underlying_disease) values(patient_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlInsert);
             statement.setString(1, patient.getFullname());

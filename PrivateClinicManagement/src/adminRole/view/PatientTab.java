@@ -44,7 +44,6 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         ageField.setEditable(false);
         dataOfAppointmentTable = (DefaultTableModel)apointmentTable.getModel();
         dataOfAppointmentTable.setColumnIdentifiers(new Object[] {"Appointment ID", "Schedule ID", "Patient ID", "Ordinal Number", "Fee"});
-        
         // properties of components
         regisField.setDate(null);
         cancelButton.setBackground((new Color(255, 0, 0)));
