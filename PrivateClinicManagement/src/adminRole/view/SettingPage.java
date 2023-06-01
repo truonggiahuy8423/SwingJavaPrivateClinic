@@ -4,6 +4,16 @@
  */
 package adminRole.view;
 
+import Model.Room;
+import Model.Service;
+import Model.Unit;
+import adminRole.controller.RoomController;
+import adminRole.controller.ServiceController;
+import adminRole.controller.UnitController;
+import java.awt.Color;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author GIAHUY
@@ -13,10 +23,70 @@ public class SettingPage extends javax.swing.JPanel {
     /**
      * Creates new form SettingPage
      */
+    private RoomController roomController;
+    private ServiceController serviceController;
+    private UnitController unitController; 
+    private List<Room> listOfRoom;
+    private List<Service> listOfService;
+    private List<Unit> listOfUnit;
+    private DefaultTableModel dataOfRoomTable;
+    private DefaultTableModel dataOfServiceTable;
+    private DefaultTableModel dataOfUnitTable;
+    
     public SettingPage() {
         initComponents();
+        
+        roomController = new RoomController();
+        serviceController = new ServiceController();
+        unitController = new UnitController();
+        
+        btnAddRoom.setBackground(Color.white);
+        btnDeleteRoom.setBackground(Color.white);
+        btnAddService.setBackground(Color.white);
+        btnDeleteService.setBackground(Color.white);
+        btnAddUnit.setBackground(Color.white);
+        btnDeleteUnit.setBackground(Color.white);
+        
+        dataOfRoomTable = (DefaultTableModel)this.tbRoom.getModel();
+        dataOfRoomTable.setColumnIdentifiers(new Object[]{"Room ID"});
+        
+        dataOfServiceTable = (DefaultTableModel)this.tbService.getModel();
+        dataOfServiceTable.setColumnIdentifiers(new Object[]{"Service ID", "Name", "Cost"});
+        
+        dataOfUnitTable = (DefaultTableModel)this.tbUnit.getModel();
+        dataOfUnitTable.setColumnIdentifiers(new Object[]{"Unit ID", "Name"});
+        
+        
+        
     }
 
+    public void queryData(String sql){
+        this.listOfRoom.clear();
+        this.listOfService.clear();
+        this.listOfUnit.clear();
+        roomController.queryData(this.listOfRoom);
+        serviceController.queryData(this.listOfService);
+        unitController.queryData(this.listOfUnit);
+    }
+    
+    public void displayData(){
+        dataOfRoomTable.setRowCount(0);
+        dataOfServiceTable.setRowCount(0);
+        dataOfUnitTable.setRowCount(0);
+        
+        for(Room r : listOfRoom){
+            dataOfRoomTable.addRow(new Object[]{r.getRoomID()});
+        }
+        
+        for(Service s : listOfService){
+            dataOfServiceTable.addRow(new Object[]{s.getServiceID(), s.getServiceName(), s.getServiceCost()});
+        }
+        
+        for(Unit u : listOfUnit){
+            dataOfUnitTable.addRow(new Object[]{u.getUnitID(), u.getUnitName()});
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,11 +97,11 @@ public class SettingPage extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbRoom = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbService = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tbUnit = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -56,7 +126,7 @@ public class SettingPage extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(1590, 765));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbRoom.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -67,9 +137,9 @@ public class SettingPage extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tbRoom);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbService.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -80,9 +150,9 @@ public class SettingPage extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(jTable2);
+        jScrollPane5.setViewportView(tbService);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tbUnit.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -93,7 +163,7 @@ public class SettingPage extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane6.setViewportView(jTable3);
+        jScrollPane6.setViewportView(tbUnit);
 
         jLabel1.setText("Room Managemet");
 
@@ -113,21 +183,51 @@ public class SettingPage extends javax.swing.JPanel {
 
         btnAddService.setText("Add");
         btnAddService.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAddService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddServiceActionPerformed(evt);
+            }
+        });
 
         btnDeleteService.setText("Delete");
         btnDeleteService.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDeleteService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteServiceActionPerformed(evt);
+            }
+        });
 
         btnAddRoom.setText("Add");
         btnAddRoom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAddRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRoomActionPerformed(evt);
+            }
+        });
 
         btnDeleteRoom.setText("Delete");
         btnDeleteRoom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDeleteRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteRoomActionPerformed(evt);
+            }
+        });
 
         btnDeleteUnit.setText("Delete");
         btnDeleteUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDeleteUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUnitActionPerformed(evt);
+            }
+        });
 
         btnAddUnit.setText("Add");
         btnAddUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAddUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUnitActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Name:");
 
@@ -240,6 +340,34 @@ public class SettingPage extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoomActionPerformed
+        Long roomID = Long.valueOf(txtRoomID.getText());
+        roomController.addRoom(new Room(roomID));
+    }//GEN-LAST:event_btnAddRoomActionPerformed
+
+    private void btnDeleteRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRoomActionPerformed
+        roomController.deleteRoom(txtRoomID.getText());
+    }//GEN-LAST:event_btnDeleteRoomActionPerformed
+
+    private void btnAddServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServiceActionPerformed
+        Long serviceID = Long.valueOf(txtServiceID.getText());
+        Long serviceCost = Long.valueOf(txtCost.getText());
+        serviceController.addService(new Service(serviceID, txtNameService.getText(), serviceCost));
+    }//GEN-LAST:event_btnAddServiceActionPerformed
+
+    private void btnDeleteServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteServiceActionPerformed
+        serviceController.deleteService(txtServiceID.getText());
+    }//GEN-LAST:event_btnDeleteServiceActionPerformed
+
+    private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnitActionPerformed
+        Long unitID = Long.valueOf(txtUnitID.getText());
+        unitController.addUnit(new Unit(unitID, txtNameUnit.getText()));
+    }//GEN-LAST:event_btnAddUnitActionPerformed
+
+    private void btnDeleteUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUnitActionPerformed
+        unitController.deleteUnit(txtUnitID.getText());
+    }//GEN-LAST:event_btnDeleteUnitActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddRoom;
@@ -260,9 +388,9 @@ public class SettingPage extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable tbRoom;
+    private javax.swing.JTable tbService;
+    private javax.swing.JTable tbUnit;
     private javax.swing.JTextField txtCost;
     private javax.swing.JTextField txtNameService;
     private javax.swing.JTextField txtNameUnit;

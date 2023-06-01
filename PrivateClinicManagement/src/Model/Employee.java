@@ -9,23 +9,23 @@ package Model;
  * @author GIAHUY
  */
 public class Employee {
-    private long employeeID;
+    private Long employeeID;
     private String name;
     private String phone;
     
     public Employee(){}
     
-    public Employee(long employeeID, String name, String phone){
+    public Employee(Long employeeID, String name, String phone){
         this.employeeID = employeeID;
         this.name = name;
          this.phone = phone;
     }
     
-    public long getEmployeeID(){
+    public Long getEmployeeID(){
         return this.employeeID;
     }
     
-    public void setEmployeeID(long employeeID){
+    public void setEmployeeID(Long employeeID){
         this.employeeID = employeeID;
     }    
 
