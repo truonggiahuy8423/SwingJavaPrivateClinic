@@ -164,6 +164,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbRoomMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -182,6 +185,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbServiceMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -200,6 +206,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbUnitMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -91,7 +91,7 @@ public class MainView extends javax.swing.JFrame {
         paneList[5].setBackground(new Color(255, 255, 100));
         paneList[6].setBackground(new Color(255, 100, 255));
         paneList[7].setBackground(new Color(100, 255, 255));
-        paneList[8].setBackground(new Color(255, 200, 255));
+//        paneList[8].setBackground(new Color(255, 200, 255));
         this.switchPane(0);
         
     }

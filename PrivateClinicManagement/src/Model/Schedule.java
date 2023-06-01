@@ -96,8 +96,8 @@ public class Schedule {
     public void getListOfSchedule(String sql, List<Schedule> listOfSchedule){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
             System.out.println(sql);
@@ -116,11 +116,11 @@ public class Schedule {
         }        
     }
     
-        public void addSchedule(String sql, Schedule schedule){
+        public void executeDataOfSchedule(String sql){
             try{
                 Class.forName("oracle.jdbc.driver.OracleDriver");
-                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-    //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
                 Statement statement = connection.createStatement() ;  
                 System.out.println(sql);
                 statement.executeUpdate(sql);
@@ -136,42 +136,5 @@ public class Schedule {
             }        
         }
     
-        public void deleteSchedule(String sql, Schedule schedule){
-            try{
-                Class.forName("oracle.jdbc.driver.OracleDriver");
-                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-    //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-                Statement statement = connection.createStatement() ;  
-                System.out.println(sql);
-                statement.executeUpdate(sql);
-
-                connection.close();
-            } 
-            catch (SQLException | ClassNotFoundException e){
-                JOptionPane.showMessageDialog(null, e.toString() + "\n" + sql);
-
-            }
-            finally{
-                System.out.println("Successful"); 
-            }        
-        }
-        public void updateSchedule(String sql, Schedule schedule){
-            try{
-                Class.forName("oracle.jdbc.driver.OracleDriver");
-                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-        //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-                Statement statement = connection.createStatement() ;  
-                System.out.println(sql);
-                statement.executeUpdate(sql);
-
-                connection.close();
-            } 
-            catch (SQLException | ClassNotFoundException e){
-                JOptionPane.showMessageDialog(null, e.toString() + "\n" + sql);
-
-            }
-            finally{
-                System.out.println("Successful"); 
-            }        
-        }
+        
 }

@@ -11,7 +11,9 @@ import adminRole.controller.RoomController;
 import adminRole.controller.ServiceController;
 import adminRole.controller.UnitController;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,15 +25,15 @@ public class SettingPage extends javax.swing.JPanel {
     /**
      * Creates new form SettingPage
      */
-    private RoomController roomController;
-    private ServiceController serviceController;
-    private UnitController unitController; 
+    private final RoomController roomController;
+    private final ServiceController serviceController;
+    private final UnitController unitController; 
     private List<Room> listOfRoom;
     private List<Service> listOfService;
     private List<Unit> listOfUnit;
-    private DefaultTableModel dataOfRoomTable;
-    private DefaultTableModel dataOfServiceTable;
-    private DefaultTableModel dataOfUnitTable;
+    private final DefaultTableModel dataOfRoomTable;
+    private final DefaultTableModel dataOfServiceTable;
+    private final DefaultTableModel dataOfUnitTable;
     
     public SettingPage() {
         initComponents();
@@ -39,6 +41,9 @@ public class SettingPage extends javax.swing.JPanel {
         roomController = new RoomController();
         serviceController = new ServiceController();
         unitController = new UnitController();
+        listOfRoom = new ArrayList<>();
+        listOfService = new ArrayList<>();
+        listOfUnit = new ArrayList<>();
         
         btnAddRoom.setBackground(Color.white);
         btnDeleteRoom.setBackground(Color.white);
@@ -56,32 +61,45 @@ public class SettingPage extends javax.swing.JPanel {
         dataOfUnitTable = (DefaultTableModel)this.tbUnit.getModel();
         dataOfUnitTable.setColumnIdentifiers(new Object[]{"Unit ID", "Name"});
         
-        
-        
+        queryDataRoom();
+        queryDataService();
+        queryDataUnit();
+        displayDataRoom();
+        displayDataService();
+        displayDataUnit();
     }
 
-    public void queryData(String sql){
+    public void queryDataRoom(){
         this.listOfRoom.clear();
-        this.listOfService.clear();
-        this.listOfUnit.clear();
         roomController.queryData(this.listOfRoom);
+    }
+    
+    public void queryDataService(){
+        this.listOfService.clear();
         serviceController.queryData(this.listOfService);
+    }
+    
+    public void queryDataUnit(){
+        this.listOfUnit.clear();
         unitController.queryData(this.listOfUnit);
     }
     
-    public void displayData(){
+    public void displayDataRoom(){
         dataOfRoomTable.setRowCount(0);
-        dataOfServiceTable.setRowCount(0);
-        dataOfUnitTable.setRowCount(0);
         
         for(Room r : listOfRoom){
             dataOfRoomTable.addRow(new Object[]{r.getRoomID()});
         }
-        
+    }
+    public void displayDataService(){
+        dataOfServiceTable.setRowCount(0);
         for(Service s : listOfService){
             dataOfServiceTable.addRow(new Object[]{s.getServiceID(), s.getServiceName(), s.getServiceCost()});
         }
-        
+    }
+    public void displayDataUnit(){
+        dataOfUnitTable.setRowCount(0);        
+
         for(Unit u : listOfUnit){
             dataOfUnitTable.addRow(new Object[]{u.getUnitID(), u.getUnitName()});
         }
@@ -137,6 +155,11 @@ public class SettingPage extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbRoom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRoomMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tbRoom);
 
         tbService.setModel(new javax.swing.table.DefaultTableModel(
@@ -150,6 +173,11 @@ public class SettingPage extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbService.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbServiceMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tbService);
 
         tbUnit.setModel(new javax.swing.table.DefaultTableModel(
@@ -163,6 +191,11 @@ public class SettingPage extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbUnit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbUnitMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(tbUnit);
 
         jLabel1.setText("Room Managemet");
@@ -343,30 +376,69 @@ public class SettingPage extends javax.swing.JPanel {
     private void btnAddRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoomActionPerformed
         Long roomID = Long.valueOf(txtRoomID.getText());
         roomController.addRoom(new Room(roomID));
+        queryDataRoom();
+        displayDataRoom();
     }//GEN-LAST:event_btnAddRoomActionPerformed
 
     private void btnDeleteRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRoomActionPerformed
-        roomController.deleteRoom(txtRoomID.getText());
+        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+        if(confirmOption == JOptionPane.YES_OPTION){
+            roomController.deleteRoom(txtRoomID.getText());
+            queryDataRoom();
+            displayDataRoom();
+        }
     }//GEN-LAST:event_btnDeleteRoomActionPerformed
 
     private void btnAddServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServiceActionPerformed
         Long serviceID = Long.valueOf(txtServiceID.getText());
         Long serviceCost = Long.valueOf(txtCost.getText());
         serviceController.addService(new Service(serviceID, txtNameService.getText(), serviceCost));
+        queryDataService();
+        displayDataService();
     }//GEN-LAST:event_btnAddServiceActionPerformed
 
     private void btnDeleteServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteServiceActionPerformed
-        serviceController.deleteService(txtServiceID.getText());
+        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+        if(confirmOption == JOptionPane.YES_OPTION){
+            serviceController.deleteService(txtServiceID.getText());
+            queryDataService();
+            displayDataService();
+        }
     }//GEN-LAST:event_btnDeleteServiceActionPerformed
 
     private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnitActionPerformed
         Long unitID = Long.valueOf(txtUnitID.getText());
         unitController.addUnit(new Unit(unitID, txtNameUnit.getText()));
+        queryDataUnit();
+        displayDataUnit();
     }//GEN-LAST:event_btnAddUnitActionPerformed
 
     private void btnDeleteUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUnitActionPerformed
-        unitController.deleteUnit(txtUnitID.getText());
+        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+        if(confirmOption == JOptionPane.YES_OPTION){
+            unitController.deleteUnit(txtUnitID.getText());
+            queryDataUnit();
+            displayDataUnit();
+        }
     }//GEN-LAST:event_btnDeleteUnitActionPerformed
+
+    private void tbRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRoomMouseClicked
+        int n = tbRoom.getSelectedRow();
+        txtRoomID.setText(String.valueOf(tbRoom.getValueAt(n, 0)));
+    }//GEN-LAST:event_tbRoomMouseClicked
+
+    private void tbServiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbServiceMouseClicked
+        int n = tbService.getSelectedRow();
+        txtServiceID.setText(String.valueOf(tbService.getValueAt(n, 0)));
+        txtNameService.setText(String.valueOf(tbService.getValueAt(n, 1)));
+        txtCost.setText(String.valueOf(tbService.getValueAt(n, 2)));
+    }//GEN-LAST:event_tbServiceMouseClicked
+
+    private void tbUnitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUnitMouseClicked
+        int n = tbUnit.getSelectedRow();
+        txtUnitID.setText(String.valueOf(tbUnit.getValueAt(n, 0)));
+        txtNameUnit.setText(String.valueOf(tbUnit.getValueAt(n, 1)));  
+    }//GEN-LAST:event_tbUnitMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
