@@ -67,7 +67,21 @@ public class PatientTabController {
             result2 = statement2.executeQuery(sql);
             while (result2.next())
             {
-                Appointment appointment = new Appointment();
+                Long appointmentID = result2.getLong(1);
+                Long scheduleID = result2.getLong(2);
+                Long patientID = paitent_id;
+                Long doctorID = result2.getLong(5);
+                String doctorName = result2.getString(6);
+                String patientName = result2.getString(4);
+                Integer ordinalNumber = result2.getInt(7);
+                Calendar date = Calendar.getInstance();
+                        date.setTimeInMillis(result2.getDate(8).getTime());
+                Integer room = result2.getInt(9);
+                String service = result2.getString(10);
+                Long final_cost = result2.getLong(11);
+                        
+                Appointment appointment = new Appointment(appointmentID, scheduleID, patientID, doctorID, doctorName, patientName, ordinalNumber, date, room, service, final_cost);
+                listOfAppointment.add(appointment);
             }
         }
         catch (ClassNotFoundException e)
@@ -87,12 +101,12 @@ public class PatientTabController {
     public void updatePatient(Patient updatedPatient) throws SQLException
     {
         String sqlUpdate = "update patient "
-                                + "set fullname = " + "?"
+                                + "set full_name = " + "?"
                                 + ", phone = " + "?"
                                 + ", birthday = " + "?"
                                 + ", registration_day = " + "?"
                                 + ", insurance_expiration = " + "?"
-                                + ", adress = " + "?"
+                                + ", address = " + "?"
                                 + ", underlying_disease = " + "?"
                                 + "where patient_id = " + "?";
         Connection connection = null;

@@ -43,7 +43,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         patientIDField.setEditable(false);
         ageField.setEditable(false);
         dataOfAppointmentTable = (DefaultTableModel)apointmentTable.getModel();
-        dataOfAppointmentTable.setColumnIdentifiers(new Object[] {"Appointment ID", "Schedule ID", "Patient ID", "Ordinal Number", "Fee"});
+        dataOfAppointmentTable.setColumnIdentifiers(new Object[] {"Appointment ID", "Schedule ID", "Patient ID", "Patient Name", "Doctor ID", "Doctor Name", "Ordinal Number", "Date", "Room", "Service", "Final Cost"});
         // properties of components
         regisField.setDate(null);
         cancelButton.setBackground((new Color(255, 0, 0)));
@@ -140,7 +140,9 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         try {
         listOfAppointment.removeAll(listOfAppointment);
         patient = (new PatientTabController()).queryData(patient_id, sql, listOfAppointment);
-        } catch (SQLException e) {} catch (Exception e) {}
+        } catch (SQLException e) { 
+            System.out.println(e);
+        } catch (Exception e) {}
     }
     public void displayData()
     {
@@ -167,14 +169,29 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             regisField.setCalendar(patient.getRegistrationDay());
             insField.setCalendar(patient.getInsuranceExpiration());
             // load appointment
+            for (Appointment a : listOfAppointment)
+            {
+                dataOfAppointmentTable.addRow(new Object[] {a.getAppointmentID(), a.getScheduleID(), a.getPatientID(), a.getPatientName(), a.getDoctorID(), a.getDoctorName(), a.getOrdinalNumber(), convert_calendar(a.getDate()), a.getRoom(), a.getService(), a.getFinal_cost()});
+            }
         }
+    }
+    private String convert_calendar(Calendar c)
+    {
+        return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
+
     }
     @Override
     public void refreshData() {
         setModifyingState(false);
         
         // load
-        queryData("Select * from Appointment");
+        String sql = "select a.appointment_id, s.schedule_id, p.patient_id, p.full_name, e.employee_id, e.full_name, a.ordinal_number, s.schedule_date, s.room_id, sv.service_name, a.fee "
+                + "from Appointment a inner join Patient p on a.patient_id = p.patient_id "
+                + "inner join Schedule s on a.schedule_id = s.schedule_id "
+                + "inner join Employee e on s.employee_id = e.employee_id "
+                + "inner join Service sv on s.service_id = sv.service_id "
+                + "where a.patient_id = " + String.valueOf(patient_id);
+        queryData(sql);
         if (patient == null)
             isPatientExistNoti.setText("Patient " + String.format("%08d", patient_id) + "was deleted!");
         else 

@@ -15,27 +15,36 @@ public class Appointment {
     private Long scheduleID;
     private Long patientID;
     private Long doctorID;
-    private String docterName;
+    private String doctorName;
     private String patientName;
     private Integer ordinalNumber;
     private Calendar date;
-    private Long room;
-    private String service;
 
+    public void setFinal_cost(Long final_cost) {
+        this.final_cost = final_cost;
+    }
+    private Integer room;
+    private String service;
+    private Long final_cost;
+
+    public Long getFinal_cost() {
+        return final_cost;
+    }
     public Appointment() {
     }
 
-    public Appointment(Long appointmentID, Long scheduleID, Long patientID, Long doctorID, String docterName, String patientName, Integer ordinalNumber, Calendar date, Long room, String service) {
+    public Appointment(Long appointmentID, Long scheduleID, Long patientID, Long doctorID, String doctorName, String patientName, Integer ordinalNumber, Calendar date, Integer room, String service, Long final_cost) {
         this.appointmentID = appointmentID;
         this.scheduleID = scheduleID;
         this.patientID = patientID;
         this.doctorID = doctorID;
-        this.docterName = docterName;
+        this.doctorName = doctorName;
         this.patientName = patientName;
         this.ordinalNumber = ordinalNumber;
         this.date = date;
         this.room = room;
         this.service = service;
+        this.final_cost = final_cost;
     }
     
 
@@ -55,8 +64,8 @@ public class Appointment {
         this.doctorID = doctorID;
     }
 
-    public void setDocterName(String docterName) {
-        this.docterName = docterName;
+    public void setDocterName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
     public void setPatientName(String patientName) {
@@ -71,7 +80,7 @@ public class Appointment {
         this.date = date;
     }
 
-    public void setRoom(Long room) {
+    public void setRoom(Integer room) {
         this.room = room;
     }
 
@@ -95,8 +104,8 @@ public class Appointment {
         return doctorID;
     }
 
-    public String getDocterName() {
-        return docterName;
+    public String getDoctorName() {
+        return doctorName;
     }
 
     public String getPatientName() {
@@ -111,7 +120,7 @@ public class Appointment {
         return date;
     }
 
-    public Long getRoom() {
+    public Integer getRoom() {
         return room;
     }
 

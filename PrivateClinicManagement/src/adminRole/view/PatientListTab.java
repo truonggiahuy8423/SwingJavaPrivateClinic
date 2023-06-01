@@ -212,7 +212,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                     JOptionPane.showMessageDialog(this, "Successfully delete " + id, "", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException sqlE)
                 {
-                    JOptionPane.showMessageDialog(this, "Patient information no longer exists", "", JOptionPane.INFORMATION_MESSAGE); 
+                    JOptionPane.showMessageDialog(this, (sqlE.getErrorCode() == 2292 ? "Delete apointments of this patient first" : "Patient information no longer exists") , "", JOptionPane.INFORMATION_MESSAGE);
                 }
                 sortMode = NEWEST;
                 //tableOfPatient.get
