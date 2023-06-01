@@ -4,7 +4,13 @@
  */
 package Model;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -15,27 +21,36 @@ public class Appointment {
     private Long scheduleID;
     private Long patientID;
     private Long doctorID;
-    private String docterName;
+    private String doctorName;
     private String patientName;
     private Integer ordinalNumber;
     private Calendar date;
-    private Long room;
-    private String service;
 
+    public void setFinal_cost(Long final_cost) {
+        this.final_cost = final_cost;
+    }
+    private Integer room;
+    private String service;
+    private Long final_cost;
+
+    public Long getFinal_cost() {
+        return final_cost;
+    }
     public Appointment() {
     }
 
-    public Appointment(Long appointmentID, Long scheduleID, Long patientID, Long doctorID, String docterName, String patientName, Integer ordinalNumber, Calendar date, Long room, String service) {
+    public Appointment(Long appointmentID, Long scheduleID, Long patientID, Long doctorID, String doctorName, String patientName, Integer ordinalNumber, Calendar date, Integer room, String service, Long final_cost) {
         this.appointmentID = appointmentID;
         this.scheduleID = scheduleID;
         this.patientID = patientID;
         this.doctorID = doctorID;
-        this.docterName = docterName;
+        this.doctorName = doctorName;
         this.patientName = patientName;
         this.ordinalNumber = ordinalNumber;
         this.date = date;
         this.room = room;
         this.service = service;
+        this.final_cost = final_cost;
     }
     
 
@@ -55,8 +70,8 @@ public class Appointment {
         this.doctorID = doctorID;
     }
 
-    public void setDocterName(String docterName) {
-        this.docterName = docterName;
+    public void setDocterName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
     public void setPatientName(String patientName) {
@@ -71,7 +86,7 @@ public class Appointment {
         this.date = date;
     }
 
-    public void setRoom(Long room) {
+    public void setRoom(Integer room) {
         this.room = room;
     }
 
@@ -95,8 +110,8 @@ public class Appointment {
         return doctorID;
     }
 
-    public String getDocterName() {
-        return docterName;
+    public String getDoctorName() {
+        return doctorName;
     }
 
     public String getPatientName() {
@@ -111,12 +126,55 @@ public class Appointment {
         return date;
     }
 
-    public Long getRoom() {
+    public Integer getRoom() {
         return room;
     }
 
     public String getService() {
         return service;
     }
-    
+    public void getListOfAppointmentsOfPatient(Long patient_id, String sql, List<Appointment> listOfAppointment) throws SQLException
+    {
+        Connection connection = null;
+        Statement statement2 = null;
+        ResultSet result2 = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            
+            // query list of Appointment of this patient
+            statement2 = connection.createStatement();
+            result2 = statement2.executeQuery(sql);
+            while (result2.next())
+            {
+                Long appointmentID = result2.getLong(1);
+                Long scheduleID = result2.getLong(2);
+                Long patientID = patient_id;
+                Long doctorID = result2.getLong(5);
+                String doctorName = result2.getString(6);
+                String patientName = result2.getString(4);
+                Integer ordinalNumber = result2.getInt(7);
+                Calendar date = Calendar.getInstance();
+                        date.setTimeInMillis(result2.getDate(8).getTime());
+                Integer room = result2.getInt(9);
+                String service = result2.getString(10);
+                Long final_cost = result2.getLong(11);
+                        
+                Appointment appointment = new Appointment(appointmentID, scheduleID, patientID, doctorID, doctorName, patientName, ordinalNumber, date, room, service, final_cost);
+                listOfAppointment.add(appointment);
+            }
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            if (result2 != null) result2.close();
+            if (statement2 != null) statement2.close();
+            if (connection != null) connection.close();
+        }
+    }
 }

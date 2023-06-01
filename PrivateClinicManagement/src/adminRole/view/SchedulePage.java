@@ -535,4 +535,5 @@ public class SchedulePage extends javax.swing.JPanel {
     private javax.swing.JTable tbSchedule;
     private com.toedter.calendar.JDateChooser txtDate;
     // End of variables declaration//GEN-END:variables
+    
 }
