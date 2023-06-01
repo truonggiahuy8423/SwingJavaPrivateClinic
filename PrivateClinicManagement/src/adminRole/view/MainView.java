@@ -69,7 +69,7 @@ public class MainView extends javax.swing.JFrame {
         paneList[5] = new JPanel();
         paneList[6] = new JPanel();
         paneList[7] = new JPanel();
-        paneList[8] = new JPanel();
+        paneList[8] = new SettingPage();
         
         patientSwitchPaneButton.setBackground(Color.WHITE);
         appointmentSwitchPaneButton.setBackground(Color.WHITE);
