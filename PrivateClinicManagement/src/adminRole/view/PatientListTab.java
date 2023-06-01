@@ -202,7 +202,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             int[] selectedRow = this.tableOfPatient.getSelectedRows(); 
             if (selectedRow.length != 0)
             {
-                String id = String.valueOf(tableOfPatient.getValueAt(selectedRow[0], 0));
+                Long id = (Long)(tableOfPatient.getValueAt(selectedRow[0], 0));
                 if (JOptionPane.showConfirmDialog(this, "Delete patient " + id, "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION)
                     return;
                 // delete
@@ -212,7 +212,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                     JOptionPane.showMessageDialog(this, "Successfully delete " + id, "", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException sqlE)
                 {
-                    JOptionPane.showMessageDialog(this, (sqlE.getErrorCode() == 2292 ? "Delete apointments of this patient first" : "Patient information no longer exists") , "", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, (sqlE.getErrorCode() == 2292 ? "Delete appointments of this patient first" : "Patient information no longer exists") , "", JOptionPane.INFORMATION_MESSAGE);
                 }
                 sortMode = NEWEST;
                 //tableOfPatient.get
