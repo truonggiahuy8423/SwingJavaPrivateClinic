@@ -8,11 +8,14 @@ import Model.Appointment;
 import Model.Patient;
 import adminRole.controller.PatientTabController;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -65,7 +68,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         birthdayField.getCalendarButton().setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         regisField.getCalendarButton().setBackground(Color.WHITE);
         regisField.getCalendarButton().setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        
+        appointmentTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // listener
         closeTabButton.addActionListener(e -> {
             parent.getTabbedPane().remove(parent.getTabbedPane().getSelectedIndex());
@@ -147,6 +150,37 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         refreshButton.addActionListener(e -> refreshData());
         addButton.addActionListener(e -> {
             new AddAppointmentForm(null, true, this).setVisible(true);
+        });
+        deleteButton.addActionListener(e -> {
+            if (appointmentTable.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Please choose patient to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            Long appointment_id = (Long) appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0);
+            if (JOptionPane.showConfirmDialog(this, "Delele appointment " + String.format("%08d", appointment_id) + "?", "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                try {
+                    new PatientTabController().deleteAppointment(appointment_id);
+                    JOptionPane.showMessageDialog(this, "Delete appointment " + String.format("%08d", appointment_id) + "successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (SQLException ee) {
+                    System.out.println(ee.getErrorCode());
+                    if (ee.getErrorCode() != 2292) {
+                        JOptionPane.showMessageDialog(this, "Appointment " + String.format("%08d", appointment_id) + " no longer exists", "", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Delete results of this patient first", "", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception ee) {
+                }
+                refreshData();
+            }
+        });
+        appointmentTable.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    parent.addNewTab(new AppointmentTab((Long)appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0), parent));
+                }
+            }     
         });
         refreshData();
     }
@@ -234,6 +268,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         insField.setEnabled(stateOfModifyingButton);
         addressField.setEditable(stateOfModifyingButton);
         underTextArea.setEditable(stateOfModifyingButton);
+        //nameField.setBackground(Color.red);
         if (!stateOfModifyingButton) 
         {   
             nameNoti.setText("");

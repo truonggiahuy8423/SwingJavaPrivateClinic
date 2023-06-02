@@ -4,6 +4,7 @@
  */
 package adminRole.controller;
 
+import Model.Appointment;
 import Model.Patient;
 import Model.Schedule;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 public class AddAppointmentFormController {
     private Schedule scheduleModel = new Schedule();
     private Patient patientModel = new Patient();
+    private Appointment appointmentModel = new Appointment();
     public void queryData(String sql, List<Schedule> listOfSchedule) throws SQLException
     {
         scheduleModel.getListOfSchedules(sql, listOfSchedule);
@@ -23,5 +25,9 @@ public class AddAppointmentFormController {
     public Patient getAPatient(Long patient_id) throws SQLException
     {
         return patientModel.getAPatient(patient_id);
+    }
+    public void addAnAppointment(Appointment appointment) throws SQLException
+    {
+        appointmentModel.addAnAppointment(appointment);
     }
 }

@@ -4,6 +4,7 @@
  */
 package adminRole.view;
 
+import Model.Appointment;
 import Model.Patient;
 import Model.Schedule;
 import adminRole.controller.AddAppointmentFormController;
@@ -16,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -55,7 +57,7 @@ public class AddAppointmentForm extends javax.swing.JDialog {
     private void refreshData() {
         queryData("select sc.schedule_id, sc.schedule_date, sc.state, sc.next_ordinal_number, sc.service_id, sv.service_name, sc.room_id, sc.employee_id, e.full_name, sv.cost "
                 + "from Schedule sc inner join employee e on sc.employee_id = e.employee_id "
-                + "inner join service sv on sc.service_id = sv.service_id ");
+                + "inner join service sv on sc.service_id = sv.service_id");
         displayData();
     }
 
@@ -83,6 +85,7 @@ public class AddAppointmentForm extends javax.swing.JDialog {
             }
 
         });
+        tableOfSchedule.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         dataOfScheduleTable = (DefaultTableModel) tableOfSchedule.getModel();
         dataOfScheduleTable.setColumnIdentifiers(new Object[]{"Schedule ID", "Date", "Doctor ID", "Next number", "Service", "State", "Cost"});
         // properties
@@ -124,6 +127,38 @@ public class AddAppointmentForm extends javax.swing.JDialog {
                 refreshData();
             }
         });
+        saveButton.addActionListener(e -> {
+            try {
+                Appointment appointment = new Appointment();
+                appointment.setScheduleID((Long)tableOfSchedule.getValueAt(tableOfSchedule.getSelectedRow(), 0));
+                appointment.setPatientID(parent2.getPatientId());
+                new AddAppointmentFormController().addAnAppointment(appointment);
+                AddAppointmentForm.this.dispose();
+                JOptionPane.showMessageDialog(parent2, "Add new appointment successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                parent2.refreshData();
+            } catch (SQLException ex) {
+                String errorMessage = "";
+                do {
+                    try {
+                        if (ex.getErrorCode() == -2292 && new AddAppointmentFormController().getAPatient(parent2.getPatientId()) == null) {
+                            this.dispose();
+                            parent2.refreshData();
+                            JOptionPane.showMessageDialog(parent2, "This patient was deleted!", "", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        } else if (ex.getErrorCode() == -2292) {
+                            JOptionPane.showMessageDialog(parent2, "Schedule information no longer exits", "", JOptionPane.ERROR_MESSAGE);
+                        } else if (ex.getErrorCode() == -20001) {
+                            JOptionPane.showMessageDialog(parent2, "Please choose schedule having Available state", "", JOptionPane.ERROR_MESSAGE);
+                        }
+                        refreshData();
+                    } catch (SQLException ex2) {
+                    }
+                } while (ex.getNextException() != null);
+
+            }
+
+        });
+        
         //load bảng
         refreshData();
     }

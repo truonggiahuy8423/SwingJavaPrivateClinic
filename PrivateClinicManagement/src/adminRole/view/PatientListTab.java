@@ -203,7 +203,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             if (selectedRow.length != 0)
             {
                 Long id = (Long)(tableOfPatient.getValueAt(selectedRow[0], 0));
-                if (JOptionPane.showConfirmDialog(this, "Delete patient " + id, "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+                if (JOptionPane.showConfirmDialog(this, "Delete patient " + String.format("%08d", id), "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
                 {
                 // delete
                 try 
@@ -232,7 +232,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
                     queryData("select * from Patient");
                     if (listOfPatient.indexOf(new Patient(id)) == -1)
                     {
-                        JOptionPane.showMessageDialog(parent, "Patient doesn't exist", "",  JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(parent, "Patient no longer exists", "",  JOptionPane.INFORMATION_MESSAGE);
                         refreshData();
                     } else 
                     {
