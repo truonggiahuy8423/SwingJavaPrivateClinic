@@ -119,7 +119,7 @@ public class SchedulePage extends javax.swing.JPanel {
         }
         
         for(Employee p: dataEmployee){
-            cbbDoctor.addItem(String.valueOf(p.getEmployeeID()));
+            cbbDoctor.addItem(String.valueOf(p.getEmployeeId()));
         }
         
         
