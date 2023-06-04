@@ -6,6 +6,7 @@ package Model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -177,5 +178,97 @@ public class Result {
 
         }
     }
+    public void addResult(Result result) throws SQLException
+    {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            String sql = "insert into result(result_id, appointment_id) values(result_id_sequence.nextval, ?)";
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, result.getAppointment_id());
+            statement.executeUpdate();
+        } catch (ClassNotFoundException e) {
 
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+    public void deleteResult(Long result_id) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            String username = "AD";  // Replace with your username
+            String password = "88888888";
+            String sql = "delete result where result_id = " + result_id;
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            if (statement.getUpdateCount() == 0) {
+                throw new SQLException();
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+    public Result getAResult(Long result_id) throws SQLException {
+        Result result = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("select r.result_id, r.appointment_id, r.reminder, r.diagnosis, a.schedule_id, a.patient_id, p.full_name, p.birthday, e.employee_id, e.full_name, p.underlying_disease "
+                + "from result r inner join appointment a on r.appointment_id = a.appointment_id "
+                + "inner join patient p on a.patient_id = p.patient_id "
+                + "inner join schedule s on a.schedule_id = s.schedule_id "
+                + "inner join employee e on s.employee_id = e.employee_id where r.result_id = " +  String.valueOf(result_id));
+            if (!resultSet.next()) {
+                return result;
+            }
+            Calendar birthday = Calendar.getInstance(); birthday.setTimeInMillis(resultSet.getDate(8).getTime());
+            result = new Result(resultSet.getLong(1), resultSet.getLong(2), resultSet.getString(3), resultSet.getString(4), resultSet.getLong(5), resultSet.getLong(6),
+                        resultSet.getString(7), birthday, resultSet.getLong(9), resultSet.getString(10), resultSet.getString(11));
+        } catch (ClassNotFoundException e) {
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
 }

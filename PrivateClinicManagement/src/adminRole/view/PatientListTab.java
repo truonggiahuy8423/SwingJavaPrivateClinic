@@ -220,7 +220,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             }
             else 
             {
-                JOptionPane.showMessageDialog(this, "Please choose patient to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please choose a patient to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         tableOfPatient.addMouseListener(new MouseAdapter() {

@@ -8,10 +8,13 @@ import Model.Appointment;
 import Model.Result;
 import adminRole.controller.AppointmentTabController;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,6 +44,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         addButton.setBackground(Color.WHITE);
         deleteButton.setBackground(Color.WHITE);
         refreshButton.setBackground(Color.WHITE);
+        closeButton.setBackground(Color.WHITE);        
         scheduleDateField.getCalendarButton().setBackground(Color.WHITE);
         resultTable.setModel(new DefaultTableModel() {
             @Override
@@ -67,8 +71,53 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         
         
         // listener
-        closeTabButton.addActionListener(e -> {
+        closeButton.addActionListener(e -> {
             parent.getTabbedPane().remove(parent.getTabbedPane().getSelectedIndex());
+        });
+        refreshButton.addActionListener(e -> refreshData());
+        addButton.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(this, "Add a new result?", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
+                try {
+                    Result result = new Result();
+                    result.setAppointment_id(appointment_id);
+                    new AppointmentTabController().addResult(result);
+                    JOptionPane.showMessageDialog(this, "Add a new result successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "This appointment was deleted!", "", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            refreshData();
+        });
+        deleteButton.addActionListener(e -> {
+            if (resultTable.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Please choose a result to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            Long result_id = (Long) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
+            if (JOptionPane.showConfirmDialog(this, "Delele result " + String.format("%08d", appointment_id) + "?", "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                try {
+                    new AppointmentTabController().deleteResult(result_id);
+                    JOptionPane.showMessageDialog(this, "Delete result " + String.format("%08d", result_id) + "successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (SQLException ee) {
+                    JOptionPane.showMessageDialog(this, "Result " + String.format("%08d", appointment_id) + " no longer exists", "", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ee) {
+                    ee.printStackTrace();
+                }
+                
+            }
+            refreshData();
+        });
+        this.resultTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    parent.addNewTab(new ResultTab((Long)resultTable.getValueAt(resultTable.getSelectedRow(), 0), parent));
+                }
+            }
+            
         });
         refreshData();
     }
@@ -91,7 +140,6 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         resultTable = new javax.swing.JTable();
-        closeTabButton = new javax.swing.JButton();
         patientIDField = new javax.swing.JTextField();
         patientNameField = new javax.swing.JTextField();
         appointmentIDField = new javax.swing.JTextField();
@@ -111,6 +159,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         jLabel11 = new javax.swing.JLabel();
         roomField = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        closeButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(1230, 718));
         setMinimumSize(new java.awt.Dimension(1230, 718));
@@ -160,18 +209,9 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         add(jScrollPane1);
         jScrollPane1.setBounds(10, 300, 1210, 410);
 
-        closeTabButton.setBackground(new java.awt.Color(255, 51, 0));
-        closeTabButton.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        closeTabButton.setForeground(new java.awt.Color(255, 255, 255));
-        closeTabButton.setText("X");
-        closeTabButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        closeTabButton.setBorderPainted(false);
-        add(closeTabButton);
-        closeTabButton.setBounds(1200, 0, 20, 20);
-
         patientIDField.setMinimumSize(new java.awt.Dimension(0, 0));
         add(patientIDField);
-        patientIDField.setBounds(140, 80, 270, 30);
+        patientIDField.setBounds(140, 80, 180, 30);
 
         patientNameField.setMinimumSize(new java.awt.Dimension(0, 0));
         add(patientNameField);
@@ -179,17 +219,17 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
 
         appointmentIDField.setMinimumSize(new java.awt.Dimension(0, 0));
         add(appointmentIDField);
-        appointmentIDField.setBounds(140, 20, 170, 30);
+        appointmentIDField.setBounds(140, 20, 180, 30);
 
         deleteButton.setText("Delete");
         deleteButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         add(deleteButton);
-        deleteButton.setBounds(1130, 270, 75, 20);
+        deleteButton.setBounds(1140, 270, 75, 20);
 
         addButton.setText("Add");
         addButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         add(addButton);
-        addButton.setBounds(1040, 270, 75, 20);
+        addButton.setBounds(1050, 270, 75, 20);
 
         refreshButton.setText("Refresh");
         refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -199,7 +239,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
             }
         });
         add(refreshButton);
-        refreshButton.setBounds(950, 270, 75, 20);
+        refreshButton.setBounds(960, 270, 75, 20);
 
         jLabel8.setText("Doctor:");
         add(jLabel8);
@@ -232,8 +272,9 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         ordinalNumberField.setBounds(1070, 80, 120, 30);
 
         noti.setForeground(new java.awt.Color(255, 0, 0));
+        noti.setText("    ");
         add(noti);
-        noti.setBounds(10, 280, 580, 0);
+        noti.setBounds(10, 280, 580, 20);
 
         doctorIDField.setMinimumSize(new java.awt.Dimension(0, 0));
         add(doctorIDField);
@@ -267,6 +308,16 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         jLabel12.setText("Ordinal Number:");
         add(jLabel12);
         jLabel12.setBounds(960, 90, 100, 16);
+
+        closeButton.setText("Close");
+        closeButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
+        add(closeButton);
+        closeButton.setBounds(1140, 20, 75, 20);
     }// </editor-fold>//GEN-END:initComponents
 
     private void doctorNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorNameFieldActionPerformed
@@ -285,11 +336,15 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         // TODO add your handling code here:
     }//GEN-LAST:event_refreshButtonActionPerformed
 
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_closeButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextField appointmentIDField;
-    private javax.swing.JButton closeTabButton;
+    private javax.swing.JButton closeButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField doctorIDField;
     private javax.swing.JTextField doctorNameField;
@@ -359,13 +414,13 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
             noti.setText("This appointment no longer exists");
         } else {
             noti.setText("");
-            appointmentIDField.setText(String.format("%08d", appointment.getAppointmentID()));
-            patientIDField.setText(String.format("%08d", appointment.getPatientID()));
+            appointmentIDField.setText(String.format("%d", appointment.getAppointmentID()));
+            patientIDField.setText(String.format("%d", appointment.getPatientID()));
             patientNameField.setText(appointment.getPatientName());
             finalCostField.setText(appointment.getFinal_cost().toString());
-            scheduleIDField.setText(String.format("%08d", appointment.getScheduleID()));
+            scheduleIDField.setText(String.format("%d", appointment.getScheduleID()));
             scheduleDateField.setCalendar(appointment.getDate());
-            doctorIDField.setText(String.format("%08d", appointment.getDoctorID()));
+            doctorIDField.setText(String.format("%d", appointment.getDoctorID()));
             doctorNameField.setText(appointment.getDoctorName());
             ordinalNumberField.setText(appointment.getOrdinalNumber().toString());
             serviceField.setText(appointment.getService());
@@ -380,4 +435,5 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
 
     }
+    
 }

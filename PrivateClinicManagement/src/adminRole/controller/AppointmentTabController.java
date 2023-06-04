@@ -27,4 +27,10 @@ public class AppointmentTabController {
         return appointment;
         // list of results
     }
+    public void addResult(Result result) throws SQLException {
+        resultModel.addResult(result);
+    }
+    public void deleteResult(Long result_id) throws SQLException {
+        resultModel.deleteResult(result_id);
+    }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
@@ -110,7 +111,7 @@ public class AddAppointmentForm extends javax.swing.JDialog {
                 roomField.setText(String.valueOf(listOfSchedule.get(index).getRoomID()));
                 serviceFeild.setText(listOfSchedule.get(index).getServiceName());
                 stateField.setText(listOfSchedule.get(index).getState() == 1 ? "Available" : "Closed");
-                finalCostField.setText(String.valueOf(calculateFinalCost(listOfSchedule.get(index).getCost())));
+                finalCostField.setText(String.valueOf(calculateFinalCost(listOfSchedule.get(index).getCost(), listOfSchedule.get(index).getScheduleDate())));
             }
 
         });
@@ -130,30 +131,34 @@ public class AddAppointmentForm extends javax.swing.JDialog {
         saveButton.addActionListener(e -> {
             try {
                 Appointment appointment = new Appointment();
-                appointment.setScheduleID((Long)tableOfSchedule.getValueAt(tableOfSchedule.getSelectedRow(), 0));
+                appointment.setScheduleID((Long) tableOfSchedule.getValueAt(tableOfSchedule.getSelectedRow(), 0));
                 appointment.setPatientID(parent2.getPatientId());
                 new AddAppointmentFormController().addAnAppointment(appointment);
                 AddAppointmentForm.this.dispose();
                 JOptionPane.showMessageDialog(parent2, "Add new appointment successfully!", "", JOptionPane.INFORMATION_MESSAGE);
                 parent2.refreshData();
             } catch (SQLException ex) {
-                String errorMessage = "";
-                do {
-                    try {
-                        if (ex.getErrorCode() == -2292 && new AddAppointmentFormController().getAPatient(parent2.getPatientId()) == null) {
-                            this.dispose();
-                            parent2.refreshData();
-                            JOptionPane.showMessageDialog(parent2, "This patient was deleted!", "", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        } else if (ex.getErrorCode() == -2292) {
-                            JOptionPane.showMessageDialog(parent2, "Schedule information no longer exits", "", JOptionPane.ERROR_MESSAGE);
-                        } else if (ex.getErrorCode() == -20001) {
-                            JOptionPane.showMessageDialog(parent2, "Please choose schedule having Available state", "", JOptionPane.ERROR_MESSAGE);
-                        }
+                //ex.printStackTrace();
+                try {
+                    if (ex.getErrorCode() == 1403 && new AddAppointmentFormController().getAPatient(parent2.getPatientId()) == null) {
+                        this.dispose();
+                        parent2.refreshData();
+                        JOptionPane.showMessageDialog(parent, "This patient was deleted!", "", JOptionPane.ERROR_MESSAGE);
+                        
+                    } else if (ex.getErrorCode() == 1403) {
+                        JOptionPane.showMessageDialog(this, "Schedule information no longer exits", "", JOptionPane.ERROR_MESSAGE);
                         refreshData();
-                    } catch (SQLException ex2) {
+                        
+                    } else if (ex.getErrorCode() == 20001) {
+                        JOptionPane.showMessageDialog(this, "Please choose schedule having Available state", "", JOptionPane.ERROR_MESSAGE);
+                        refreshData();
+                        
                     }
-                } while (ex.getNextException() != null);
+                    
+
+                } catch (SQLException ex2) {
+                    ex2.printStackTrace();
+                }
 
             }
 
@@ -162,13 +167,13 @@ public class AddAppointmentForm extends javax.swing.JDialog {
         //load bảng
         refreshData();
     }
-    private Long calculateFinalCost(Long cost) {
+    private Long calculateFinalCost(Long cost, Date sche_date) {
         Long final_cost = (long)0;
         try {
             Patient patient = new AddAppointmentFormController().getAPatient(parent2.getPatientId());
             if (patient != null)
             {
-                final_cost = ((Double)(patient.getInsuranceExpiration().getTimeInMillis() > System.currentTimeMillis() ? cost*0.5 : cost)).longValue();
+                final_cost = ((Double)(patient.getInsuranceExpiration().getTimeInMillis() > sche_date.getTime()? cost*0.5 : cost)).longValue();
             }
             else
             {

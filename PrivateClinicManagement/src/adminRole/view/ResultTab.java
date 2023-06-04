@@ -4,17 +4,44 @@
  */
 package adminRole.view;
 
+import Model.PrescriptionDetails;
+import Model.Result;
+import adminRole.controller.ResultTabController;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.SQLException;
+
 /**
  *
  * @author GIAHUY
  */
-public class ResultTab extends javax.swing.JPanel {
-
+public class ResultTab extends javax.swing.JPanel implements Tab{
+    private Long result_id;
+    private Result result;
+    List<PrescriptionDetails> listOfPresc = new ArrayList<>();
+    
+    @Override
+    public String toString() {
+        return "Result " + String.format("%08d", result_id); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
     /**
      * Creates new form ResultTab
      */
-    public ResultTab() {
+    public ResultTab(Long result_id, PatientPage parent) {
         initComponents();
+        this.result_id = result_id;
+        this.addButton.setBackground(Color.WHITE);
+        this.deleteButton.setBackground(Color.WHITE);
+        this.closeButton.setBackground(Color.WHITE);
+        this.refreshButton.setBackground(Color.WHITE);
+        
+        //listener
+        closeButton.addActionListener(e -> {
+            parent.getTabbedPane().remove(parent.getTabbedPane().getSelectedIndex());
+        });
+        refreshData();
     }
 
     /**
@@ -26,19 +53,290 @@ public class ResultTab extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        resultIDField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        apppointmentIDField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        patientIDField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        patientNameField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        doctorIDField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        doctorNameField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        diagnosisField = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        reminderField = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        prescTable = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        underlyingDiseaseField = new javax.swing.JTextArea();
+        closeButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        resultExistsNoti = new javax.swing.JLabel();
+        cancelButton = new javax.swing.JButton();
+        modifyResultInformationButton = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(1230, 718));
+        setMinimumSize(new java.awt.Dimension(1230, 718));
+        setLayout(null);
+
+        resultIDField.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(resultIDField);
+        resultIDField.setBounds(140, 20, 180, 30);
+
+        jLabel3.setText("Result ID:");
+        add(jLabel3);
+        jLabel3.setBounds(20, 30, 130, 16);
+
+        apppointmentIDField.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(apppointmentIDField);
+        apppointmentIDField.setBounds(140, 80, 180, 30);
+
+        jLabel4.setText("Appointment ID:");
+        add(jLabel4);
+        jLabel4.setBounds(20, 90, 130, 16);
+
+        patientIDField.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(patientIDField);
+        patientIDField.setBounds(140, 140, 180, 30);
+
+        jLabel5.setText("Patient ID:");
+        add(jLabel5);
+        jLabel5.setBounds(20, 150, 130, 16);
+
+        patientNameField.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(patientNameField);
+        patientNameField.setBounds(140, 200, 310, 30);
+
+        jLabel6.setText("Patient Name:");
+        add(jLabel6);
+        jLabel6.setBounds(20, 210, 130, 16);
+
+        doctorIDField.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(doctorIDField);
+        doctorIDField.setBounds(590, 20, 180, 30);
+
+        jLabel7.setText("Doctor ID:");
+        add(jLabel7);
+        jLabel7.setBounds(470, 30, 130, 16);
+
+        doctorNameField.setMinimumSize(new java.awt.Dimension(0, 0));
+        add(doctorNameField);
+        doctorNameField.setBounds(590, 80, 300, 30);
+
+        jLabel8.setText("Doctor:");
+        add(jLabel8);
+        jLabel8.setBounds(470, 90, 130, 16);
+
+        jLabel10.setText("Underlying Disease:");
+        add(jLabel10);
+        jLabel10.setBounds(470, 150, 130, 16);
+
+        diagnosisField.setColumns(20);
+        diagnosisField.setRows(5);
+        jScrollPane1.setViewportView(diagnosisField);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(590, 260, 530, 80);
+
+        jLabel11.setText("Diagnosis:");
+        add(jLabel11);
+        jLabel11.setBounds(470, 270, 130, 16);
+
+        jLabel12.setText("Reminder:");
+        add(jLabel12);
+        jLabel12.setBounds(20, 270, 130, 16);
+
+        reminderField.setColumns(20);
+        reminderField.setRows(5);
+        jScrollPane3.setViewportView(reminderField);
+
+        add(jScrollPane3);
+        jScrollPane3.setBounds(140, 260, 310, 80);
+
+        prescTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(prescTable);
+
+        add(jScrollPane4);
+        jScrollPane4.setBounds(10, 400, 1210, 310);
+
+        underlyingDiseaseField.setColumns(20);
+        underlyingDiseaseField.setRows(5);
+        jScrollPane5.setViewportView(underlyingDiseaseField);
+
+        add(jScrollPane5);
+        jScrollPane5.setBounds(590, 140, 530, 90);
+
+        closeButton.setText("Close");
+        closeButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
+        add(closeButton);
+        closeButton.setBounds(1140, 20, 75, 20);
+
+        addButton.setText("Add");
+        addButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        add(addButton);
+        addButton.setBounds(1050, 370, 75, 20);
+
+        refreshButton.setText("Refresh");
+        refreshButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+        add(refreshButton);
+        refreshButton.setBounds(960, 370, 75, 20);
+
+        deleteButton.setText("Delete");
+        deleteButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        add(deleteButton);
+        deleteButton.setBounds(1140, 370, 75, 20);
+
+        resultExistsNoti.setForeground(new java.awt.Color(255, 51, 0));
+        resultExistsNoti.setText("   ");
+        add(resultExistsNoti);
+        resultExistsNoti.setBounds(10, 380, 510, 16);
+
+        cancelButton.setText("Cancel");
+        cancelButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+        add(cancelButton);
+        cancelButton.setBounds(780, 370, 75, 20);
+
+        modifyResultInformationButton.setText("Modify");
+        modifyResultInformationButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        modifyResultInformationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyResultInformationButtonActionPerformed(evt);
+            }
+        });
+        add(modifyResultInformationButton);
+        modifyResultInformationButton.setBounds(870, 370, 75, 20);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void modifyResultInformationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyResultInformationButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modifyResultInformationButtonActionPerformed
+    private void queryData(String sql) {
+        try {
+            listOfPresc.removeAll(listOfPresc);
+            result = new ResultTabController().queryData(result_id, sql, listOfPresc);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void displayData() {
+        if (result == null) {
+            this.resultExistsNoti.setText("This result no longer exists");
+            this.resultIDField.setText("--");
+            this.apppointmentIDField.setText("--");
+            this.patientIDField.setText("--");
+            this.patientNameField.setText("--");
+            this.doctorIDField.setText("--");
+            this.doctorNameField.setText("--");
+            this.reminderField.setText("--");
+            this.underlyingDiseaseField.setText("--");
+            this.diagnosisField.setText("--");
+        } else {
+            this.resultExistsNoti.setText(" ");
+            this.resultIDField.setText(result.getResult_id().toString());
+            this.apppointmentIDField.setText(result.getAppointment_id().toString());
+            this.patientIDField.setText(result.getPatient_id().toString());
+            this.patientNameField.setText(result.getPatient_name());
+            this.doctorIDField.setText(result.getDoctor_id().toString());
+            this.doctorNameField.setText(result.getDoctor_name());
+            this.reminderField.setText(result.getReminder());
+            this.underlyingDiseaseField.setText(result.getUnderlying_disease());
+            this.diagnosisField.setText(result.getDiagnosis());
+            // list
+        }
+    }
+    @Override
+    public void refreshData() {
+        String sql = "";
+        queryData(sql);
+        displayData();
+    }
+    private boolean stateOfModifyingButton = false; 
+    private void setModifyingState(boolean state) {
+        if (state) {
+            
+        } else {
+            
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JTextField apppointmentIDField;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton closeButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTextArea diagnosisField;
+    private javax.swing.JTextField doctorIDField;
+    private javax.swing.JTextField doctorNameField;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JButton modifyResultInformationButton;
+    private javax.swing.JTextField patientIDField;
+    private javax.swing.JTextField patientNameField;
+    private javax.swing.JTable prescTable;
+    private javax.swing.JButton refreshButton;
+    private javax.swing.JTextArea reminderField;
+    private javax.swing.JLabel resultExistsNoti;
+    private javax.swing.JTextField resultIDField;
+    private javax.swing.JTextArea underlyingDiseaseField;
     // End of variables declaration//GEN-END:variables
 }
