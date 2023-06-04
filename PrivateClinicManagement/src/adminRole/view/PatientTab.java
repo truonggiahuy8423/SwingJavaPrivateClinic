@@ -8,11 +8,14 @@ import Model.Appointment;
 import Model.Patient;
 import adminRole.controller.PatientTabController;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -42,7 +45,14 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         this.listOfAppointment = new ArrayList<>();
         patientIDField.setEditable(false);
         ageField.setEditable(false);
-        dataOfAppointmentTable = (DefaultTableModel)apointmentTable.getModel();
+        appointmentTable.setModel(new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+            
+        } );
+        dataOfAppointmentTable = (DefaultTableModel)appointmentTable.getModel();
         dataOfAppointmentTable.setColumnIdentifiers(new Object[] {"Appointment ID", "Schedule ID", "Patient ID", "Patient Name", "Doctor ID", "Doctor Name", "Ordinal Number", "Date", "Room", "Service", "Final Cost"});
         // properties of components
         regisField.setDate(null);
@@ -52,8 +62,14 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         deleteButton.setBackground(Color.WHITE);
         refreshButton.setBackground(Color.WHITE);
         modifyPatientInfomationButton.setBackground(Color.WHITE);
+        insField.getCalendarButton().setBackground(Color.WHITE);
+        insField.getCalendarButton().setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        birthdayField.getCalendarButton().setBackground(Color.WHITE);
+        birthdayField.getCalendarButton().setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        regisField.getCalendarButton().setBackground(Color.WHITE);
+        regisField.getCalendarButton().setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        appointmentTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // listener
-        
         closeTabButton.addActionListener(e -> {
             parent.getTabbedPane().remove(parent.getTabbedPane().getSelectedIndex());
         });
@@ -132,6 +148,40 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             refreshData();
         });
         refreshButton.addActionListener(e -> refreshData());
+        addButton.addActionListener(e -> {
+            new AddAppointmentForm(null, true, this).setVisible(true);
+        });
+        deleteButton.addActionListener(e -> {
+            if (appointmentTable.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Please choose patient to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            Long appointment_id = (Long) appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0);
+            if (JOptionPane.showConfirmDialog(this, "Delele appointment " + String.format("%08d", appointment_id) + "?", "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+                try {
+                    new PatientTabController().deleteAppointment(appointment_id);
+                    JOptionPane.showMessageDialog(this, "Delete appointment " + String.format("%08d", appointment_id) + "successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (SQLException ee) {
+                    System.out.println(ee.getErrorCode());
+                    if (ee.getErrorCode() != 2292) {
+                        JOptionPane.showMessageDialog(this, "Appointment " + String.format("%08d", appointment_id) + " no longer exists", "", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Delete results of this patient first", "", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception ee) {
+                }
+                refreshData();
+            }
+        });
+        appointmentTable.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    parent.addNewTab(new AppointmentTab((Long)appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0), parent));
+                }
+            }     
+        });
         refreshData();
     }
 
@@ -156,6 +206,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             birthdayField.setCalendar(null);
             regisField.setCalendar(null);
             insField.setCalendar(null);
+            this.isPatientExistNoti.setText("This patient is deleted!");
         }
         else 
         {
@@ -168,6 +219,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             birthdayField.setCalendar(patient.getBirthday());
             regisField.setCalendar(patient.getRegistrationDay());
             insField.setCalendar(patient.getInsuranceExpiration());
+            this.isPatientExistNoti.setText("");
             // load appointment
             for (Appointment a : listOfAppointment)
             {
@@ -199,7 +251,12 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         // display
         displayData();
     }
-    
+    public Long getPatientId() {
+        return patient_id;
+    }
+    public String getPatientName() {
+        return nameField.getText();
+    }
     private void setModifyingState(boolean state)
     {
         stateOfModifyingButton = state;
@@ -211,6 +268,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         insField.setEnabled(stateOfModifyingButton);
         addressField.setEditable(stateOfModifyingButton);
         underTextArea.setEditable(stateOfModifyingButton);
+        //nameField.setBackground(Color.red);
         if (!stateOfModifyingButton) 
         {   
             nameNoti.setText("");
@@ -267,7 +325,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        apointmentTable = new javax.swing.JTable();
+        appointmentTable = new javax.swing.JTable();
         closeTabButton = new javax.swing.JButton();
         nameField = new javax.swing.JTextField();
         phoneField = new javax.swing.JTextField();
@@ -336,7 +394,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         add(jLabel7);
         jLabel7.setBounds(650, 160, 180, 16);
 
-        apointmentTable.setModel(new javax.swing.table.DefaultTableModel(
+        appointmentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -347,7 +405,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(apointmentTable);
+        jScrollPane1.setViewportView(appointmentTable);
 
         add(jScrollPane1);
         jScrollPane1.setBounds(10, 360, 1210, 350);
@@ -446,7 +504,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
     private javax.swing.JButton addButton;
     private javax.swing.JTextField addressField;
     private javax.swing.JTextField ageField;
-    private javax.swing.JTable apointmentTable;
+    private javax.swing.JTable appointmentTable;
     private com.toedter.calendar.JDateChooser birthdayField;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton closeTabButton;
