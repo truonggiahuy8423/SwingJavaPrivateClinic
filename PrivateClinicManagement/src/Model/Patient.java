@@ -54,8 +54,8 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
+            String username = "c##uni4";  // Replace with your username
+            String password = "123";  // Replace with your password
             String sqlInsert = "insert into patient(patient_id, full_name, phone, birthday, "
                     + "registration_day, insurance_expiration, address, underlying_disease) values(patient_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -160,8 +160,8 @@ public class Patient{
         try
         {Class.forName("oracle.jdbc.driver.OracleDriver");
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-        String username = "AD";  // Replace with your username
-        String password = "88888888";  // Replace with your password
+        String username = "c##uni4";  // Replace with your username
+        String password = "123";  // Replace with your password
         connection = null; statement = null; result = null;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             //System.out.println(connection.isClosed());
@@ -217,8 +217,8 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
+            String username = "c##uni4";  // Replace with your username
+            String password = "123";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement() ;  
             result = statement.executeQuery("select * from PATIENT where patient_id = " + String.valueOf(patient_id));
@@ -259,8 +259,8 @@ public class Patient{
         try {
         Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
-            String password = "88888888";
+            String username = "c##uni4";  // Replace with your username
+            String password = "123";
             String sql = "delete PATIENT where patient_id = " + patientID;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement();
@@ -293,8 +293,8 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
+            String username = "c##uni4";  // Replace with your username
+            String password = "123";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, updatedPatient.getFullname());
@@ -316,6 +316,79 @@ public class Patient{
             if (statement != null) statement.close();
             if (connection != null) connection.close();
         }
-        
+
+    }
+    // Getters and Setters for the properties
+    
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Calendar getBirthday() {
+        return birthday;
+    }
+
+    public Calendar getRegistrationDay() {
+        return registrationDay;
+    }
+
+    public Calendar getInsuranceExpiration() {
+        return insuranceExpiration;
+    }
+
+    public void setBirthday(Calendar birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setRegistrationDay(Calendar registrationDay) {
+        this.registrationDay = registrationDay;
+    }
+
+    public void setInsuranceExpiration(Calendar insuranceExpiration) {
+        this.insuranceExpiration = insuranceExpiration;
+    }
+    
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUnderlyingDisease() {
+        return underlyingDisease;
+    }
+
+    public void setUnderlyingDisease(String underlyingDisease) {
+        this.underlyingDisease = underlyingDisease;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.patientId == ((Patient)obj).patientId;
+    }
+   
     }  
+
 }
