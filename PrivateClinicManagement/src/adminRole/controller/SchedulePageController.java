@@ -24,7 +24,23 @@ public class SchedulePageController {
         scheduleModel.getListOfSchedule(sql, listOfSchedule);
     }
     
-    public void executeData(String sql){
-        scheduleModel.executeDataOfSchedule(sql);
+//    public void executeData(String sql){
+//        scheduleModel.executeDataOfSchedule(sql);
+//    }
+    
+    public void addData(Schedule addSchedule){
+        scheduleModel.addSchedule(addSchedule);
+    }
+        
+    public void deleteData(String scheduleID){
+        scheduleModel.deleteSchedule(scheduleID);
+    }
+    
+    public void updateData(Schedule updateSchedule, Schedule currentSchedule){
+        scheduleModel.updateSchedule(updateSchedule, currentSchedule);
+    }
+    
+    public void searchData(Schedule searchSchedule, List<Schedule> listSearchSchedule){
+        scheduleModel.searchSchedule(searchSchedule, listSearchSchedule);
     }
 }
