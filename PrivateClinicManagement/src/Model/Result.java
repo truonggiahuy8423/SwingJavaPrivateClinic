@@ -271,4 +271,37 @@ public class Result {
         }
         return result;
     }
+    public void updateResult(Result updatedResult) throws SQLException {
+        String sqlUpdate = "update result "
+                + "set appointment_id = ? , "
+                + "reminder = ? , "
+                + "diagnosis = ? "
+                + "where result_id = " + "?";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            statement = connection.prepareStatement(sqlUpdate);
+            statement.setLong(1, updatedResult.getAppointment_id());
+            statement.setString(2, updatedResult.getReminder());
+            statement.setString(3, updatedResult.getDiagnosis());
+            statement.setLong(4, updatedResult.getResult_id());
+            System.out.println(sqlUpdate);
+            statement.executeUpdate();
+        }
+        catch (ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            if (result != null) result.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        }
+    }
 }

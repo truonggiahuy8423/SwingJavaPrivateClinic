@@ -4,13 +4,16 @@
  */
 package adminRole.view;
 
+import Model.Patient;
 import Model.PrescriptionDetails;
 import Model.Result;
+import adminRole.controller.PatientTabController;
 import adminRole.controller.ResultTabController;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,14 +39,65 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
         this.deleteButton.setBackground(Color.WHITE);
         this.closeButton.setBackground(Color.WHITE);
         this.refreshButton.setBackground(Color.WHITE);
-        
+        this.modifyResultInformationButton.setBackground(Color.WHITE);
+        cancelButton.setBackground(Color.RED);
+        cancelButton.setVisible(false);
+        this.resultIDField.setEditable(false);
+        this.apppointmentIDField.setEditable(false);
+        this.patientIDField.setEditable(false);
+        this.patientNameField.setEditable(false);
+        this.doctorIDField.setEditable(false);
+        this.doctorNameField.setEditable(false);
+        this.reminderField.setEditable(false);
+        this.underlyingDiseaseField.setEditable(false);
+        this.diagnosisField.setEditable(false);
+
         //listener
+        refreshButton.addActionListener(e -> refreshData());
         closeButton.addActionListener(e -> {
             parent.getTabbedPane().remove(parent.getTabbedPane().getSelectedIndex());
         });
+        cancelButton.addActionListener(e -> {
+            refreshData();
+        });
+        modifyResultInformationButton.addActionListener(e -> {
+            if (!stateOfModifyingButton) {
+                setModifyingState(!stateOfModifyingButton); 
+                return;
+            }
+            if (!checkIDFormat(apppointmentIDField.getText())) {
+                appNoti.setText("Appointment ID is invalid");
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(parent, "Save result information?", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
+                Result result = new Result();   
+                result.setResult_id(result_id);
+                result.setDiagnosis(diagnosisField.getText());
+                result.setReminder(reminderField.getText());
+                result.setAppointment_id(Long.valueOf(apppointmentIDField.getText()));
+                try {
+                    new ResultTabController().updateResult(result);
+                    JOptionPane.showMessageDialog(parent, "Update result information successfully", "", JOptionPane.INFORMATION_MESSAGE);
+                    refreshData();
+                } catch (SQLException ex) {
+                    appNoti.setText("Appointment ID doesn't exists");
+                    ex.printStackTrace();
+                    return;
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         refreshData();
     }
-
+    private boolean checkIDFormat(String id) {
+        try {
+            Long.valueOf(id);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,6 +137,7 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
         resultExistsNoti = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
         modifyResultInformationButton = new javax.swing.JButton();
+        appNoti = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1230, 718));
         setMinimumSize(new java.awt.Dimension(1230, 718));
@@ -220,6 +275,8 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
         add(resultExistsNoti);
         resultExistsNoti.setBounds(10, 380, 510, 16);
 
+        cancelButton.setBackground(new java.awt.Color(255, 51, 0));
+        cancelButton.setForeground(new java.awt.Color(255, 255, 255));
         cancelButton.setText("Cancel");
         cancelButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -239,6 +296,11 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
         });
         add(modifyResultInformationButton);
         modifyResultInformationButton.setBounds(870, 370, 75, 20);
+
+        appNoti.setForeground(new java.awt.Color(255, 0, 0));
+        appNoti.setText("   ");
+        add(appNoti);
+        appNoti.setBounds(140, 110, 270, 16);
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
@@ -294,21 +356,36 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
     }
     @Override
     public void refreshData() {
+        setModifyingState(false);
         String sql = "";
         queryData(sql);
-        displayData();
+        displayData(); System.out.println("adminRole.view.ResultTab.refreshData()");
     }
     private boolean stateOfModifyingButton = false; 
     private void setModifyingState(boolean state) {
-        if (state) {
-            
-        } else {
-            
+        stateOfModifyingButton = state;
+        this.apppointmentIDField.setEditable(stateOfModifyingButton);
+        this.diagnosisField.setEditable(stateOfModifyingButton);
+        this.reminderField.setEditable(stateOfModifyingButton);
+        cancelButton.setVisible(stateOfModifyingButton);
+        if (stateOfModifyingButton)
+        {
+            modifyResultInformationButton.setBackground(Color.GREEN);
+            modifyResultInformationButton.setForeground(Color.WHITE);
+            modifyResultInformationButton.setText("Save");
+        }
+        else
+        {
+            modifyResultInformationButton.setBackground(Color.WHITE);
+            modifyResultInformationButton.setForeground(Color.BLACK);
+            modifyResultInformationButton.setText("Modify");
+            appNoti.setText(" ");
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JLabel appNoti;
     private javax.swing.JTextField apppointmentIDField;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton closeButton;

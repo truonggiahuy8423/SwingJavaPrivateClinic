@@ -145,7 +145,6 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             
         });
         cancelButton.addActionListener(e -> {
-            setModifyingState(stateOfModifyingButton = !stateOfModifyingButton); 
             refreshData();
         });
         refreshButton.addActionListener(e -> refreshData());

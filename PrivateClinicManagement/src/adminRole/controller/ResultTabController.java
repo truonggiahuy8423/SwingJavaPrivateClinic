@@ -21,5 +21,8 @@ public class ResultTabController {
         }
         return result;
     }
+    public void updateResult(Result updatedResult) throws SQLException {
+        resultModel.updateResult(updatedResult);
+    }
     
 }

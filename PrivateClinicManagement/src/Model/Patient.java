@@ -54,8 +54,8 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
+            String username = "c##uni4";  // Replace with your username
+            String password = "123";  // Replace with your password
             String sqlInsert = "insert into patient(patient_id, full_name, phone, birthday, "
                     + "registration_day, insurance_expiration, address, underlying_disease) values(patient_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -316,6 +316,9 @@ public class Patient{
             if (statement != null) statement.close();
             if (connection != null) connection.close();
         }
-        
-    }  
+
+    }
+    // Getters and Setters for the properties
+    
+
 }
