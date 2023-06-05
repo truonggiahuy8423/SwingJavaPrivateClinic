@@ -29,18 +29,18 @@ public class EmployeeController {
 
             while (result.next()){
                 Calendar birthday = null;
-                if (result.getDate(4) != null)
+                if (result.getDate(6) != null)
                 {
                     birthday = Calendar.getInstance();
-                    birthday.setTimeInMillis(result.getDate(4).getTime());
+                    birthday.setTimeInMillis(result.getDate(6).getTime());
                 }
-                Calendar start_date = null;
-                if (result.getDate(5) != null)
-                {
-                    start_date = Calendar.getInstance();
-                    start_date.setTimeInMillis(result.getDate(5).getTime());
-                }
-                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), result.getString(10), result.getInt(11));
+//                Calendar start_date = null;
+//                if (result.getDate(5) != null)
+//                {
+//                    start_date = Calendar.getInstance();
+//                    start_date.setTimeInMillis(result.getDate(5).getTime());
+//                }
+                Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));                
                 listOfEmployee.add(p);
             }
             connection.close();

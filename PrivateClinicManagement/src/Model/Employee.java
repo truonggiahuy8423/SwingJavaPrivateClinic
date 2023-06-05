@@ -36,6 +36,18 @@ public class Employee {
     {
         this.employeeId = id;
     }
+
+    public Employee(int employeeId, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown) {
+        this.employeeId = employeeId;
+        this.fullName = fullName;
+        this.roleId = roleId;
+        this.phone = phone;
+        this.password = password;
+        this.birthday = birthday;
+        this.address = address;
+        this.hometown = hometown;  
+    }
+    
     public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
         this.employeeId = employeeId;
         this.fullName = fullName;
@@ -147,20 +159,24 @@ public class Employee {
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "c##uni4";  // Replace with your username
             String password = "123";  // Replace with your password
-            String sqlInsert = "insert into employee(employee_id, full_name, phone, birthday, "
-                    + "start_day, address, hometown, password, salary_per_day, role_id) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlInsert = "insert into employee(employee_id, full_name, role_id, phone, password, birthday, "
+                    + "address, hometown) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlInsert);
             statement.setInt(1, employee.getEmployeeId());
             statement.setString(2, employee.getFullName());
-            statement.setString(3, employee.getPhone());
-            statement.setDate(4, employee.getBirthday() == null ? null : new java.sql.Date(employee.getBirthday().getTimeInMillis()));
-            statement.setDate(5, employee.getStartDay() == null ? null : new java.sql.Date(employee.getStartDay().getTimeInMillis()));
-            statement.setString(6, employee.getAddress());
-            statement.setString(7, employee.getHometown());
-            statement.setString(8, employee.getPassword());
-            statement.setInt(1, employee.getSalaryPerDay());
-            statement.setInt(1, employee.getRoleId());
+            statement.setInt(3, employee.getRoleId());
+            
+            statement.setString(4, employee.getPhone());
+            
+            statement.setString(5, employee.getPassword());
+            
+            statement.setDate(6, employee.getBirthday() == null ? null : new java.sql.Date(employee.getBirthday().getTimeInMillis()));
+//            statement.setDate(5, employee.getStartDay() == null ? null : new java.sql.Date(employee.getStartDay().getTimeInMillis()));
+            statement.setString(7, employee.getAddress());
+            statement.setString(8, employee.getHometown());          
+//            statement.setInt(1, employee.getSalaryPerDay());
+            
             statement.executeUpdate(); // co van de o day
             
 
@@ -192,18 +208,18 @@ public class Employee {
             while (result.next())
             {
                 Calendar birthday = null;
-                if (result.getDate(4) != null)
+                if (result.getDate(6) != null)
                 {
                     birthday = Calendar.getInstance();
-                    birthday.setTimeInMillis(result.getDate(4).getTime());
+                    birthday.setTimeInMillis(result.getDate(6).getTime());
                 }
-                Calendar start_date = null;
-                if (result.getDate(5) != null)
-                {
-                    start_date = Calendar.getInstance();
-                    start_date.setTimeInMillis(result.getDate(5).getTime());
-                }
-                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), result.getString(10), result.getInt(11));
+//                Calendar start_date = null;
+//                if (result.getDate(5) != null)
+//                {
+//                    start_date = Calendar.getInstance();
+//                    start_date.setTimeInMillis(result.getDate(5).getTime());
+//                }
+                Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
                 listOfEmployee.add(p);
             }         
         }
@@ -237,18 +253,18 @@ public class Employee {
                 return employee;
             
             Calendar birthday = null;
-            if (result.getDate(4) != null)
+            if (result.getDate(6) != null)
             {
                 birthday = Calendar.getInstance();
-                birthday.setTimeInMillis(result.getDate(4).getTime());
+                birthday.setTimeInMillis(result.getDate(6).getTime());
             }
-            Calendar start_date =null;
-            if (result.getDate(5) != null)
-            {
-                start_date = Calendar.getInstance();
-                start_date.setTimeInMillis(result.getDate(5).getTime());
-            }
-            employee = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), result.getString(10), result.getInt(11));
+//            Calendar start_date =null;
+//            if (result.getDate(5) != null)
+//            {
+//                start_date = Calendar.getInstance();
+//                start_date.setTimeInMillis(result.getDate(5).getTime());
+//            }
+            Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();

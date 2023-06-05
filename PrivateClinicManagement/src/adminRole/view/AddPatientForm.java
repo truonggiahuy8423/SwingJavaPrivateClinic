@@ -175,7 +175,6 @@ public class AddPatientForm extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-
         underlyingDisease = new javax.swing.JTextArea();
         cancelButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -185,14 +184,12 @@ public class AddPatientForm extends javax.swing.JDialog {
         byear = new javax.swing.JTextField();
         iday = new javax.swing.JTextField();
         bday = new javax.swing.JTextField();
-
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-
         name = new javax.swing.JTextField();
         phone = new javax.swing.JTextField();
         address = new javax.swing.JTextField();
@@ -210,19 +207,16 @@ public class AddPatientForm extends javax.swing.JDialog {
         underlyingDisease.setRows(5);
         jScrollPane1.setViewportView(underlyingDisease);
 
-
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(180, 370, 480, 108);
 
         cancelButton.setText("Cancel");
         cancelButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
-
         getContentPane().add(cancelButton);
         cancelButton.setBounds(560, 510, 70, 20);
 
@@ -230,7 +224,6 @@ public class AddPatientForm extends javax.swing.JDialog {
         saveButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         getContentPane().add(saveButton);
         saveButton.setBounds(650, 510, 70, 20);
-
 
         iyear.setMaximumSize(new java.awt.Dimension(64, 22));
         getContentPane().add(iyear);
@@ -256,7 +249,6 @@ public class AddPatientForm extends javax.swing.JDialog {
         getContentPane().add(bday);
         bday.setBounds(180, 230, 64, 30);
 
-
         jLabel5.setText("Insurance Expiration:");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(40, 310, 124, 16);
@@ -279,7 +271,6 @@ public class AddPatientForm extends javax.swing.JDialog {
 
         jLabel1.setText("Name:");
         getContentPane().add(jLabel1);
-
         jLabel1.setBounds(40, 50, 110, 16);
         getContentPane().add(name);
         name.setBounds(180, 40, 348, 30);
@@ -309,7 +300,6 @@ public class AddPatientForm extends javax.swing.JDialog {
         getContentPane().add(insuranceExpiration);
         insuranceExpiration.setBounds(180, 330, 300, 16);
 
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -331,7 +321,6 @@ public class AddPatientForm extends javax.swing.JDialog {
     private javax.swing.JTextField imon;
     private javax.swing.JLabel insuranceExpiration;
     private javax.swing.JTextField iyear;
-
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -339,13 +328,11 @@ public class AddPatientForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-
     private javax.swing.JTextField name;
     private javax.swing.JLabel nameNoti1;
     private javax.swing.JTextField phone;
     private javax.swing.JLabel phoneNoti1;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextArea underlyingDisease;
-
     // End of variables declaration//GEN-END:variables
 }
