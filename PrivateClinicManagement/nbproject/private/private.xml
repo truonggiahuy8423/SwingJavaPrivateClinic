@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/github/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AddEmployeeForm.java</file>
             <file>file:/D:/github/SwingJavaPrivateClinic/PrivateClinicManagement/src/privateclinicmanagement/PrivateClinicManagement.java</file>
             <file>file:/D:/github/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AddPatientForm.java</file>
@@ -10,6 +11,23 @@
             <file>file:/D:/github/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Employee.java</file>
             <file>file:/D:/github/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/EmployeePageController.java</file>
             <file>file:/D:/github/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientListTab.java</file>
+=======
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/ResultTabController.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientTab.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/privateclinicmanagement/PrivateClinicManagement.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Patient.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/AppointmentTabController.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/SchedulePage.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Appointment.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Result.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AppointmentTab.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/MainView.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/PrescriptionDetails.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Employee.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/ResultTab.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientPage.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Medicine.java</file>
+>>>>>>> b3dca0aa04d050b7ae2725fffdb98e200a2db09a
         </group>
     </open-files>
 </project-private>

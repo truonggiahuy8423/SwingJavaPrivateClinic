@@ -38,4 +38,9 @@ public class PatientTabController {
     {
         patientModel.updatePatient(updatedPatient);    
     }
+    
+    public void deleteAppointment(Long appointment_id) throws SQLException
+    {
+        appointmentModel.deleteAppointment(appointment_id);
+    }
 }

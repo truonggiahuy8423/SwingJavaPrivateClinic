@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @author GIAHUY
  */
 public class Appointment {
+
     private Long appointmentID;
     private Long scheduleID;
     private Long patientID;
@@ -25,17 +27,18 @@ public class Appointment {
     private String patientName;
     private Integer ordinalNumber;
     private Calendar date;
-
-    public void setFinal_cost(Long final_cost) {
-        this.final_cost = final_cost;
-    }
     private Integer room;
     private String service;
     private Long final_cost;
 
+    public void setFinal_cost(Long final_cost) {
+        this.final_cost = final_cost;
+    }
+
     public Long getFinal_cost() {
         return final_cost;
     }
+
     public Appointment() {
     }
 
@@ -52,7 +55,6 @@ public class Appointment {
         this.service = service;
         this.final_cost = final_cost;
     }
-    
 
     public void setAppointmentID(Long appointmentID) {
         this.appointmentID = appointmentID;
@@ -133,23 +135,22 @@ public class Appointment {
     public String getService() {
         return service;
     }
-    public void getListOfAppointmentsOfPatient(Long patient_id, String sql, List<Appointment> listOfAppointment) throws SQLException
-    {
+
+    public void getListOfAppointmentsOfPatient(Long patient_id, String sql, List<Appointment> listOfAppointment) throws SQLException {
         Connection connection = null;
         Statement statement2 = null;
         ResultSet result2 = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
             String username = "AD";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
-            
+
             // query list of Appointment of this patient
             statement2 = connection.createStatement();
             result2 = statement2.executeQuery(sql);
-            while (result2.next())
-            {
+            while (result2.next()) {
                 Long appointmentID = result2.getLong(1);
                 Long scheduleID = result2.getLong(2);
                 Long patientID = patient_id;
@@ -158,23 +159,133 @@ public class Appointment {
                 String patientName = result2.getString(4);
                 Integer ordinalNumber = result2.getInt(7);
                 Calendar date = Calendar.getInstance();
-                        date.setTimeInMillis(result2.getDate(8).getTime());
+                date.setTimeInMillis(result2.getDate(8).getTime());
                 Integer room = result2.getInt(9);
                 String service = result2.getString(10);
                 Long final_cost = result2.getLong(11);
-                        
+
                 Appointment appointment = new Appointment(appointmentID, scheduleID, patientID, doctorID, doctorName, patientName, ordinalNumber, date, room, service, final_cost);
                 listOfAppointment.add(appointment);
             }
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            if (result2 != null) {
+                result2.close();
+            }
+            if (statement2 != null) {
+                statement2.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
-        finally {
-            if (result2 != null) result2.close();
-            if (statement2 != null) statement2.close();
-            if (connection != null) connection.close();
+    }
+
+    public void addAnAppointment(Appointment appointment) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet result = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            String sql = "insert into appointment(appointment_id, schedule_id, patient_id, fee, ordinal_number) values(appointment_id_sequence.nextval, ?, ?, 0, 0)";
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, appointment.getScheduleID());
+            statement.setLong(2, appointment.getPatientID());
+            statement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+
+        } finally {
+            if (result != null) {
+                result.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
+    }
+
+    public void deleteAppointment(Long appointment_id) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            String username = "AD";  // Replace with your username
+            String password = "88888888";
+            String sql = "delete APPOINTMENT where appointment_id = " + appointment_id;
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            if (statement.getUpdateCount() == 0) {
+                throw new SQLException();
+            }
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public Appointment getAnAppointment(Long appointment_id) throws SQLException {
+        Appointment appointment = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            statement = connection.createStatement();
+            result = statement.executeQuery("select a.appointment_id, s.schedule_id, p.patient_id, p.full_name, e.employee_id, e.full_name, a.ordinal_number, s.schedule_date, s.room_id, sv.service_name, a.fee "
+                    + "from Appointment a inner join Patient p on a.patient_id = p.patient_id "
+                    + "inner join Schedule s on a.schedule_id = s.schedule_id "
+                    + "inner join Employee e on s.employee_id = e.employee_id "
+                    + "inner join Service sv on s.service_id = sv.service_id where appointment_id = " + String.valueOf(appointment_id));
+            if (!result.next()) {
+                return appointment;
+            }
+            Long appointmentID = appointment_id;
+            Long scheduleID = result.getLong(2);
+            Long patientID = result.getLong(3);
+            Long doctorID = result.getLong(5);
+            String doctorName = result.getString(6);
+            String patientName = result.getString(4);
+            Integer ordinalNumber = result.getInt(7);
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(result.getDate(8).getTime());
+            Integer room = result.getInt(9);
+            String service = result.getString(10);
+            Long final_cost = result.getLong(11);
+
+            appointment = new Appointment(appointmentID, scheduleID, patientID, doctorID, doctorName, patientName, ordinalNumber, date, room, service, final_cost);
+        } catch (ClassNotFoundException e) {
+        } finally {
+            if (result != null) {
+                result.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return appointment;
     }
 }

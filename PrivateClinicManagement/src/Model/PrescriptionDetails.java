@@ -9,5 +9,8 @@ package Model;
  * @author GIAHUY
  */
 public class PrescriptionDetails {
-    
+    private Long result_id;
+    private Medicine medicine;
+    private int quantity;
+    private String instruction;
 }
