@@ -24,7 +24,7 @@ public class PatientTabController {
     private Appointment appointmentModel = new Appointment();
     public PatientTabController() {
     }
-    public Patient queryData(Long patient_id, String sql, List<Appointment> listOfAppointment) throws SQLException
+    public Patient queryData(Integer patient_id, String sql, List<Appointment> listOfAppointment) throws SQLException
     {
         Patient patient = patientModel.getAPatient(patient_id);
         if (patient != null)
@@ -39,7 +39,7 @@ public class PatientTabController {
         patientModel.updatePatient(updatedPatient);    
     }
     
-    public void deleteAppointment(Long appointment_id) throws SQLException
+    public void deleteAppointment(Integer appointment_id) throws SQLException
     {
         appointmentModel.deleteAppointment(appointment_id);
     }

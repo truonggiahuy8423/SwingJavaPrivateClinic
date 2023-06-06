@@ -19,22 +19,22 @@ import java.util.List;
  */
 public class Result {
 
-    private Long result_id;
-    private Long appointment_id; // appointment
+    private Integer result_id;
+    private Integer appointment_id; // appointment
     private String reminder;
     private String diagnosis;
-    private Long schedule_id; // schedule
-    private Long patient_id; // patient
+    private Integer schedule_id; // schedule
+    private Integer patient_id; // patient
     private String patient_name;
     private Calendar patient_birthday;
-    private Long doctor_id;
+    private Integer doctor_id;
     private String doctor_name; // employee
     private String underlying_disease;
 
     public Result() {
     }
 
-    public Result(Long result_id, Long appointment_id, String reminder, String diagnosis, Long schedule_id, Long patient_id, String patient_name, Calendar patient_birthday, Long doctor_id, String doctor_name, String underlying_disease) {
+    public Result(Integer result_id, Integer appointment_id, String reminder, String diagnosis, Integer schedule_id, Integer patient_id, String patient_name, Calendar patient_birthday, Integer doctor_id, String doctor_name, String underlying_disease) {
         this.result_id = result_id;
         this.appointment_id = appointment_id;
         this.reminder = reminder;
@@ -48,11 +48,11 @@ public class Result {
         this.underlying_disease = underlying_disease;
     }
 
-    public void setResult_id(Long result_id) {
+    public void setResult_id(Integer result_id) {
         this.result_id = result_id;
     }
 
-    public void setAppointment_id(Long appointment_id) {
+    public void setAppointment_id(Integer appointment_id) {
         this.appointment_id = appointment_id;
     }
 
@@ -64,11 +64,11 @@ public class Result {
         this.diagnosis = diagnosis;
     }
 
-    public void setSchedule_id(Long schedule_id) {
+    public void setSchedule_id(Integer schedule_id) {
         this.schedule_id = schedule_id;
     }
 
-    public void setPatient_id(Long patient_id) {
+    public void setPatient_id(Integer patient_id) {
         this.patient_id = patient_id;
     }
 
@@ -80,7 +80,7 @@ public class Result {
         this.patient_birthday = patient_birthday;
     }
 
-    public void setDoctor_id(Long doctor_id) {
+    public void setDoctor_id(Integer doctor_id) {
         this.doctor_id = doctor_id;
     }
 
@@ -92,11 +92,11 @@ public class Result {
         this.underlying_disease = underlying_disease;
     }
 
-    public Long getResult_id() {
+    public Integer getResult_id() {
         return result_id;
     }
 
-    public Long getAppointment_id() {
+    public Integer getAppointment_id() {
         return appointment_id;
     }
 
@@ -108,11 +108,11 @@ public class Result {
         return diagnosis;
     }
 
-    public Long getSchedule_id() {
+    public Integer getSchedule_id() {
         return schedule_id;
     }
 
-    public Long getPatient_id() {
+    public Integer getPatient_id() {
         return patient_id;
     }
 
@@ -124,7 +124,7 @@ public class Result {
         return patient_birthday;
     }
 
-    public Long getDoctor_id() {
+    public Integer getDoctor_id() {
         return doctor_id;
     }
 
@@ -157,8 +157,8 @@ public class Result {
                     birthday = Calendar.getInstance();
                     birthday.setTimeInMillis(result.getDate(8).getTime());
                 }
-                Result r = new Result(result.getLong(1), result.getLong(2), result.getString(3), result.getString(4), result.getLong(5), result.getLong(6),
-                        result.getString(7), birthday, result.getLong(9), result.getString(10), result.getString(11));
+                Result r = new Result(result.getInt(1), result.getInt(2), result.getString(3), result.getString(4), result.getInt(5), result.getInt(6),
+                        result.getString(7), birthday, result.getInt(9), result.getString(10), result.getString(11));
                 listOfResults.add(r);
             }
 
@@ -191,7 +191,7 @@ public class Result {
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             String sql = "insert into result(result_id, appointment_id) values(result_id_sequence.nextval, ?)";
             statement = connection.prepareStatement(sql);
-            statement.setLong(1, result.getAppointment_id());
+            statement.setInt(1, result.getAppointment_id());
             statement.executeUpdate();
         } catch (ClassNotFoundException e) {
 
@@ -207,7 +207,7 @@ public class Result {
             }
         }
     }
-    public void deleteResult(Long result_id) throws SQLException {
+    public void deleteResult(Integer result_id) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -234,7 +234,7 @@ public class Result {
             }
         }
     }
-    public Result getAResult(Long result_id) throws SQLException {
+    public Result getAResult(Integer result_id) throws SQLException {
         Result result = null;
         Connection connection = null;
         Statement statement = null;
@@ -255,8 +255,8 @@ public class Result {
                 return result;
             }
             Calendar birthday = Calendar.getInstance(); birthday.setTimeInMillis(resultSet.getDate(8).getTime());
-            result = new Result(resultSet.getLong(1), resultSet.getLong(2), resultSet.getString(3), resultSet.getString(4), resultSet.getLong(5), resultSet.getLong(6),
-                        resultSet.getString(7), birthday, resultSet.getLong(9), resultSet.getString(10), resultSet.getString(11));
+            result = new Result(resultSet.getInt(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getInt(6),
+                        resultSet.getString(7), birthday, resultSet.getInt(9), resultSet.getString(10), resultSet.getString(11));
         } catch (ClassNotFoundException e) {
         } finally {
             if (resultSet != null) {
@@ -287,10 +287,10 @@ public class Result {
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlUpdate);
-            statement.setLong(1, updatedResult.getAppointment_id());
+            statement.setInt(1, updatedResult.getAppointment_id());
             statement.setString(2, updatedResult.getReminder());
             statement.setString(3, updatedResult.getDiagnosis());
-            statement.setLong(4, updatedResult.getResult_id());
+            statement.setInt(4, updatedResult.getResult_id());
             System.out.println(sqlUpdate);
             statement.executeUpdate();
         }

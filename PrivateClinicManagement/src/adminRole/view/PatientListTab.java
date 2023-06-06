@@ -108,7 +108,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
     }
     private String convert_calendar(Calendar c)
     {
-        return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
+        return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH) + 1) + "/"+ String.format("%02d", c.get(Calendar.DATE));
 
     }
     @Override
@@ -202,7 +202,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             int[] selectedRow = this.tableOfPatient.getSelectedRows(); 
             if (selectedRow.length != 0)
             {
-                Long id = (Long)(tableOfPatient.getValueAt(selectedRow[0], 0));
+                Integer id = (Integer)(tableOfPatient.getValueAt(selectedRow[0], 0));
                 if (JOptionPane.showConfirmDialog(this, "Delete patient " + String.format("%08d", id), "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
                 {
                 // delete
@@ -228,7 +228,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2)
                 {
-                    Long id = (Long)tableOfPatient.getValueAt(tableOfPatient.getSelectedRow(), 0);
+                    Integer id = (Integer)tableOfPatient.getValueAt(tableOfPatient.getSelectedRow(), 0);
                     queryData("select * from Patient");
                     if (listOfPatient.indexOf(new Patient(id)) == -1)
                     {
@@ -245,6 +245,7 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
         });
         
         searchButton.addActionListener(e -> {
+            
             if (!isNumber(searchTextField.getText())) 
             {
                 JOptionPane.showMessageDialog(parent, "Patient id format is invalid!", "", JOptionPane.INFORMATION_MESSAGE);
@@ -326,7 +327,13 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
         add(deleteButton);
         deleteButton.setBounds(1164, 20, 60, 20);
 
+        searchTextField.setForeground(new java.awt.Color(153, 153, 153));
         searchTextField.setText("Patient ID");
+        searchTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTextFieldActionPerformed(evt);
+            }
+        });
         add(searchTextField);
         searchTextField.setBounds(6, 19, 122, 22);
 
@@ -380,6 +387,10 @@ public class PatientListTab extends javax.swing.JPanel implements Tab{
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void searchTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTextFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

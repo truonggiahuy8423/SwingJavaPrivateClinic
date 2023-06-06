@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class AppointmentTabController {
     private Appointment appointmentModel = new Appointment();
     private Result resultModel = new Result();
-    public Appointment queryData(Long appointment_id, String sql, List<Result> listOfResults) throws SQLException
+    public Appointment queryData(Integer appointment_id, String sql, List<Result> listOfResults) throws SQLException
     {
         // appointment
         Appointment appointment = null;
@@ -30,7 +30,7 @@ public class AppointmentTabController {
     public void addResult(Result result) throws SQLException {
         resultModel.addResult(result);
     }
-    public void deleteResult(Long result_id) throws SQLException {
+    public void deleteResult(Integer result_id) throws SQLException {
         resultModel.deleteResult(result_id);
     }
 }

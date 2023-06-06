@@ -29,7 +29,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
     /**
      * Creates new form PatientTab
      */
-    private Long patient_id;
+    private Integer patient_id;
     private Patient patient;
     private List<Appointment> listOfAppointment;
     private DefaultTableModel dataOfAppointmentTable;
@@ -39,7 +39,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         return "Patient " + String.format("%08d", patient_id); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
     
-    public PatientTab(Long id, PatientPage parent) {
+    public PatientTab(Integer id, PatientPage parent) {
         initComponents();
         this.patient_id = id;
         this.listOfAppointment = new ArrayList<>();
@@ -156,7 +156,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
                 JOptionPane.showMessageDialog(this, "Please choose an appointment to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            Long appointment_id = (Long) appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0);
+            Integer appointment_id = (Integer) appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0);
             if (JOptionPane.showConfirmDialog(this, "Delele appointment " + String.format("%08d", appointment_id) + "?", "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 try {
                     new PatientTabController().deleteAppointment(appointment_id);
@@ -178,7 +178,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    parent.addNewTab(new AppointmentTab((Long)appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0), parent));
+                    parent.addNewTab(new AppointmentTab((Integer)appointmentTable.getValueAt(appointmentTable.getSelectedRow(), 0), parent));
                 }
             }     
         });
@@ -251,7 +251,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
         // display
         displayData();
     }
-    public Long getPatientId() {
+    public Integer getPatientId() {
         return patient_id;
     }
     public String getPatientName() {

@@ -14,16 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author GIAHUY
  */
 public class ResultTab extends javax.swing.JPanel implements Tab{
-    private Long result_id;
+    private Integer result_id;
     private Result result;
     List<PrescriptionDetails> listOfPresc = new ArrayList<>();
-    
+    DefaultTableModel dataOfPrescTable;
     @Override
     public String toString() {
         return "Result " + String.format("%08d", result_id); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
@@ -32,8 +34,15 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
     /**
      * Creates new form ResultTab
      */
-    public ResultTab(Long result_id, PatientPage parent) {
+    public ResultTab(Integer result_id, PatientPage parent) {
         initComponents();
+        this.prescTable.setModel(new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+            }
+        });
+        dataOfPrescTable = (DefaultTableModel)prescTable.getModel();
         this.result_id = result_id;
         this.addButton.setBackground(Color.WHITE);
         this.deleteButton.setBackground(Color.WHITE);
@@ -51,14 +60,37 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
         this.reminderField.setEditable(false);
         this.underlyingDiseaseField.setEditable(false);
         this.diagnosisField.setEditable(false);
-
+        this.prescTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.dataOfPrescTable.setColumnIdentifiers(new Object[] {"Medicine ID", "Result ID", "Name", "Description", "Quantity", "Unit", "Instruction"});
         //listener
         refreshButton.addActionListener(e -> refreshData());
         closeButton.addActionListener(e -> {
             parent.getTabbedPane().remove(parent.getTabbedPane().getSelectedIndex());
         });
+        
+        addButton.addActionListener(e -> {
+            new AddPrescriptionDetailsForm(null, true, this).setVisible(true);
+        });
         cancelButton.addActionListener(e -> {
             refreshData();
+        });
+        deleteButton.addActionListener(e -> {
+            if (prescTable.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(this, "Please choose a prescription detail to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Delele this prescription?", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) 
+            { Integer result_id_ = (Integer) prescTable.getValueAt(prescTable.getSelectedRow(), 1);
+            Integer medicine_id = (Integer) prescTable.getValueAt(prescTable.getSelectedRow(), 0);
+            try {
+                new ResultTabController().deletePresc(result_id, medicine_id);
+                JOptionPane.showMessageDialog(this, "Delete successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                refreshData();
+            } catch (SQLException ee) {
+                JOptionPane.showMessageDialog(this, "This prescription no longer exists", "", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }}
         });
         modifyResultInformationButton.addActionListener(e -> {
             if (!stateOfModifyingButton) {
@@ -74,7 +106,7 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
                 result.setResult_id(result_id);
                 result.setDiagnosis(diagnosisField.getText());
                 result.setReminder(reminderField.getText());
-                result.setAppointment_id(Long.valueOf(apppointmentIDField.getText()));
+                result.setAppointment_id(Integer.valueOf(apppointmentIDField.getText()));
                 try {
                     new ResultTabController().updateResult(result);
                     JOptionPane.showMessageDialog(parent, "Update result information successfully", "", JOptionPane.INFORMATION_MESSAGE);
@@ -90,9 +122,12 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
         });
         refreshData();
     }
+    public Integer getResultID() {
+        return result_id;
+    }
     private boolean checkIDFormat(String id) {
         try {
-            Long.valueOf(id);
+            Integer.valueOf(id);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -270,10 +305,11 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
         add(deleteButton);
         deleteButton.setBounds(1140, 370, 75, 20);
 
+        resultExistsNoti.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         resultExistsNoti.setForeground(new java.awt.Color(255, 51, 0));
         resultExistsNoti.setText("   ");
         add(resultExistsNoti);
-        resultExistsNoti.setBounds(10, 380, 510, 16);
+        resultExistsNoti.setBounds(10, 380, 510, 14);
 
         cancelButton.setBackground(new java.awt.Color(255, 51, 0));
         cancelButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -339,6 +375,7 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
             this.doctorNameField.setText("--");
             this.reminderField.setText("--");
             this.underlyingDiseaseField.setText("--");
+            this.dataOfPrescTable.setRowCount(0);
             this.diagnosisField.setText("--");
         } else {
             this.resultExistsNoti.setText(" ");
@@ -351,13 +388,19 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
             this.reminderField.setText(result.getReminder());
             this.underlyingDiseaseField.setText(result.getUnderlying_disease());
             this.diagnosisField.setText(result.getDiagnosis());
+            this.dataOfPrescTable.setRowCount(0);
+            for (PrescriptionDetails pre : this.listOfPresc) {
+                dataOfPrescTable.addRow(new Object[] {pre.getMedicine_id(), pre.getResult_id(), pre.getName(), pre.getDescription(), pre.getQuantity(), pre.getUnit(), pre.getInstruction()});
+            }
             // list
         }
     }
     @Override
     public void refreshData() {
         setModifyingState(false);
-        String sql = "";
+        String sql = "select m.medicine_id, rd.result_id, m.medicine_name, m.description, rd.quantity, u.unit_name, rd.instruction "
+                + " from result_detail rd inner join medicine m on rd.medicine_id = m.medicine_id "
+                + "inner join unit u on m.unit_id = u.unit_id where rd.result_id = " + result_id;
         queryData(sql);
         displayData(); System.out.println("adminRole.view.ResultTab.refreshData()");
     }

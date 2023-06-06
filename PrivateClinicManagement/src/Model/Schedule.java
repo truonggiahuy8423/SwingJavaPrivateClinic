@@ -18,18 +18,18 @@ import java.util.Calendar;
  * @author GIAHUY
  */
 public class Schedule {
-    private Long scheduleID;
+    private Integer scheduleID;
     private Date scheduleDate;
     private Integer state;
-    private Long nextOrinalNumber;
-    private Long serviceID;
-    private Long roomID;
-    private Long employeeID;
+    private Integer nextOrinalNumber;
+    private Integer serviceID;
+    private Integer roomID;
+    private Integer employeeID;
     private String doctorName;
     private String serviceName;
-    private Long cost;
+    private Integer cost;
     public Schedule(){}
-    public Schedule(Long scheduleID, Date scheduleDate, Integer state, Long nextOrinalNumber,  Long serviceID, String serviceName, Long roomID, Long employeeID, String doctorName, Long cost){
+    public Schedule(Integer scheduleID, Date scheduleDate, Integer state, Integer nextOrinalNumber,  Integer serviceID, String serviceName, Integer roomID, Integer employeeID, String doctorName, Integer cost){
         this.scheduleID = scheduleID;
         this.scheduleDate = scheduleDate;
         this.state = state;
@@ -41,7 +41,7 @@ public class Schedule {
         this.serviceName = serviceName;
         this.cost = cost;
     }
-    public Schedule( Long scheduleID, Date scheduleDate, Integer state, Long nextOrinalNumber,  Long serviceID, Long roomID, Long employeeID){
+    public Schedule( Integer scheduleID, Date scheduleDate, Integer state, Integer nextOrinalNumber,  Integer serviceID, Integer roomID, Integer employeeID){
         this.scheduleID = scheduleID;
         this.scheduleDate = scheduleDate;
         this.state = state;
@@ -61,23 +61,23 @@ public class Schedule {
         return serviceName;
     }
 
-    public void setScheduleID(Long scheduleID) {
+    public void setScheduleID(Integer scheduleID) {
         this.scheduleID = scheduleID;
     }
 
-    public void setNextOrinalNumber(Long nextOrinalNumber) {
+    public void setNextOrinalNumber(Integer nextOrinalNumber) {
         this.nextOrinalNumber = nextOrinalNumber;
     }
 
-    public void setServiceID(Long serviceID) {
+    public void setServiceID(Integer serviceID) {
         this.serviceID = serviceID;
     }
 
-    public void setRoomID(Long roomID) {
+    public void setRoomID(Integer roomID) {
         this.roomID = roomID;
     }
 
-    public void setEmployeeID(Long employeeID) {
+    public void setEmployeeID(Integer employeeID) {
         this.employeeID = employeeID;
     }
 
@@ -85,7 +85,7 @@ public class Schedule {
         this.doctorName = doctorName;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 
@@ -93,17 +93,14 @@ public class Schedule {
         return doctorName;
     }
 
-    public Long getCost() {
+    public Integer getCost() {
         return cost;
     }
     
-    public Long getScheduleID(){
+    public Integer getScheduleID(){
         return this.scheduleID;
     }
     
-    public void setScheduleID(long scheduleID){
-         this.scheduleID = scheduleID;       
-    }
     
     public Date getScheduleDate(){
         return scheduleDate;
@@ -121,37 +118,29 @@ public class Schedule {
         this.state = state;
     }
     
-    public Long getNextOrinalNumber(){
+    public Integer getNextOrinalNumber(){
         return this.nextOrinalNumber;
     }
     
-    public void setNextOrinalNumber(long nextOrinalNumber){
-        this.nextOrinalNumber = nextOrinalNumber;        
-    }
     
-    public Long getServiceID(){
+    
+    public Integer getServiceID(){
         return this.serviceID;
     }
     
-    public void setServiceID(long serviceID){
-        this.serviceID = serviceID;
-    }
     
-    public Long getRoomID(){
+    
+    public Integer getRoomID(){
         return this.roomID;
     }
     
-    public void setRoomID(long roomID){
-        this.roomID = roomID;
-    }
     
-    public Long getEmployeeID(){
+    
+    public Integer getEmployeeID(){
         return this.employeeID;
     }
     
-    public void setEmployeeID(long employeeID){
-        this.employeeID = employeeID;
-    }
+    
     public void getListOfSchedules(String sql, List<Schedule> listOfSchedule) throws SQLException 
             {
         Connection connection = null;
@@ -171,16 +160,16 @@ public class Schedule {
             while (result.next())
             {
                 // sc.schedule_id, sc.schedule_date, sc.state, sc.next_orinal_number, sc.service_id, sv.service_name, sc.room_id, sc.employee_id, e.full_name, sv.cost 
-                Long schedule_id = result.getLong(1);
+                Integer schedule_id = result.getInt(1);
                 Date schedule_date = result.getDate(2);
                 int state = result.getInt(3);
-                Long next_ordinal_number = result.getLong(4);
-                Long service_id = result.getLong(5);
+                Integer next_ordinal_number = result.getInt(4);
+                Integer service_id = result.getInt(5);
                 String service_name = result.getString(6);
-                Long room_id = result.getLong(7);
-                Long doctor_id = result.getLong(8);
+                Integer room_id = result.getInt(7);
+                Integer doctor_id = result.getInt(8);
                 String doctor_name = result.getString(9);
-                Long cost = result.getLong(10);
+                Integer cost = result.getInt(10);
                 Schedule schedule = new Schedule(schedule_id, schedule_date, state, next_ordinal_number, service_id, service_name, room_id, doctor_id, doctor_name, cost);
                 listOfSchedule.add(schedule);
             }

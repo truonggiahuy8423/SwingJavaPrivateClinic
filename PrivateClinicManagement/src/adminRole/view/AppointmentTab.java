@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  * @author GIAHUY
  */
 public class AppointmentTab extends javax.swing.JPanel implements Tab {
-    private Long appointment_id;
+    private Integer appointment_id;
     private Appointment appointment;
     private List<Result> listOfResults;
     private DefaultTableModel dataOfResultTable;
@@ -36,7 +36,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         return "Appointment " + String.format("%08d", appointment_id);// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 
-    public AppointmentTab(Long appointment_id, PatientPage parent) {
+    public AppointmentTab(Integer appointment_id, PatientPage parent) {
         initComponents();
         listOfResults = new ArrayList<>();
         this.appointment_id = appointment_id;
@@ -95,7 +95,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
                 JOptionPane.showMessageDialog(this, "Please choose a result to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            Long result_id = (Long) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
+            Integer result_id = (Integer) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
             if (JOptionPane.showConfirmDialog(this, "Delele result " + String.format("%08d", appointment_id) + "?", "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 try {
                     new AppointmentTabController().deleteResult(result_id);
@@ -114,7 +114,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    parent.addNewTab(new ResultTab((Long)resultTable.getValueAt(resultTable.getSelectedRow(), 0), parent));
+                    parent.addNewTab(new ResultTab((Integer)resultTable.getValueAt(resultTable.getSelectedRow(), 0), parent));
                 }
             }
             

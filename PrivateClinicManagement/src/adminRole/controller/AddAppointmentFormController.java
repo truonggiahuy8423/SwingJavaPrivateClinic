@@ -22,7 +22,7 @@ public class AddAppointmentFormController {
     {
         scheduleModel.getListOfSchedules(sql, listOfSchedule);
     }
-    public Patient getAPatient(Long patient_id) throws SQLException
+    public Patient getAPatient(Integer patient_id) throws SQLException
     {
         return patientModel.getAPatient(patient_id);
     }

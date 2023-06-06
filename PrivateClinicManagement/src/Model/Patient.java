@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 public class Patient{
-    private Long patientId;
+    private Integer patientId;
     private String fullname;
 
     private String phone;
@@ -29,11 +29,11 @@ public class Patient{
     private String address;
     private String underlyingDisease;
     public Patient(){}
-    public Patient(Long id)
+    public Patient(Integer id)
     {
         this.patientId = id;
     }
-    public Patient(Long patientId, String fullname, String phone, Calendar birthday, Calendar registrationDay, Calendar insuranceExpiration, String address, String underlyingDisease) {
+    public Patient(Integer patientId, String fullname, String phone, Calendar birthday, Calendar registrationDay, Calendar insuranceExpiration, String address, String underlyingDisease) {
 
         this.patientId = patientId;
         this.fullname = fullname;
@@ -54,8 +54,8 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "c##uni4";  // Replace with your username
-            String password = "123";  // Replace with your password
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
             String sqlInsert = "insert into patient(patient_id, full_name, phone, birthday, "
                     + "registration_day, insurance_expiration, address, underlying_disease) values(patient_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -81,11 +81,11 @@ public class Patient{
     }
     // Getters and Setters for the properties
     
-    public Long getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(Long patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
@@ -188,13 +188,11 @@ public class Patient{
                     expi_date = Calendar.getInstance();
                     expi_date.setTimeInMillis(result.getDate(6).getTime());
                 }
-                Patient p = new Patient(result.getLong(1), result.getString(2), result.getString(3), birthday, regis_date, 
+                Patient p = new Patient(result.getInt(1), result.getString(2), result.getString(3), birthday, regis_date, 
 
                         expi_date, result.getString(7), result.getString(8));
                 listOfPatient.add(p);
             }
-            
-            
         }
         catch (ClassNotFoundException e)
         { 
@@ -208,7 +206,7 @@ public class Patient{
             
         }        
     }
-    public Patient getAPatient(Long patient_id) throws SQLException
+    public Patient getAPatient(Integer patient_id) throws SQLException
     {
         Patient patient = null;
         Connection connection = null;
@@ -243,7 +241,7 @@ public class Patient{
                 expi_date = Calendar.getInstance();
                 expi_date.setTimeInMillis(result.getDate(6).getTime());
             }
-            patient = new Patient(result.getLong(1), result.getString(2), result.getString(3), birthday, regis_date, expi_date, result.getString(7), result.getString(8));
+            patient = new Patient(result.getInt(1), result.getString(2), result.getString(3), birthday, regis_date, expi_date, result.getString(7), result.getString(8));
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();
@@ -252,7 +250,7 @@ public class Patient{
         }
         return patient;
     }
-    public void deletePatient(Long patientID) throws SQLException
+    public void deletePatient(Integer patientID) throws SQLException
     {
         Connection connection = null;
         Statement statement = null;
@@ -304,7 +302,7 @@ public class Patient{
             statement.setDate(5, updatedPatient.getInsuranceExpiration() == null ? null : new java.sql.Date(updatedPatient.getInsuranceExpiration().getTimeInMillis()));
             statement.setString(6, updatedPatient.getAddress());
             statement.setString(7, updatedPatient.getUnderlyingDisease());
-            statement.setLong(8, updatedPatient.getPatientId());
+            statement.setInt(8, updatedPatient.getPatientId());
             statement.executeUpdate();
         }
         catch (ClassNotFoundException e)

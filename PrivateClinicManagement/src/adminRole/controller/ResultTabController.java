@@ -13,16 +13,19 @@ import java.util.List;
  * @author GIAHUY
  */
 public class ResultTabController {
+    PrescriptionDetails prescModel = new PrescriptionDetails();
     Result resultModel = new Result();
-    public Result queryData(Long result_id, String sql, List<PrescriptionDetails> listOfPres) throws SQLException {
+    public Result queryData(Integer result_id, String sql, List<PrescriptionDetails> listOfPres) throws SQLException {
         Result result = resultModel.getAResult(result_id);
         if (result != null ){
-            // 
+            prescModel.getListOfPresc(sql, listOfPres);
         }
         return result;
     }
     public void updateResult(Result updatedResult) throws SQLException {
         resultModel.updateResult(updatedResult);
     }
-    
+    public void deletePresc(Integer result_id, Integer medicine_id) throws SQLException {
+        prescModel.deleltePresc(result_id, medicine_id);
+    }
 }

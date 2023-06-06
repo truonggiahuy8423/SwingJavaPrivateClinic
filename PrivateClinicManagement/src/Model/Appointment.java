@@ -19,30 +19,30 @@ import java.util.List;
  */
 public class Appointment {
 
-    private Long appointmentID;
-    private Long scheduleID;
-    private Long patientID;
-    private Long doctorID;
+    private Integer appointmentID;
+    private Integer scheduleID;
+    private Integer patientID;
+    private Integer doctorID;
     private String doctorName;
     private String patientName;
     private Integer ordinalNumber;
     private Calendar date;
     private Integer room;
     private String service;
-    private Long final_cost;
+    private Integer final_cost;
 
-    public void setFinal_cost(Long final_cost) {
+    public void setFinal_cost(Integer final_cost) {
         this.final_cost = final_cost;
     }
 
-    public Long getFinal_cost() {
+    public Integer getFinal_cost() {
         return final_cost;
     }
 
     public Appointment() {
     }
 
-    public Appointment(Long appointmentID, Long scheduleID, Long patientID, Long doctorID, String doctorName, String patientName, Integer ordinalNumber, Calendar date, Integer room, String service, Long final_cost) {
+    public Appointment(Integer appointmentID, Integer scheduleID, Integer patientID, Integer doctorID, String doctorName, String patientName, Integer ordinalNumber, Calendar date, Integer room, String service, Integer final_cost) {
         this.appointmentID = appointmentID;
         this.scheduleID = scheduleID;
         this.patientID = patientID;
@@ -56,19 +56,19 @@ public class Appointment {
         this.final_cost = final_cost;
     }
 
-    public void setAppointmentID(Long appointmentID) {
+    public void setAppointmentID(Integer appointmentID) {
         this.appointmentID = appointmentID;
     }
 
-    public void setScheduleID(Long scheduleID) {
+    public void setScheduleID(Integer scheduleID) {
         this.scheduleID = scheduleID;
     }
 
-    public void setPatientID(Long patientID) {
+    public void setPatientID(Integer patientID) {
         this.patientID = patientID;
     }
 
-    public void setDoctorID(Long doctorID) {
+    public void setDoctorID(Integer doctorID) {
         this.doctorID = doctorID;
     }
 
@@ -96,19 +96,19 @@ public class Appointment {
         this.service = service;
     }
 
-    public Long getAppointmentID() {
+    public Integer getAppointmentID() {
         return appointmentID;
     }
 
-    public Long getScheduleID() {
+    public Integer getScheduleID() {
         return scheduleID;
     }
 
-    public Long getPatientID() {
+    public Integer getPatientID() {
         return patientID;
     }
 
-    public Long getDoctorID() {
+    public Integer getDoctorID() {
         return doctorID;
     }
 
@@ -136,7 +136,7 @@ public class Appointment {
         return service;
     }
 
-    public void getListOfAppointmentsOfPatient(Long patient_id, String sql, List<Appointment> listOfAppointment) throws SQLException {
+    public void getListOfAppointmentsOfPatient(Integer patient_id, String sql, List<Appointment> listOfAppointment) throws SQLException {
         Connection connection = null;
         Statement statement2 = null;
         ResultSet result2 = null;
@@ -151,10 +151,10 @@ public class Appointment {
             statement2 = connection.createStatement();
             result2 = statement2.executeQuery(sql);
             while (result2.next()) {
-                Long appointmentID = result2.getLong(1);
-                Long scheduleID = result2.getLong(2);
-                Long patientID = patient_id;
-                Long doctorID = result2.getLong(5);
+                Integer appointmentID = result2.getInt(1);
+                Integer scheduleID = result2.getInt(2);
+                Integer patientID = patient_id;
+                Integer doctorID = result2.getInt(5);
                 String doctorName = result2.getString(6);
                 String patientName = result2.getString(4);
                 Integer ordinalNumber = result2.getInt(7);
@@ -162,7 +162,7 @@ public class Appointment {
                 date.setTimeInMillis(result2.getDate(8).getTime());
                 Integer room = result2.getInt(9);
                 String service = result2.getString(10);
-                Long final_cost = result2.getLong(11);
+                Integer final_cost = result2.getInt(11);
 
                 Appointment appointment = new Appointment(appointmentID, scheduleID, patientID, doctorID, doctorName, patientName, ordinalNumber, date, room, service, final_cost);
                 listOfAppointment.add(appointment);
@@ -194,8 +194,8 @@ public class Appointment {
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             String sql = "insert into appointment(appointment_id, schedule_id, patient_id, fee, ordinal_number) values(appointment_id_sequence.nextval, ?, ?, 0, 0)";
             statement = connection.prepareStatement(sql);
-            statement.setLong(1, appointment.getScheduleID());
-            statement.setLong(2, appointment.getPatientID());
+            statement.setInt(1, appointment.getScheduleID());
+            statement.setInt(2, appointment.getPatientID());
             statement.executeUpdate();
         } catch (ClassNotFoundException e) {
 
@@ -212,7 +212,7 @@ public class Appointment {
         }
     }
 
-    public void deleteAppointment(Long appointment_id) throws SQLException {
+    public void deleteAppointment(Integer appointment_id) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -240,7 +240,7 @@ public class Appointment {
         }
     }
 
-    public Appointment getAnAppointment(Long appointment_id) throws SQLException {
+    public Appointment getAnAppointment(Integer appointment_id) throws SQLException {
         Appointment appointment = null;
         Connection connection = null;
         Statement statement = null;
@@ -260,10 +260,10 @@ public class Appointment {
             if (!result.next()) {
                 return appointment;
             }
-            Long appointmentID = appointment_id;
-            Long scheduleID = result.getLong(2);
-            Long patientID = result.getLong(3);
-            Long doctorID = result.getLong(5);
+            Integer appointmentID = appointment_id;
+            Integer scheduleID = result.getInt(2);
+            Integer patientID = result.getInt(3);
+            Integer doctorID = result.getInt(5);
             String doctorName = result.getString(6);
             String patientName = result.getString(4);
             Integer ordinalNumber = result.getInt(7);
@@ -271,7 +271,7 @@ public class Appointment {
             date.setTimeInMillis(result.getDate(8).getTime());
             Integer room = result.getInt(9);
             String service = result.getString(10);
-            Long final_cost = result.getLong(11);
+            Integer final_cost = result.getInt(11);
 
             appointment = new Appointment(appointmentID, scheduleID, patientID, doctorID, doctorName, patientName, ordinalNumber, date, room, service, final_cost);
         } catch (ClassNotFoundException e) {
