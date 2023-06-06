@@ -16,7 +16,6 @@ import javax.swing.*;
  * @author GIAHUY
  */
 public class PrivateClinicManagement {
-
     /**
      * @param args the command line arguments
      */
@@ -24,5 +23,5 @@ public class PrivateClinicManagement {
         LoginView loginView = new LoginView();
         loginView.setVisible(true);
     }
-    
+  
 }

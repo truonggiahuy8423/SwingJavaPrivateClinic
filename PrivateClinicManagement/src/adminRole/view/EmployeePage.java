@@ -114,14 +114,14 @@ public class EmployeePage extends javax.swing.JPanel {
     public String toString() {
         return "Employee List"; 
     } 
-    private class ImageRender extends DefaultTableCellRenderer {
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        String photoName = value.toString();
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/resources/" + photoName).getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
-        return new JLabel(imageIcon);
-    }
-}
+//    private class ImageRender extends DefaultTableCellRenderer {
+//    @Override
+//    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//        String photoName = value.toString();
+//        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/resources/" + photoName).getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+//        return new JLabel(imageIcon);
+//    }
+//}
     private void queryData(String sql) // load các record của employee vào list (Lưu ý thứ tự và các cột của câu query phải trùng khớp với lúc lấy data từ ResultSet)
     {
         listOfEmployee.removeAll(listOfEmployee);
@@ -136,18 +136,18 @@ public class EmployeePage extends javax.swing.JPanel {
         dataOftable.setRowCount(0);
         
         for (Employee p : this.listOfEmployee) {
-            dataOftable.addRow(new Object[] {p.getEmployeeId(), p.getPortrait(), p.getFullName(), p.getRoleId(), p.getPhone(),
+            dataOftable.addRow(new Object[] {p.getEmployeeId(), p.getFullName(), p.getRoleId(), p.getPhone(),
                 p.getPassword() == null ? "None" : p.getPassword(), convert_calendar(p.getBirthday()), 
                 p.getAddress() == null ? "None" : p.getAddress(), p.getHometown() == null ? "None" : p.getHometown()});
         }
         tableOfEmployee.setModel(dataOftable);
-        tableOfEmployee.setRowHeight(100);
-        tableOfEmployee.getColumnModel().getColumn(1).setCellRenderer(new ImageRender());
+//        tableOfEmployee.setRowHeight(100);
+//        tableOfEmployee.getColumnModel().getColumn(1).setCellRenderer(new ImageRender());
     }
 //    @Override
     public void refreshData()
     {
-        queryData("select employee_id, portrait, full_name, phone, role_id, password, birthday, address, hometown from employee");
+        queryData("select employee_id, full_name, phone, role_id, password, birthday, address, hometown from employee");
         sortEmployeeList();
         displayData();
     }
@@ -176,7 +176,7 @@ public class EmployeePage extends javax.swing.JPanel {
         searchButton.setBackground(Color.WHITE);
         searchTextField.setBackground(Color.WHITE);
         dataOftable = (DefaultTableModel)this.tableOfEmployee.getModel(); 
-        dataOftable.setColumnIdentifiers(new Object[]{"Employee ID", "Portrait", "Name", "Phone", "Position title", "Password", "Birthday", "Address", "Hometown"});
+        dataOftable.setColumnIdentifiers(new Object[]{"Employee ID", "Name", "Phone", "Position title", "Password", "Birthday", "Address", "Hometown"});
         refreshButton.setBackground(Color.WHITE);
         // set action event
         addButton.addActionListener(e -> {
@@ -293,7 +293,6 @@ public class EmployeePage extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(1230, 718));
         setMinimumSize(new java.awt.Dimension(1230, 718));
         setPreferredSize(new java.awt.Dimension(1590, 763));
-        setLayout(null);
 
         tableOfEmployee.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -306,10 +305,8 @@ public class EmployeePage extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableOfEmployee.setMaximumSize(new java.awt.Dimension(2147, 80));
         jScrollPane1.setViewportView(tableOfEmployee);
-
-        add(jScrollPane1);
-        jScrollPane1.setBounds(6, 80, 1578, 607);
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -317,16 +314,10 @@ public class EmployeePage extends javax.swing.JPanel {
                 addButtonActionPerformed(evt);
             }
         });
-        add(addButton);
-        addButton.setBounds(961, 39, 72, 23);
 
         searchButton.setText("Search");
-        add(searchButton);
-        searchButton.setBounds(6, 39, 72, 23);
 
         deleteButton.setText("Delete");
-        add(deleteButton);
-        deleteButton.setBounds(1179, 39, 72, 23);
 
         refreshButton.setText("Refresh");
         refreshButton.addActionListener(new java.awt.event.ActionListener() {
@@ -334,16 +325,46 @@ public class EmployeePage extends javax.swing.JPanel {
                 refreshButtonActionPerformed(evt);
             }
         });
-        add(refreshButton);
-        refreshButton.setBounds(1281, 39, 72, 23);
 
         sortChooser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(sortChooser);
-        sortChooser.setBounds(755, 39, 72, 22);
 
         searchTextField.setText("Employee ID");
-        add(searchTextField);
-        searchTextField.setBounds(116, 39, 80, 22);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(searchButton)
+                .addGap(38, 38, 38)
+                .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(559, 559, 559)
+                .addComponent(sortChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134)
+                .addComponent(addButton)
+                .addGap(146, 146, 146)
+                .addComponent(deleteButton)
+                .addGap(30, 30, 30)
+                .addComponent(refreshButton))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1430, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchButton)
+                    .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sortChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addButton)
+                    .addComponent(deleteButton)
+                    .addComponent(refreshButton))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed

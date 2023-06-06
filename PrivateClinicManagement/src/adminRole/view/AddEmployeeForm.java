@@ -9,8 +9,11 @@ import adminRole.controller.EmployeePageController;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Calendar;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -185,10 +188,17 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                 jLabelPhoneNoti.setText(c ? "Enter phone number" : "Phone format is invalid");
                 formatIsOk = false;
             }
+            
+            // check password format
+            String spassword = jTextFieldPassword.getText(); c = spassword.equals("");
+            if (c) {
+                jLabelPasswordNoti.setText("Enter password");
+                formatIsOk = false;
+            }
+            
             String saddress = jTextFieldPassword.getText();
             String shometown = jTextFieldHometown.getText();
-            String spassword = jTextFieldPassword.getText();
-            
+                
             Calendar insBirthday = null;
             Integer day = Integer.valueOf((String) jComboBoxBirthdayDate.getSelectedItem());
             Integer mon = Integer.valueOf((String) jComboBoxBirthdayMonth.getSelectedItem());
@@ -201,8 +211,8 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             if (formatIsOk)
             {
                 Calendar startDate = Calendar.getInstance(); startDate.setTimeInMillis(System.currentTimeMillis());
-                Employee employee = new Employee(0, sname, 0, sphone,
-                        spassword, insBirthday, saddress, shometown);
+                Employee employee = new Employee('0', sname, '3', sphone,
+                        spassword, startDate, saddress, shometown);
                 try {
                     new EmployeePageController(null).addEmployee(employee);
                     JOptionPane.showMessageDialog(null, "Add new employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);
@@ -212,8 +222,29 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                 {
                     JOptionPane.showMessageDialog(null, "Error: " + ex.toString(),"", JOptionPane.OK_OPTION);
                 } catch (Exception ee) {ee.printStackTrace();}
-                
+ 
             }
+        });
+        
+        //Edit Noti
+        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+//                int choice = JOptionPane.showConfirmDialog(AddEmployeeForm.this, "Do you want to close the program?", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//                if (choice == JOptionPane.OK_OPTION)
+//                    AddEmployeeForm.this.dispose();
+                jDialogcloseForm.setVisible(true);
+            }           
+        });
+            
+        jButtonNosave.addActionListener (e -> {
+            jDialogcloseForm.setVisible(false);
+            this.dispose();
+            
+        });
+        jButtonCancel.addActionListener (e -> {
+            jDialogcloseForm.setVisible(false);
         });
     }
 
@@ -226,6 +257,11 @@ public class AddEmployeeForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialogcloseForm = new javax.swing.JDialog();
+        jLabelNoti = new javax.swing.JLabel();
+        jButtonCancel = new javax.swing.JButton();
+        jButtonNosave = new javax.swing.JButton();
+        jButtonSave = new javax.swing.JButton();
         jLabelName = new javax.swing.JLabel();
         jLabelPhone = new javax.swing.JLabel();
         jLabelAddress = new javax.swing.JLabel();
@@ -248,7 +284,6 @@ public class AddEmployeeForm extends javax.swing.JDialog {
         jComboBoxBirthdayMonth = new javax.swing.JComboBox<>();
         jComboBoxStartdayYear = new javax.swing.JComboBox<>();
         jComboBoxBirthdayYear = new javax.swing.JComboBox<>();
-        jLabelPortrait = new javax.swing.JLabel();
         jLabelPositionTitle = new javax.swing.JLabel();
         jLabelPassword = new javax.swing.JLabel();
         jComboBoxPositionTitle = new javax.swing.JComboBox<>();
@@ -257,6 +292,53 @@ public class AddEmployeeForm extends javax.swing.JDialog {
         jLabelNameNoti = new javax.swing.JLabel();
         jLabelPhoneNoti = new javax.swing.JLabel();
         jLabelPasswordNoti = new javax.swing.JLabel();
+
+        jDialogcloseForm.setMinimumSize(new java.awt.Dimension(500, 217));
+        jDialogcloseForm.setModal(true);
+
+        jLabelNoti.setText("Do you want to save this new employee?");
+
+        jButtonCancel.setText("Cancel");
+
+        jButtonNosave.setText("Don't save");
+        jButtonNosave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNosaveActionPerformed(evt);
+            }
+        });
+
+        jButtonSave.setText("Save");
+
+        javax.swing.GroupLayout jDialogcloseFormLayout = new javax.swing.GroupLayout(jDialogcloseForm.getContentPane());
+        jDialogcloseForm.getContentPane().setLayout(jDialogcloseFormLayout);
+        jDialogcloseFormLayout.setHorizontalGroup(
+            jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                .addGroup(jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(jButtonCancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonNosave)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonSave))
+                    .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(jLabelNoti)))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        jDialogcloseFormLayout.setVerticalGroup(
+            jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                .addContainerGap(99, Short.MAX_VALUE)
+                .addComponent(jLabelNoti)
+                .addGap(42, 42, 42)
+                .addGroup(jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonCancel)
+                    .addComponent(jButtonNosave)
+                    .addComponent(jButtonSave))
+                .addGap(37, 37, 37))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -304,13 +386,17 @@ public class AddEmployeeForm extends javax.swing.JDialog {
 
         jComboBoxBirthdayYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabelPortrait.setText("Portrait:");
-
         jLabelPositionTitle.setText("Position title:");
 
         jLabelPassword.setText("Password:");
 
         jComboBoxPositionTitle.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jTextFieldPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPasswordActionPerformed(evt);
+            }
+        });
 
         jButtonConfirm.setText("Confirm");
         jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
@@ -319,78 +405,90 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             }
         });
 
+        jLabelNameNoti.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabelNameNoti.setForeground(new java.awt.Color(255, 51, 51));
+
+        jLabelPhoneNoti.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabelPhoneNoti.setForeground(new java.awt.Color(255, 51, 51));
+
+        jLabelPasswordNoti.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jLabelPasswordNoti.setForeground(new java.awt.Color(255, 51, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelNameNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(261, 261, 261)
-                        .addComponent(jLabelPortrait, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabelNameNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(jLabelPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(jTextFieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelPhoneNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabelPhoneNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(jLabelAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
                         .addComponent(jTextFieldAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelHometown)
-                        .addGap(34, 34, 34)
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabelHometown, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
                         .addComponent(jTextFieldHometown, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(jLabelStartday, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
                         .addComponent(jLabelStartdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(jComboBoxStartdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabelStartdayMonth)
-                        .addGap(6, 6, 6)
+                        .addComponent(jLabelStartdayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
                         .addComponent(jComboBoxStartdayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21)
                         .addComponent(jLabelStartdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(jComboBoxStartdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(193, 193, 193)
-                        .addComponent(jLabelPositionTitle)
-                        .addGap(37, 37, 37)
-                        .addComponent(jComboBoxPositionTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBoxStartdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelBirthday, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabelBirthdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jComboBoxBirthdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelBirthdayMonth)
-                        .addGap(6, 6, 6)
-                        .addComponent(jComboBoxBirthdayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabelBirthdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jComboBoxBirthdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(193, 193, 193)
-                        .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelPasswordNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(135, 135, 135))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonConfirm)
-                .addGap(111, 111, 111))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelBirthday, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelPositionTitle)
+                            .addComponent(jLabelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelBirthdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(jComboBoxBirthdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelBirthdayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                                .addComponent(jComboBoxBirthdayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabelBirthdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(jComboBoxBirthdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBoxPositionTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelPasswordNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)))))
+                .addGap(32, 32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -398,20 +496,20 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNameNoti)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelName)
-                            .addComponent(jLabelPortrait))))
-                .addGap(26, 26, 26)
+                        .addComponent(jLabelName)))
+                .addGap(3, 3, 3)
+                .addComponent(jLabelNameNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabelPhone))
-                    .addComponent(jTextFieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPhoneNoti))
-                .addGap(31, 31, 31)
+                    .addComponent(jTextFieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(jLabelPhoneNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -428,33 +526,38 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                     .addComponent(jComboBoxStartdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxStartdayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxStartdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxPositionTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelStartday)
                             .addComponent(jLabelStartdayDate)
                             .addComponent(jLabelStartdayMonth)
-                            .addComponent(jLabelStartdayYear)
-                            .addComponent(jLabelPositionTitle))))
+                            .addComponent(jLabelStartdayYear))))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBoxBirthdayDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxBirthdayMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxBirthdayYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPasswordNoti)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelBirthday)
                             .addComponent(jLabelBirthdayDate)
                             .addComponent(jLabelBirthdayMonth)
-                            .addComponent(jLabelBirthdayYear)
-                            .addComponent(jLabelPassword))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jButtonConfirm)
-                .addGap(47, 47, 47))
+                            .addComponent(jLabelBirthdayYear))))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPositionTitle)
+                    .addComponent(jComboBoxPositionTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPassword)
+                    .addComponent(jTextFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelPasswordNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonConfirm))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -467,6 +570,14 @@ public class AddEmployeeForm extends javax.swing.JDialog {
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonConfirmActionPerformed
+
+    private void jButtonNosaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNosaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonNosaveActionPerformed
+
+    private void jTextFieldPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -513,7 +624,10 @@ public class AddEmployeeForm extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonConfirm;
+    private javax.swing.JButton jButtonNosave;
+    private javax.swing.JButton jButtonSave;
     private javax.swing.JComboBox<String> jComboBoxBirthdayDate;
     private javax.swing.JComboBox<String> jComboBoxBirthdayMonth;
     private javax.swing.JComboBox<String> jComboBoxBirthdayYear;
@@ -521,6 +635,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxStartdayDate;
     private javax.swing.JComboBox<String> jComboBoxStartdayMonth;
     private javax.swing.JComboBox<String> jComboBoxStartdayYear;
+    private javax.swing.JDialog jDialogcloseForm;
     private javax.swing.JLabel jLabelAddress;
     private javax.swing.JLabel jLabelBirthday;
     private javax.swing.JLabel jLabelBirthdayDate;
@@ -529,11 +644,11 @@ public class AddEmployeeForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelHometown;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelNameNoti;
+    private javax.swing.JLabel jLabelNoti;
     private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelPasswordNoti;
     private javax.swing.JLabel jLabelPhone;
     private javax.swing.JLabel jLabelPhoneNoti;
-    private javax.swing.JLabel jLabelPortrait;
     private javax.swing.JLabel jLabelPositionTitle;
     private javax.swing.JLabel jLabelStartday;
     private javax.swing.JLabel jLabelStartdayDate;
