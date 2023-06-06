@@ -7,23 +7,30 @@ package adminRole.view;
 import Model.Employee;
 import adminRole.controller.EmployeePageController;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.sql.SQLException;
 import java.util.Calendar;
 
 import java.util.Collections;
 import java.util.Comparator;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
  * @author GIAHUY
  */
+
 public class EmployeePage extends javax.swing.JPanel {
 
     /**
@@ -107,6 +114,14 @@ public class EmployeePage extends javax.swing.JPanel {
     public String toString() {
         return "Employee List"; 
     } 
+    private class ImageRender extends DefaultTableCellRenderer {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        String photoName = value.toString();
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("src/resources/" + photoName).getImage().getScaledInstance(90, 90, Image.SCALE_DEFAULT));
+        return new JLabel(imageIcon);
+    }
+}
     private void queryData(String sql) // load các record của employee vào list (Lưu ý thứ tự và các cột của câu query phải trùng khớp với lúc lấy data từ ResultSet)
     {
         listOfEmployee.removeAll(listOfEmployee);
@@ -120,23 +135,23 @@ public class EmployeePage extends javax.swing.JPanel {
     {
         dataOftable.setRowCount(0);
         
-        for (Employee p : this.listOfEmployee)
-            {
-
-                dataOftable.addRow(new Object[] {p.getEmployeeId(), p.getFullName(), p.getRoleId(), p.getPhone(),
-                    p.getPassword() == null ? "None" : p.getPassword(), convert_calendar(p.getBirthday()), 
-                    p.getAddress() == null ? "None" : p.getAddress(), p.getHometown() == null ? "None" : p.getHometown()});
-
-            }
-        
+        for (Employee p : this.listOfEmployee) {
+            dataOftable.addRow(new Object[] {p.getEmployeeId(), p.getPortrait(), p.getFullName(), p.getRoleId(), p.getPhone(),
+                p.getPassword() == null ? "None" : p.getPassword(), convert_calendar(p.getBirthday()), 
+                p.getAddress() == null ? "None" : p.getAddress(), p.getHometown() == null ? "None" : p.getHometown()});
+        }
+        tableOfEmployee.setModel(dataOftable);
+        tableOfEmployee.setRowHeight(100);
+        tableOfEmployee.getColumnModel().getColumn(1).setCellRenderer(new ImageRender());
     }
 //    @Override
     public void refreshData()
     {
-        queryData("select employee_id, full_name, phone, role_id, password, birthday, address, hometown from employee");
+        queryData("select employee_id, portrait, full_name, phone, role_id, password, birthday, address, hometown from employee");
         sortEmployeeList();
         displayData();
     }
+    
     public EmployeePage() {
         initComponents();
         controller = new EmployeePageController(this);
@@ -161,7 +176,7 @@ public class EmployeePage extends javax.swing.JPanel {
         searchButton.setBackground(Color.WHITE);
         searchTextField.setBackground(Color.WHITE);
         dataOftable = (DefaultTableModel)this.tableOfEmployee.getModel(); 
-        dataOftable.setColumnIdentifiers(new Object[]{"Employee ID", "Name", "Phone", "Position title", "Password", "Birthday", "Address", "Hometown"});
+        dataOftable.setColumnIdentifiers(new Object[]{"Employee ID", "Portrait", "Name", "Phone", "Position title", "Password", "Birthday", "Address", "Hometown"});
         refreshButton.setBackground(Color.WHITE);
         // set action event
         addButton.addActionListener(e -> {
@@ -328,7 +343,7 @@ public class EmployeePage extends javax.swing.JPanel {
 
         searchTextField.setText("Employee ID");
         add(searchTextField);
-        searchTextField.setBounds(116, 39, 81, 22);
+        searchTextField.setBounds(116, 39, 80, 22);
     }// </editor-fold>//GEN-END:initComponents
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed

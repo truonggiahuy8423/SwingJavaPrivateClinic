@@ -47,7 +47,17 @@ public class Employee {
         this.address = address;
         this.hometown = hometown;  
     }
-    
+    public Employee(int employeeId, String portrait, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown) {
+        this.employeeId = employeeId;
+        this.portrait = portrait;
+        this.fullName = fullName;
+        this.roleId = roleId;
+        this.phone = phone;
+        this.password = password;
+        this.birthday = birthday;
+        this.address = address;
+        this.hometown = hometown;  
+    }
     public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
         this.employeeId = employeeId;
         this.fullName = fullName;
@@ -208,10 +218,10 @@ public class Employee {
             while (result.next())
             {
                 Calendar birthday = null;
-                if (result.getDate(6) != null)
+                if (result.getDate(7) != null)
                 {
                     birthday = Calendar.getInstance();
-                    birthday.setTimeInMillis(result.getDate(6).getTime());
+                    birthday.setTimeInMillis(result.getDate(7).getTime());
                 }
 //                Calendar start_date = null;
 //                if (result.getDate(5) != null)
@@ -219,7 +229,8 @@ public class Employee {
 //                    start_date = Calendar.getInstance();
 //                    start_date.setTimeInMillis(result.getDate(5).getTime());
 //                }
-                Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
+//                Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
+                Employee p = new Employee(result.getInt(1), result.getString(2),result.getString(3), result.getInt(4), result.getString(5), result.getString(6), birthday, result.getString(8), result.getString(9));
                 listOfEmployee.add(p);
             }         
         }

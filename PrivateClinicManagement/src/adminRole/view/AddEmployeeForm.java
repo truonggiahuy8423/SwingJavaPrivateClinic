@@ -71,7 +71,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
         for (int i = 1; i < 12; i++) {
             jComboBoxBirthdayMonth.addItem(String.valueOf(i));
         }
-        for (int i = 1955; i < 2032; i++) {
+        for (int i = 1955; i < 2024; i++) {
             jComboBoxBirthdayYear.addItem(String.valueOf(i));
         }
                 
