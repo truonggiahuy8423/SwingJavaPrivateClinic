@@ -114,7 +114,7 @@ public class AddPatientForm extends javax.swing.JDialog {
                     Integer year = Integer.valueOf(byear.getText());
                     birthday = Calendar.getInstance();
                     birthday.setLenient(false);
-                    birthday.set(year, mon, day);
+                    birthday.set(year, mon - 1, day);
                     birthday.getTime();
                 } catch (NumberFormatException ex)
                 {
@@ -136,7 +136,7 @@ public class AddPatientForm extends javax.swing.JDialog {
                     Integer year = Integer.valueOf(iyear.getText());
                     insExpiDate = Calendar.getInstance();
                     insExpiDate.setLenient(false);
-                    insExpiDate.set(year, mon, day);
+                    insExpiDate.set(year, mon - 1, day);
                     insExpiDate.getTime();
                 } catch (NumberFormatException ex)
                 {
