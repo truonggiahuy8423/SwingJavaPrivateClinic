@@ -11,13 +11,16 @@ import Model.Employee;
 import adminRole.controller.SchedulePageController;
 import  adminRole.controller.RoomController;
 import  adminRole.controller.ServiceController;
-import  adminRole.controller.EmployeeController;
+import  adminRole.controller.EmployeePageController;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,7 +36,7 @@ public class SchedulePage extends javax.swing.JPanel {
     private SchedulePageController controller;
     private RoomController roomController;
     private ServiceController serviceController;
-    private EmployeeController employeeController;    
+    private EmployeePageController employeeController;    
     private List<Schedule> listOfSchedule;
     private DefaultTableModel dataOftable;
     
@@ -91,12 +94,15 @@ public class SchedulePage extends javax.swing.JPanel {
         // Load data
         roomController = new RoomController();
         serviceController = new ServiceController();
-        employeeController = new EmployeeController();
+        employeeController = new EmployeePageController();
         controller.queryData("select * from schedule order by schedule_id asc",dataSchedule);
         controller.queryData("select * from schedule order by next_ordinal_number asc",dataNextOrinalNumber);
         serviceController.queryData("select * from service", dataService);
         roomController.queryData("select * from room",dataRoom);
-        employeeController.queryData("select * from employee",dataEmployee);
+        String sql = null;
+        try {
+            employeeController.queryData(sql,dataEmployee);
+        } catch (SQLException e) {e.printStackTrace();} catch (Exception e) {e.printStackTrace();}
         
         // Add data into combobox
         cbbState.addItem(dataState[0]);

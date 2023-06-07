@@ -16,6 +16,10 @@ import java.util.List;
 public class EmployeePageController {
     private EmployeePage view;
     private Employee employeeModel = new Employee();
+
+    public EmployeePageController() {
+    }
+    
     public EmployeePageController(EmployeePage view)
     {
          this.view = view;

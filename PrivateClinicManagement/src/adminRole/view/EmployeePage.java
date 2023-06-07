@@ -180,7 +180,7 @@ public class EmployeePage extends javax.swing.JPanel {
         refreshButton.setBackground(Color.WHITE);
         // set action event
         addButton.addActionListener(e -> {
-            AddEmployeeForm form = new AddEmployeeForm(null, true, parent); 
+            AddEmployeeForm form = new AddEmployeeForm(null, true, this); 
             form.setVisible(true);
         }); 
         refreshButton.addActionListener(e -> {refreshData();});

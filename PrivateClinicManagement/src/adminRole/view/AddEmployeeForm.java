@@ -170,7 +170,53 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                 }
             });
         jButtonConfirm.addActionListener(e -> {
+            jLabelNameNoti.setText("");
+            jLabelPasswordNoti.setText("");
+            jLabelPhoneNoti.setText("");
+            boolean formatIsOk = true;
+            // check name format
+            String sname = jTextFieldName.getText(); boolean c = sname.equals("");
+            if (c || !checkName(sname)) {
+                this.jLabelNameNoti.setText(c ? "Enter name" : "Name format is invalid");
+                formatIsOk = false;
+            }
+        
+            // check phone format
+            String sphone = jTextFieldPhone.getText(); c = sphone.equals("");
+            if (c || !phoneCheck(sphone)) {
+                jLabelPhoneNoti.setText(c ? "Enter phone number" : "Phone format is invalid");
+                formatIsOk = false;
+            }
             
+            // check password format
+            String spassword = jTextFieldPassword.getText(); c = spassword.equals("");
+            if (c) {
+                jLabelPasswordNoti.setText("Enter password");
+                formatIsOk = false;
+            }
+            
+            if (formatIsOk)
+                jDialogcloseForm.setVisible(true);
+        });
+        
+        //Edit Noti
+        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                jDialogcloseForm.setVisible(true);
+            }           
+        });
+            
+        jButtonNosave.addActionListener (e -> {
+            jDialogcloseForm.dispose();
+            this.dispose();
+            
+        });
+        jButtonCancel.addActionListener (e -> {
+            jDialogcloseForm.dispose();
+        });
+        jButtonSave.addActionListener (e -> {
             jLabelNameNoti.setText("");
             jLabelPasswordNoti.setText("");
             jLabelPhoneNoti.setText("");
@@ -216,35 +262,14 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                 try {
                     new EmployeePageController(null).addEmployee(employee);
                     JOptionPane.showMessageDialog(null, "Add new employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);
-                    parent2.refreshData();
+                    parent2.refreshData();                          
                     this.dispose();
+                    jDialogcloseForm.dispose();
                 } catch (SQLException ex)
                 {
                     JOptionPane.showMessageDialog(null, "Error: " + ex.toString(),"", JOptionPane.OK_OPTION);
-                } catch (Exception ee) {ee.printStackTrace();}
- 
-            }
-        });
-        
-        //Edit Noti
-        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new WindowAdapter(){
-            @Override
-            public void windowClosing(WindowEvent e) {
-//                int choice = JOptionPane.showConfirmDialog(AddEmployeeForm.this, "Do you want to close the program?", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-//                if (choice == JOptionPane.OK_OPTION)
-//                    AddEmployeeForm.this.dispose();
-                jDialogcloseForm.setVisible(true);
-            }           
-        });
-            
-        jButtonNosave.addActionListener (e -> {
-            jDialogcloseForm.setVisible(false);
-            this.dispose();
-            
-        });
-        jButtonCancel.addActionListener (e -> {
-            jDialogcloseForm.setVisible(false);
+                } catch (Exception ee) {ee.printStackTrace();}   
+            }   
         });
     }
 
