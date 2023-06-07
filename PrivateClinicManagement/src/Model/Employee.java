@@ -29,6 +29,7 @@ public class Employee {
     private String password;
     private int salaryPerDay;
     private int roleId;
+    private String roleName;
     
     public Employee(){};
     public Employee(int id)
@@ -36,6 +37,17 @@ public class Employee {
         this.employeeId = id;
     }
 
+    public Employee(int employeeId, String fullName, String roleName, String phone, String password, Calendar birthday, String address, String hometown) {
+        this.employeeId = employeeId;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.address = address;
+        this.hometown = hometown;
+        this.password = password;
+        this.roleName = roleName;
+    }
+    
     public Employee(int employeeId, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown) {
         this.employeeId = employeeId;
         this.fullName = fullName;
@@ -69,7 +81,7 @@ public class Employee {
 //        this.portrait = portrait;
 //        this.roleId = roleId;
 //    }
-
+    
     public int getEmployeeId() {
         return employeeId;
     }
@@ -149,6 +161,14 @@ public class Employee {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
     
     public void addEmployee(Employee employee) throws SQLException
     {
@@ -165,7 +185,7 @@ public class Employee {
             statement = connection.prepareStatement(sqlInsert);
 //            statement.setInt(1, employee.getEmployeeId());
             statement.setString(1, employee.getFullName());
-            statement.setInt(2, employee.getRoleId() - 48);
+            statement.setInt(2, employee.getRoleId());
             statement.setString(3, employee.getPhone());
             statement.setString(4, employee.getPassword());
             statement.setDate(5, employee.getBirthday() == null ? null : new java.sql.Date(employee.getBirthday().getTimeInMillis()));
@@ -215,7 +235,7 @@ public class Employee {
 //                    start_date.setTimeInMillis(result.getDate(5).getTime());
 //                }
 //                Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
-                Employee p = new Employee(result.getInt(1),result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
+                Employee p = new Employee(result.getInt(1),result.getString(2), result.getString(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
                 listOfEmployee.add(p);
             }         
         }
@@ -260,7 +280,7 @@ public class Employee {
 //                start_date = Calendar.getInstance();
 //                start_date.setTimeInMillis(result.getDate(5).getTime());
 //            }
-            Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
+            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();

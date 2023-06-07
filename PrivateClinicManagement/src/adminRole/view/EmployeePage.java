@@ -136,7 +136,7 @@ public class EmployeePage extends javax.swing.JPanel {
         dataOftable.setRowCount(0);
         
         for (Employee p : this.listOfEmployee) {
-            dataOftable.addRow(new Object[] {p.getEmployeeId(), p.getFullName(), p.getRoleId(), p.getPhone(),
+            dataOftable.addRow(new Object[] {p.getEmployeeId(), p.getFullName(), p.getRoleName(), p.getPhone(),
                 p.getPassword() == null ? "None" : p.getPassword(), convert_calendar(p.getBirthday()), 
                 p.getAddress() == null ? "None" : p.getAddress(), p.getHometown() == null ? "None" : p.getHometown()});
         }
@@ -147,7 +147,7 @@ public class EmployeePage extends javax.swing.JPanel {
 //    @Override
     public void refreshData()
     {
-        queryData("select employee_id, full_name, phone, role_id, password, birthday, address, hometown from employee");
+        queryData("select employee_id, full_name, phone, role_name, password, birthday, address, hometown from employee inner join role on employee.role_id = role.role_id");
         sortEmployeeList();
         displayData();
     }

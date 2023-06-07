@@ -244,7 +244,8 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             
             String saddress = jTextFieldPassword.getText();
             String shometown = jTextFieldHometown.getText();
-                
+            int srole_id = jComboBoxPositionTitle.getSelectedIndex() + 1; 
+            
             Calendar insBirthday = null;
             Integer day = Integer.valueOf((String) jComboBoxBirthdayDate.getSelectedItem());
             Integer mon = Integer.valueOf((String) jComboBoxBirthdayMonth.getSelectedItem());
@@ -257,7 +258,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             if (formatIsOk)
             {
                 Calendar startDate = Calendar.getInstance(); startDate.setTimeInMillis(System.currentTimeMillis());
-                Employee employee = new Employee('0', sname, '3', sphone,
+                Employee employee = new Employee('0', sname, 1, sphone,
                         spassword, startDate, saddress, shometown);
                 try {
                     new EmployeePageController(null).addEmployee(employee);
