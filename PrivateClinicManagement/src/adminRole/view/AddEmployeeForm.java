@@ -258,8 +258,8 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             if (formatIsOk)
             {
                 Calendar startDate = Calendar.getInstance(); startDate.setTimeInMillis(System.currentTimeMillis());
-                Employee employee = new Employee('0', sname, 1, sphone,
-                        spassword, startDate, saddress, shometown);
+                Employee employee = new Employee('0', sname, srole_id, sphone,
+                        spassword, startDate, saddress, shometown, startDate);
                 try {
                     new EmployeePageController(null).addEmployee(employee);
                     JOptionPane.showMessageDialog(null, "Add new employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);

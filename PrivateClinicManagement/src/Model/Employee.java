@@ -37,18 +37,19 @@ public class Employee {
         this.employeeId = id;
     }
 
-    public Employee(int employeeId, String fullName, String roleName, String phone, String password, Calendar birthday, String address, String hometown) {
+    public Employee(int employeeId, String fullName, String roleName, String phone, String password, Calendar birthday, String address, String hometown, Calendar startDay) {
         this.employeeId = employeeId;
         this.fullName = fullName;
+        this.roleName = roleName;
         this.phone = phone;
+        this.password = password;
         this.birthday = birthday;
         this.address = address;
         this.hometown = hometown;
-        this.password = password;
-        this.roleName = roleName;
+        this.startDay = startDay;
     }
     
-    public Employee(int employeeId, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown) {
+    public Employee(int employeeId, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown, Calendar startDay) {
         this.employeeId = employeeId;
         this.fullName = fullName;
         this.roleId = roleId;
@@ -56,7 +57,8 @@ public class Employee {
         this.password = password;
         this.birthday = birthday;
         this.address = address;
-        this.hometown = hometown;  
+        this.hometown = hometown;
+        this.password = password;
     }
 //    public Employee(int employeeId, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown) {
 //        this.employeeId = employeeId;
@@ -228,14 +230,14 @@ public class Employee {
                     birthday = Calendar.getInstance();
                     birthday.setTimeInMillis(result.getDate(6).getTime());
                 }
-//                Calendar start_date = null;
-//                if (result.getDate(5) != null)
-//                {
-//                    start_date = Calendar.getInstance();
-//                    start_date.setTimeInMillis(result.getDate(5).getTime());
-//                }
+                Calendar start_date = null;
+                if (result.getDate(9) != null)
+                {
+                    start_date = Calendar.getInstance();
+                    start_date.setTimeInMillis(result.getDate(9).getTime());
+                }
 //                Employee p = new Employee(result.getInt(1), result.getString(2), result.getInt(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
-                Employee p = new Employee(result.getInt(1),result.getString(2), result.getString(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
+                Employee p = new Employee(result.getInt(1),result.getString(2), result.getString(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8), start_date);
                 listOfEmployee.add(p);
             }         
         }
@@ -274,13 +276,13 @@ public class Employee {
                 birthday = Calendar.getInstance();
                 birthday.setTimeInMillis(result.getDate(6).getTime());
             }
-//            Calendar start_date =null;
-//            if (result.getDate(5) != null)
-//            {
-//                start_date = Calendar.getInstance();
-//                start_date.setTimeInMillis(result.getDate(5).getTime());
-//            }
-            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8));
+            Calendar start_date =null;
+            if (result.getDate(9) != null)
+            {
+                start_date = Calendar.getInstance();
+                start_date.setTimeInMillis(result.getDate(9).getTime());
+            }
+            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8), start_date);
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();
