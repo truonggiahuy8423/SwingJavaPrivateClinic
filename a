@@ -1,0 +1,272 @@
+[33mcommit 8725052b02f9a11cc3b15670ca21314b6b5c9767[m[33m ([m[1;36mHEAD -> [m[1;32memployee-update[m[33m, [m[1;31morigin/employee-update[m[33m)[m
+Merge: 2b46e7f 2918358
+Author: sunsun1102 <sonhoang880@gmail.com>
+Date:   Wed Jun 7 10:18:43 2023 +0700
+
+    employee update
+
+[33mcommit 2b46e7f6ee965b634d718ef9a713a49709b591cc[m
+Author: sunsun1102 <sonhoang880@gmail.com>
+Date:   Wed Jun 7 10:14:24 2023 +0700
+
+    employee update
+
+[33mcommit 637e7d4af11f9ef41870d26c5282e4b6400f4a0f[m[33m ([m[1;32memployee[m[33m)[m
+Author: sunsun1102 <sonhoang880@gmail.com>
+Date:   Wed Jun 7 10:00:44 2023 +0700
+
+    employee update
+
+[33mcommit 2918358030571837ff5b3985fd0875c8f50b8824[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Tue Jun 6 15:40:06 2023 +0700
+
+    done patientPage
+
+[33mcommit 147b1d88fc5c6677248731f2bbe873300be9ef61[m
+Author: sunsun1102 <sonhoang880@gmail.com>
+Date:   Tue Jun 6 15:39:22 2023 +0700
+
+    employee
+
+[33mcommit de48b28707a705571224cdb889c775e5eb9c81af[m
+Author: sunsun1102 <sonhoang880@gmail.com>
+Date:   Tue Jun 6 08:13:03 2023 +0700
+
+    employee
+
+[33mcommit 7408ee0dc84316f4d00566d3f45d2d3a317c7b8c[m
+Author: sunsun1102 <sonhoang880@gmail.com>
+Date:   Mon Jun 5 21:44:33 2023 +0700
+
+    employee
+
+[33mcommit b3dca0aa04d050b7ae2725fffdb98e200a2db09a[m
+Merge: 069335b 967e46f
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Mon Jun 5 10:47:47 2023 +0700
+
+    v
+
+[33mcommit 069335bf1c3d250e17ae52084fd1b1c4e4099d31[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Sun Jun 4 11:50:11 2023 +0700
+
+    resulttab
+
+[33mcommit 967e46f02a4345cfa2c8a928c0711f2bc7349f6c[m
+Merge: 481c22d 9055a94
+Author: sunsun1102 <95130966+sunsun1102@users.noreply.github.com>
+Date:   Sun Jun 4 09:56:23 2023 +0700
+
+    Merge pull request #7 from truonggiahuy8423/employee
+    
+    employee
+
+[33mcommit 9055a946ffb261e11a870ef28b2fcc0dc74380c4[m
+Merge: e496cc5 481c22d
+Author: sunsun1102 <95130966+sunsun1102@users.noreply.github.com>
+Date:   Sun Jun 4 09:52:25 2023 +0700
+
+    Merge branch 'main' into employee
+
+[33mcommit e496cc5a00bcb3dad32b339d32567c657963395e[m
+Author: your name <sonhoang880@gmail.com>
+Date:   Sat Jun 3 11:33:42 2023 +0700
+
+    employee
+
+[33mcommit 481c22d972d882c75be0229820430d5cd0761b16[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Fri Jun 2 11:18:58 2023 +0700
+
+    appointment tab
+
+[33mcommit b0a8935c75bd33a239857da09cdcee4fe97f730d[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Thu Jun 1 17:12:09 2023 +0700
+
+    add new appointment, choose schedule, search schedule, calculate final cost
+
+[33mcommit 55f8dd905556268af3cbe1d0eb6055daf5cadcaa[m[33m ([m[1;32mmain[m[33m)[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Thu Jun 1 11:15:24 2023 +0700
+
+    MVC
+
+[33mcommit 8b79ff51153e5eb64b96b0bd3e95a60766a08d34[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Thu Jun 1 10:33:24 2023 +0700
+
+    load appointments in patient tab
+
+[33mcommit 7d68e1ffaa9fbddda801013c2f9694cbaf9ba1e3[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Wed May 31 11:08:59 2023 +0700
+
+    revert v3
+
+[33mcommit 837207d7108a946b719de03a0ae12b38e73b40b1[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Wed May 31 10:44:40 2023 +0700
+
+    revert v2
+
+[33mcommit ce8acecb1fad788e128393b7200dfad6bd5c3751[m
+Merge: c1fd608 1e36f83
+Author: truonggiahuy8423 <134354507+truonggiahuy8423@users.noreply.github.com>
+Date:   Wed May 31 10:37:54 2023 +0700
+
+    Merge pull request #6 from truonggiahuy8423/schedulePage_2
+    
+    Schedule page 2 into main
+
+[33mcommit 1e36f83a8c873f28d4237ad8746a0cf7f374b1ea[m
+Merge: c22afd8 c1fd608
+Author: truonggiahuy8423 <134354507+truonggiahuy8423@users.noreply.github.com>
+Date:   Wed May 31 10:37:40 2023 +0700
+
+    Merge branch 'main' into schedulePage_2
+
+[33mcommit c22afd8cc25ea914a97d1df6cc2d31fa78ae7bbc[m
+Merge: 30ac46b d232391
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Wed May 31 10:24:32 2023 +0700
+
+    blabla
+
+[33mcommit 30ac46be6535d7be65e961ac44fde686a3f1e49f[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Wed May 31 10:01:38 2023 +0700
+
+    Update textBox
+
+[33mcommit c1fd6082811dffb13f5f722864bcf1166a53b91d[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Wed May 31 09:56:40 2023 +0700
+
+    revert
+
+[33mcommit 90c30a5dacfcd08351197490fd11ea8b4f24bbff[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Wed May 31 09:38:52 2023 +0700
+
+    h
+
+[33mcommit 6067f9263e9d2e3baf2547e882bdcf248c44b8cb[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Wed May 31 09:29:17 2023 +0700
+
+    fix
+
+[33mcommit c7ed52446e6c6c504fa49cb884b37e3390abcddc[m
+Merge: 6e54413 d232391
+Author: truonggiahuy8423 <134354507+truonggiahuy8423@users.noreply.github.com>
+Date:   Wed May 31 09:19:07 2023 +0700
+
+    Merge pull request #5 from truonggiahuy8423/schedulePage_2
+    
+    Schedule page 2 - Update NextOrinalNumber textField
+
+[33mcommit d23239137cb28eb6c3d8501d545ab879921217b9[m
+Merge: 83e9933 6e54413
+Author: truonggiahuy8423 <134354507+truonggiahuy8423@users.noreply.github.com>
+Date:   Wed May 31 09:18:54 2023 +0700
+
+    Merge branch 'main' into schedulePage_2
+
+[33mcommit 6e54413653fff3544e2b2b403a31e9e44b4fa3e9[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Wed May 31 09:00:09 2023 +0700
+
+    appointment list in patienttab
+
+[33mcommit 42c641bdc8d2e005c0a889518aa559ebb7eba05a[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Wed May 31 08:53:06 2023 +0700
+
+    bla
+
+[33mcommit 83e993331886f6356b7a6f0dc91428ea4beffcea[m
+Merge: 44c5080 e8bf9eb
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Wed May 31 08:29:46 2023 +0700
+
+    Update NextOrinalNumber textField
+
+[33mcommit 44c5080c68ea643fc541cd36b445c8489aab3b22[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Wed May 31 08:24:46 2023 +0700
+
+    Update NextOrinalNumber textField
+
+[33mcommit e26e200fd8edb7240c1457db370b505a4e618049[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Tue May 30 21:17:53 2023 +0700
+
+    bla
+
+[33mcommit c8e1fa0477aa2d398f5fe5e9b08ea340d4019bf0[m
+Merge: d5e2efa e8bf9eb
+Author: truonggiahuy8423 <134354507+truonggiahuy8423@users.noreply.github.com>
+Date:   Tue May 30 15:28:36 2023 +0700
+
+    Merge pull request #4 from truonggiahuy8423/schedulePage_2
+    
+    Schedule page 2 to main
+
+[33mcommit e8bf9ebdc843a096df973f0eef66c0fd1c97fe03[m
+Merge: d1f4a9d d5e2efa
+Author: truonggiahuy8423 <134354507+truonggiahuy8423@users.noreply.github.com>
+Date:   Tue May 30 15:28:08 2023 +0700
+
+    Merge branch 'main' into schedulePage_2
+
+[33mcommit d5e2efabc56895f13879677d6e39d29bbde2c70e[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Tue May 30 15:19:06 2023 +0700
+
+    patient tab, update patient function
+
+[33mcommit d1f4a9d8c4dd87585170a91016878df905c6cb97[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Tue May 30 14:42:04 2023 +0700
+
+    Updated schedule page
+
+[33mcommit 83408c81440f2a31947ccd039fec738d0723924c[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Tue May 30 14:14:02 2023 +0700
+
+    Updated schedule page
+
+[33mcommit 2f54d4a87e97a1dc0ad9a121b074d6f07696f426[m
+Author: Kaito1820 <nguyenduykhanh1820@gmail.com>
+Date:   Mon May 29 18:38:40 2023 +0700
+
+    Convert textField into Combobox
+
+[33mcommit 70a1789d469c02a963e5364020434ccb309d294e[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Mon May 29 17:09:46 2023 +0700
+
+    delete patient, sorting patient, patient tab
+
+[33mcommit f1e6c6743afed1891fe40851c53bc0d76ae22c43[m
+Author: truonggiahuy8423 <zhuy8423@gmail.com>
+Date:   Sun May 28 13:52:14 2023 +0700
+
+    tieng Anh, dateChooser
+
+[33mcommit ac15f973b6c0020517ce83458e63b1c3f186f12d[m
+Merge: d747b88 dd2724e
+Author: truonggiahuy8423 <134354507+truonggiahuy8423@users.noreply.github.com>
+Date:   Sun May 28 13:31:48 2023 +0700
+
+    Merge pull request #2 from truonggiahuy8423/schedulePage
+    
+    Schedule page: Add Delete, Update and Search feature
+
+[33mcommit dd2724e0bdcf386b024b2320abc2bc85a03fb2e3[m
+Merge: 33f2b57 d747b88
+Author: truonggiahuy8423 <134354507+truonggi

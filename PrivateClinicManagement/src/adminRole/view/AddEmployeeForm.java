@@ -269,7 +269,9 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                 {
                     JOptionPane.showMessageDialog(null, "Error: " + ex.toString(),"", JOptionPane.OK_OPTION);
                 } catch (Exception ee) {ee.printStackTrace();}   
-            }   
+            }
+            else 
+                jDialogcloseForm.dispose();
         });
     }
 

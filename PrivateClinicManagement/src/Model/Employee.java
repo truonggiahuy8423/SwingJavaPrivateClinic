@@ -189,11 +189,12 @@ public class Employee {
         Statement statement = null;
         ResultSet result = null;
         try
-        {Class.forName("oracle.jdbc.driver.OracleDriver");
-        String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-        String username = "c##uni4";  // Replace with your username
-        String password = "123";  // Replace with your password
-        connection = null; statement = null; result = null;
+        {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+            String username = "c##uni4";  // Replace with your username
+            String password = "123";  // Replace with your password
+            connection = null; statement = null; result = null;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             //System.out.println(connection.isClosed());
             statement = connection.createStatement() ;  
