@@ -407,7 +407,7 @@ public class SettingPage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteServiceActionPerformed
 
     private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnitActionPerformed
-        Long unitID = Long.valueOf(txtUnitID.getText());
+        Integer unitID = Integer.valueOf(txtUnitID.getText());
         unitController.addUnit(new Unit(unitID, txtNameUnit.getText()));
         queryDataUnit();
         displayDataUnit();

@@ -18,22 +18,22 @@ import javax.swing.JOptionPane;
  * @author GIAHUY
  */
 public class Unit {
-    private Long unitID;
+    private Integer unitID;
     private String unitName;
     
     public Unit(){
         
     }
-    public Unit(Long unitID, String unitName){
+    public Unit(Integer unitID, String unitName){
         this.unitID = unitID;
         this.unitName  = unitName;
     }
     
-    public void setUnitID(Long unitID){
+    public void setUnitID(Integer unitID){
         this.unitID = unitID;
     }
     
-    public Long getUnitID(){
+    public Integer getUnitID(){
         return this.unitID;
     }
     
@@ -54,7 +54,7 @@ public class Unit {
             ResultSet result = statement.executeQuery("select * from UNIT order by unit_id asc");
 
             while (result.next()){
-                Unit p = new Unit(result.getLong(1), result.getString(2));
+                Unit p = new Unit(result.getInt(1), result.getString(2));
                 listOfUnit.add(p);
             }
             connection.close();
@@ -74,7 +74,7 @@ public class Unit {
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             String sql = "insert into UNIT values(?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;  
-            statement.setLong(1, unit.getUnitID());
+            statement.setInt(1, unit.getUnitID());
             statement.setString(2, unit.getUnitName());
             statement.executeUpdate();
             connection.close();

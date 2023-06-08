@@ -4,6 +4,15 @@
  */
 package adminRole.view;
 
+import Model.Medicine;
+import adminRole.controller.MedicinePageController;
+import adminRole.controller.UnitController;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author GIAHUY
@@ -13,10 +22,58 @@ public class MedicinePage extends javax.swing.JPanel {
     /**
      * Creates new form MedicinePage
      */
+    private List<Medicine> listOfMedicine;
+    private MedicinePageController controller;
+    private UnitController unitController;
+    private DefaultTableModel dataOftable;
+    
     public MedicinePage() {
         initComponents();
+        
+        listOfMedicine = new ArrayList<>();
+        controller = new MedicinePageController(this);
+        
+        txtMedicineID.setBackground(Color.WHITE);
+        txtMedicineName.setBackground(Color.WHITE);
+        btnAdd.setBackground(Color.WHITE);;
+        btnDelete.setBackground(Color.WHITE);
+        btnUpdate.setBackground(Color.WHITE);
+        btnSearch.setBackground(Color.WHITE);
+        btnRefresh.setBackground(Color.WHITE);
+        errorID.setText("");
+        errorName.setText("");
+        dataOftable = (DefaultTableModel)this.tbMedicine.getModel();
+        dataOftable.setColumnIdentifiers(new Object[]{"Medicine ID", "Name", "Unit", "Description"});
+        
+        queryData("select m.medicine_id, m.medicine_name, u.unit_name, m.description "
+                        + "from medicine m, unit  u "
+                        + "where m.unit_id  = u.unit_id "
+                        + "order by medicine_id asc");
+        displayData(this.listOfMedicine);
     }
 
+    public void queryData(String sql){
+        listOfMedicine.clear();
+        controller.queryData(sql, listOfMedicine);
+    }
+    
+    public void displayData(List<Medicine> listOfMedicine){
+        dataOftable.setRowCount(0);
+        
+        for(Medicine p: listOfMedicine){
+            dataOftable.addRow(new Object[]{p.getMedicineID(), p.getMedicineName(), p.getUnit(), p.getDescription()});
+        }
+    }
+    
+    public void refreshData(){
+        errorID.setText("");
+        errorName.setText("");
+        queryData("select m.medicine_id, m.medicine_name, u.unit_name, m.description "
+                        + "from medicine m, unit  u "
+                        + "where m.unit_id  = u.unit_id "
+                        + "order by medicine_id asc");
+        displayData(this.listOfMedicine);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +83,230 @@ public class MedicinePage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbMedicine = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        txtMedicineID = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtMedicineName = new javax.swing.JTextField();
+        btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        errorID = new javax.swing.JLabel();
+        errorName = new javax.swing.JLabel();
+
+        setPreferredSize(new java.awt.Dimension(1625, 765));
+
+        tbMedicine.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbMedicine.setRowHeight(40);
+        tbMedicine.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbMedicineMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbMedicine);
+
+        jLabel1.setText("Medicine ID:");
+
+        jLabel2.setText("Name:");
+
+        btnAdd.setText("Add");
+        btnAdd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Delete");
+        btnDelete.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
+        btnSearch.setText("Search");
+        btnSearch.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        errorID.setForeground(new java.awt.Color(255, 0, 0));
+        errorID.setText("error");
+        errorID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        errorName.setForeground(new java.awt.Color(255, 0, 0));
+        errorName.setText("error");
+        errorName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(errorID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMedicineID, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(errorName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMedicineName, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 600, Short.MAX_VALUE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(150, 150, 150))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtMedicineID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtMedicineName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd)
+                    .addComponent(btnDelete)
+                    .addComponent(btnRefresh)
+                    .addComponent(btnSearch)
+                    .addComponent(btnUpdate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(errorID, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                    .addComponent(errorName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        MedicineForm form = new MedicineForm(null, true, this, 0, null);
+        form.setVisible(true);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if(txtMedicineID.getText().equals("")){
+            errorID.setText("ID must not be empty");
+        }
+        else{
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+            if(confirmOption == JOptionPane.YES_OPTION){
+                controller.deleteData(txtMedicineID.getText());
+                refreshData();
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        if(txtMedicineID.getText().equals("") && txtMedicineName.getText().equals("")){
+            errorID.setText("ID must not be empty");
+            errorName.setText("Name must not be empty");
+        }
+        else{
+            Medicine currentMedicine = new Medicine();
+            int n = tbMedicine.getSelectedRow();
+            currentMedicine.setMedicineID(Integer.valueOf(txtMedicineID.getText()));
+            currentMedicine.setMedicineName(String.valueOf(tbMedicine.getValueAt(n, 1)));
+            currentMedicine.setUnit(String.valueOf(tbMedicine.getValueAt(n, 2)));
+            currentMedicine.setDescription(String.valueOf(tbMedicine.getValueAt(n, 3)));
+
+            MedicineForm form = new MedicineForm(null, true, this, 1, currentMedicine);
+            form.setVisible(true);
+        }
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        if(txtMedicineID.getText().equals("") && txtMedicineName.getText().equals("")){
+            errorID.setText("ID must not be empty");
+            errorName.setText("Name must not be empty");
+        }
+        List<Medicine> listSearchMedicine = new ArrayList<>();
+        Medicine medicine = new Medicine();
+        String medicineID = String.valueOf(txtMedicineID.getText());
+        medicine.setMedicineID(medicineID.equals("null") ? null : Integer.valueOf(medicineID));
+        medicine.setMedicineName(String.valueOf(txtMedicineName.getText()));
+        
+        controller.searchData(medicine, listSearchMedicine);
+        displayData(listSearchMedicine);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        txtMedicineID.setText("");
+        txtMedicineName.setText("");
+        refreshData();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void tbMedicineMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMedicineMouseClicked
+        int n = tbMedicine.getSelectedRow();
+        
+        txtMedicineID.setText(String.valueOf(tbMedicine.getValueAt(n, 0)));
+        txtMedicineName.setText(String.valueOf(tbMedicine.getValueAt(n, 1)));
+    }//GEN-LAST:event_tbMedicineMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JLabel errorID;
+    private javax.swing.JLabel errorName;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbMedicine;
+    private javax.swing.JTextField txtMedicineID;
+    private javax.swing.JTextField txtMedicineName;
     // End of variables declaration//GEN-END:variables
 }
