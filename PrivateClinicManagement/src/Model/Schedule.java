@@ -217,7 +217,7 @@ public class Schedule {
 
         }
         finally{
-            System.out.println("Successful"); 
+            System.out.println("Successfully update"); 
         }        
     }
     public void searchSchedule(Schedule searchSchedule, List<Schedule> listSearchSchedule){
@@ -292,7 +292,7 @@ public class Schedule {
 
         }
         finally{
-            System.out.println("Successful"); 
+            System.out.println("Successfully search"); 
         }        
     }
 }
