@@ -131,7 +131,7 @@ public class SchedulePage extends javax.swing.JPanel {
         
         cbbDoctor.insertItemAt(null, 0);
         for(Employee p: dataEmployee){
-            cbbDoctor.addItem(String.valueOf(p.getEmployeeID()));
+            cbbDoctor.addItem(String.valueOf(p.getEmployeeId()));
         }
         
         txtDate.setDate(null);
@@ -602,4 +602,5 @@ public class SchedulePage extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser txtDate;
     private javax.swing.JTextField txtNextOrdinalNumber;
     // End of variables declaration//GEN-END:variables
+    
 }

@@ -24,5 +24,6 @@ public class ServiceController {
     
     public void deleteService(String serviceID){
         serviceModel.deleteService(serviceID);
+
     }
 }

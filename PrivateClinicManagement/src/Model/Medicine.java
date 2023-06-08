@@ -5,71 +5,119 @@
 package Model;
 
 import adminRole.controller.UnitController;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JOptionPane;
-
+import java.util.Calendar;
 /**
  *
  * @author GIAHUY
  */
 public class Medicine {
     private Integer medicineID;
-//    private String medicineImage;
+    private Integer unitID;
     private String medicineName;
     private String unit;
     private String description;
+
+    public void setMedicineID(Integer medicineID) {
+        this.medicineID = medicineID;
+    }
+
+    public void setUnitID(Integer unitID) {
+        this.unitID = unitID;
+    }
+
+    public void setMedicineName(String medicineName) {
+        this.medicineName = medicineName;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getMedicineID() {
+        return medicineID;
+    }
+
+    public Integer getUnitID() {
+        return unitID;
+    }
+
+    public String getMedicineName() {
+        return medicineName;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public String getDescription() {
+        return description;
+    }
     
     public Medicine(){
         
     }
-    
     public Medicine(Integer medicineID, /*String medicineImage,*/ String medicineName, String unit, String description){
         this.medicineID = medicineID;
-//        this.medicineImage = medicineImage;
         this.medicineName = medicineName;
         this.unit = unit;
         this.description = description;
     }
-    
-    public Integer getMedicineID(){
-        return this.medicineID;
-    }
-    
-    public void setMedicineID(Integer medicineID){
+    public Medicine(Integer medicineID, String medicineName, String decription, Integer unitID, String unit) {
         this.medicineID = medicineID;
-    }
-    
-    public String getMedicineName(){
-        return this.medicineName;
-    }
-    
-    public void setMedicineName(String medicineName){
         this.medicineName = medicineName;
-    }
-    
-    public String getUnit(){
-        return this.unit;
-    }
-    
-    public void setUnit(String unit){
+        this.description = decription;
+        this.unitID = unitID;
         this.unit = unit;
     }
-    
-    public String getDescription(){
-        return this.description;
+
+
+    public void getListOfMedicine_(String sql, List<Medicine> listOfMedicine) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        try
+        {Class.forName("oracle.jdbc.driver.OracleDriver");
+        String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+        String username = "AD";  // Replace with your username
+        String password = "88888888";  // Replace with your password
+        connection = null; statement = null; result = null;
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            //System.out.println(connection.isClosed());
+            statement = connection.createStatement() ;  
+            result = statement.executeQuery(sql);
+            //System.out.println(rs.next()); 
+            while (result.next())
+            {
+                //m.medicine_id, m.medicine_name, m.description, u.unit_id, u.unit_name
+                Medicine m = new Medicine(result.getInt(1), result.getString(2), result.getString(3), result.getInt(4), result.getString(5));
+                listOfMedicine.add(m);
+            }
+        }
+        catch (ClassNotFoundException e)
+        { 
+
+            System.out.println(e);
+        }
+        finally { 
+            if (result != null) result.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+            
+        } 
     }
-    
-    public void setDescription(String description){
-        this.description = description;
-    }
-    
     public void getListOfMedicine(String sql, List<Medicine> listOfMedicine){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
