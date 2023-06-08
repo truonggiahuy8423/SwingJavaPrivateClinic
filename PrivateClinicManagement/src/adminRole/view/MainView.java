@@ -65,8 +65,8 @@ public class MainView extends javax.swing.JFrame {
         paneList[1] = new JPanel(); //appointment
         paneList[2] = new JPanel(); //
         paneList[3] = new JPanel();
-        paneList[4] =  new JPanel();//new SchedulePage();
-        paneList[5] =  new JPanel();//new MedicinePage();
+        paneList[4] =  new JPanel();
+        paneList[5] =  new MedicinePage();
         paneList[6] = new JPanel();
         paneList[7] = new JPanel();
         paneList[8] = new SettingPage();

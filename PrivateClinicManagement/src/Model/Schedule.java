@@ -105,7 +105,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
             System.out.println(sql);
@@ -129,7 +129,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             String sql = "INSERT INTO SCHEDULE VALUES(schedule_id_sequence.nextval, ?, ?, 1, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;
 
@@ -155,7 +155,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             String sql = "DELETE FROM SCHEDULE WHERE SCHEDULE_ID = " + scheduleID;
             Statement statement = connection.createStatement() ;
             statement.executeUpdate(sql);
@@ -176,7 +176,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             sql = "UPDATE SCHEDULE SET ";
             Statement statement = connection.createStatement() ;
             boolean check = false;
@@ -229,7 +229,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             String sql = "SELECT * FROM SCHEDULE "
                             + "WHERE "
                                     + "SCHEDULE_ID = "        + "?"  +" OR "
