@@ -22,6 +22,7 @@ public class PatientPage extends javax.swing.JPanel {
     public void addNewTab(JPanel tab)
     {
         this.tabbedPane.add(tab, tab.toString());
+        this.tabbedPane.setSelectedIndex((tabbedPane.getTabCount()- 1));
     }
     
     public JTabbedPane getTabbedPane() {
