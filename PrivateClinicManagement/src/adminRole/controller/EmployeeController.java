@@ -22,7 +22,7 @@ public class EmployeeController {
     public void queryData(String sql, List<Employee> listOfEmployee){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##uni4", "123");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
@@ -40,7 +40,7 @@ public class EmployeeController {
                     start_date = Calendar.getInstance();
                     start_date.setTimeInMillis(result.getDate(5).getTime());
                 }
-                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), result.getString(10), result.getInt(11));
+                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9),"", result.getInt(10));
                 listOfEmployee.add(p);
             }
             connection.close();

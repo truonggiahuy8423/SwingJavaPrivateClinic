@@ -65,7 +65,7 @@ public class MainView extends javax.swing.JFrame {
         paneList[1] = new JPanel(); //appointment
         paneList[2] = new JPanel(); //
         paneList[3] = new JPanel();
-        paneList[4] =  new JPanel();
+        paneList[4] =  new SchedulePage();
         paneList[5] =  new MedicinePage();
         paneList[6] = new JPanel();
         paneList[7] = new JPanel();
@@ -290,6 +290,8 @@ public class MainView extends javax.swing.JFrame {
         contentPane.setLayout(new java.awt.CardLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setMaximumSize(new java.awt.Dimension(1550, 760));
+        jPanel2.setMinimumSize(new java.awt.Dimension(1550, 760));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

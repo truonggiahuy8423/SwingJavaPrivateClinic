@@ -130,7 +130,7 @@ public class Employee {
         this.employeeID = id;
     }
     public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
-        this.employeeID = employeeID;
+        this.employeeID = employeeId;
         this.name = fullName;
         this.phone = phone;
         this.birthday = birthday;
@@ -211,7 +211,7 @@ public class Employee {
                     start_date = Calendar.getInstance();
                     start_date.setTimeInMillis(result.getDate(5).getTime());
                 }
-                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), result.getString(10), result.getInt(11));
+                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), " ", result.getInt(10));
                 listOfEmployee.add(p);
             }         
         }
