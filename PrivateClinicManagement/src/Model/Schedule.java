@@ -286,7 +286,6 @@ public class Schedule {
                 listSearchSchedule.add(p);
             }
             connection.close();
-//                System.out.println(sql);
         } 
         catch (SQLException | ClassNotFoundException e){
                 JOptionPane.showMessageDialog(null, e.toString());
