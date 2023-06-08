@@ -1,0 +1,287 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ */
+package adminRole.view;
+
+import Model.Medicine;
+import Model.Unit;
+import adminRole.controller.MedicinePageController;
+import adminRole.controller.UnitController;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Admin
+ */
+public class MedicineForm extends javax.swing.JDialog {
+
+    /**
+     * Creates new form MedicineForm
+     */
+    private List<Medicine> listOfMedicine;
+    private List<Unit> listOfUnit ;
+    private MedicinePageController medicineController;
+    
+    public MedicineForm(java.awt.Frame parent, boolean modal, MedicinePage parent2, int state, Medicine currentMedicine) {
+        super(parent, modal);
+        initComponents();
+        
+        txtName.setBackground(Color.WHITE);
+        cbbUnit.setBackground(Color.WHITE);
+        txtDescription.setBackground(Color.WHITE);
+        btnSave.setBackground(Color.WHITE);
+        btnCancel.setBackground(Color.WHITE);
+        
+        errorName.setText("");
+        errorUnit.setText("");
+        
+        loadUnit();
+        
+        medicineController = new MedicinePageController(null);
+        
+        // Neu state = 1 (update) thi set up cac txtField va combobox voi thong tin vua chon
+        if(state == 1){
+            txtName.setText(currentMedicine.getMedicineName());
+            for(int i = 1; i < cbbUnit.getItemCount(); i++){
+                if(cbbUnit.getItemAt(i).equalsIgnoreCase(currentMedicine.getUnit())){
+                    cbbUnit.setSelectedIndex(i);
+                }
+            }
+            txtDescription.setText(currentMedicine.getDescription());
+        }
+        
+        btnSave.addActionListener(e ->{
+            Medicine newMedicine = new Medicine();
+            Integer unitID = 0;
+            for(Unit u: listOfUnit){
+                if(String.valueOf(cbbUnit.getSelectedItem()).equals(u.getUnitName())){
+                    unitID = u.getUnitID();
+                }
+            }
+            if(checkNull()){
+                for(Unit u: listOfUnit){
+                    if(String.valueOf(cbbUnit.getSelectedItem()).equals(u.getUnitName())){
+                        unitID = u.getUnitID();
+                    }
+                }
+                newMedicine.setMedicineID(null);
+                newMedicine.setMedicineName(String.valueOf(txtName.getText()));
+                newMedicine.setUnit(String.valueOf(cbbUnit.getSelectedItem()));
+                newMedicine.setDescription(String.valueOf(txtDescription.getText()));
+
+                // state = 0: thuc hien add 
+                // state = 1 thuc hien update
+                if(state == 0){
+                    try{
+                        medicineController.addData(newMedicine, unitID);
+                    }
+                    catch(Exception exc){
+                        JOptionPane.showMessageDialog(null, exc.toString());
+                    }
+                    finally{
+                        JOptionPane.showMessageDialog(null, "Add new medicine successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    
+                }
+                else{
+                    try{
+                        medicineController.updateData(newMedicine, currentMedicine, unitID);
+                    }
+                    catch(Exception exc){
+                        JOptionPane.showMessageDialog(null, exc.toString());
+                    }
+                    finally{
+                        JOptionPane.showMessageDialog(null, "Update medicine successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+
+                parent2.refreshData();
+                this.dispose();
+            }
+        });
+    }
+    
+    public void loadUnit(){
+        cbbUnit.removeAllItems();
+        UnitController unitController = new UnitController();
+        listOfUnit = new ArrayList<>();
+        unitController.queryData(listOfUnit);
+        cbbUnit.insertItemAt(null, 0);
+        for(Unit p: listOfUnit){
+            cbbUnit.addItem(p.getUnitName());
+        }
+    }
+    
+    public boolean checkNull(){
+        boolean isOk = true;
+        
+        if(String.valueOf(txtName.getText()).length() <= 0){
+            errorName.setText("Name must not be empty");
+            isOk = false;
+        }
+        
+        if(cbbUnit.getSelectedItem() == null){
+            errorUnit.setText("Unit must not be empty");
+            isOk = false;
+        }
+        return isOk;
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescription = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        cbbUnit = new javax.swing.JComboBox<>();
+        btnSave = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        errorName = new javax.swing.JLabel();
+        errorUnit = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        txtDescription.setColumns(20);
+        txtDescription.setRows(5);
+        jScrollPane1.setViewportView(txtDescription);
+
+        jLabel1.setText("Name:");
+
+        jLabel2.setText("Unit:");
+
+        jLabel3.setText("Decription:");
+
+        cbbUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btnSave.setText("Save");
+        btnSave.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btnCancel.setText("Cancel");
+        btnCancel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Add Medicine");
+
+        errorName.setForeground(new java.awt.Color(255, 0, 0));
+        errorName.setText("error");
+        errorName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        errorUnit.setForeground(new java.awt.Color(255, 0, 0));
+        errorUnit.setText("error");
+        errorUnit.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(errorName, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(errorUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(33, 33, 33)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                        .addComponent(cbbUnit, 0, 170, Short.MAX_VALUE)))))))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(errorName, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cbbUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorUnit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancel)
+                    .addComponent(btnSave))
+                .addGap(15, 15, 15))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int option = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn hủy thao tác hiện tại?", "Thoát", JOptionPane.YES_NO_OPTION);
+        if(option == JOptionPane.YES_OPTION){
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cbbUnit;
+    private javax.swing.JLabel errorName;
+    private javax.swing.JLabel errorUnit;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtDescription;
+    private javax.swing.JTextField txtName;
+    // End of variables declaration//GEN-END:variables
+}

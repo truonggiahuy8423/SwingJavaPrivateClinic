@@ -19,8 +19,8 @@ import java.util.Date;
  * @author GIAHUY
  */
 public class Employee {
-    private int employeeId;
-    private String fullName;
+    private Long employeeID;
+    private String name;
     private String phone;
     private Calendar birthday;
     private Calendar startDay;
@@ -30,15 +30,19 @@ public class Employee {
     private int salaryPerDay;
     private String portrait;
     private int roleId;
-    
-    public Employee(){};
-    public Employee(int id)
+    public Employee(){}
+    public Employee(Long employeeID, String name, String phone){
+        this.employeeID = employeeID;
+        this.name = name;
+         this.phone = phone;
+    }
+   public Employee(int id)
     {
         this.employeeId = id;
     }
     public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
-        this.employeeId = employeeId;
-        this.fullName = fullName;
+        this.employeeID = employeeID;
+        this.name = fullName;
         this.phone = phone;
         this.birthday = birthday;
         this.startDay = startDay;
@@ -49,94 +53,9 @@ public class Employee {
         this.portrait = portrait;
         this.roleId = roleId;
     }
+    
 
-    public int getEmployeeId() {
-        return employeeId;
-    }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Calendar getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Calendar birthday) {
-        this.birthday = birthday;
-    }
-
-    public Calendar getStartDay() {
-        return startDay;
-    }
-
-    public void setStartDay(Calendar startDay) {
-        this.startDay = startDay;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getHometown() {
-        return hometown;
-    }
-
-    public void setHometown(String hometown) {
-        this.hometown = hometown;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getSalaryPerDay() {
-        return salaryPerDay;
-    }
-
-    public void setSalaryPerDay(int salaryPerDay) {
-        this.salaryPerDay = salaryPerDay;
-    }
-
-    public String getPortrait() {
-        return portrait;
-    }
-
-    public void setPortrait(String portrait) {
-        this.portrait = portrait;
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
     
     public void addEmployee(Employee employee) throws SQLException
     {
