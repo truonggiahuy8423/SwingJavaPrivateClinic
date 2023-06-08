@@ -134,7 +134,7 @@ public class AddPrescriptionDetailsForm extends javax.swing.JDialog {
         descriptionField.setText(" ");
         dataOfMedicineTable.setRowCount(0);
         for (Medicine m : listOfMedicine) {
-            dataOfMedicineTable.addRow(new Object[]{m.getMedicineID(), m.getName(), m.getDecription(), m.getUnitName()});
+            dataOfMedicineTable.addRow(new Object[]{m.getMedicineID(), m.getMedicineName(), m.getDescription(), m.getUnit()});
         }
     }
     private void refreshData() {

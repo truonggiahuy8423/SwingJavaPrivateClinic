@@ -51,7 +51,7 @@ public class AddAppointmentForm extends javax.swing.JDialog {
         finalCostField.setText("");
         dataOfScheduleTable.setRowCount(0);
         for (Schedule schedule : listOfSchedule) {
-            dataOfScheduleTable.addRow(new Object[]{schedule.getScheduleID(), schedule.getScheduleDate(), schedule.getEmployeeID(), schedule.getNextOrinalNumber(), schedule.getServiceName(), (schedule.getState() == 1 ? "Available" : "Closed"), schedule.getCost()});
+            dataOfScheduleTable.addRow(new Object[]{schedule.getScheduleID(), schedule.getScheduleDate(), schedule.getDoctorID(), schedule.getNextOrinalNumber(), schedule.getServiceName(), (schedule.getState() == 1 ? "Available" : "Closed"), schedule.getCost()});
         }
     }
 
@@ -105,7 +105,7 @@ public class AddAppointmentForm extends javax.swing.JDialog {
             public void mouseClicked(MouseEvent e) {
                 int index = tableOfSchedule.getSelectedRow();
                 scheduleIDField.setText(String.valueOf(listOfSchedule.get(index).getScheduleID()));
-                doctorIDField.setText(String.valueOf(listOfSchedule.get(index).getEmployeeID()));
+                doctorIDField.setText(String.valueOf(listOfSchedule.get(index).getDoctorID()));
                 doctorNameField.setText(listOfSchedule.get(index).getDoctorName());
                 dateField.setText(String.valueOf(listOfSchedule.get(index).getScheduleDate()));
                 roomField.setText(String.valueOf(listOfSchedule.get(index).getRoomID()));

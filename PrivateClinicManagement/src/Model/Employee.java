@@ -19,8 +19,8 @@ import java.util.Date;
  * @author GIAHUY
  */
 public class Employee {
-    private int employeeId;
-    private String fullName;
+    private Integer employeeID;
+    private String name;
     private String phone;
     private Calendar birthday;
     private Calendar startDay;
@@ -30,113 +30,121 @@ public class Employee {
     private int salaryPerDay;
     private String portrait;
     private int roleId;
-    
-    public Employee(){};
-    public Employee(int id)
-    {
-        this.employeeId = id;
-    }
-    public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
-        this.employeeId = employeeId;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.birthday = birthday;
-        this.startDay = startDay;
-        this.address = address;
-        this.hometown = hometown;
-        this.password = password;
-        this.salaryPerDay = salaryPerDay;
-        this.portrait = portrait;
-        this.roleId = roleId;
+
+    public void setEmployeeID(Integer employeeID) {
+        this.employeeID = employeeID;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getPhone() {
-        return phone;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public Calendar getBirthday() {
-        return birthday;
-    }
-
     public void setBirthday(Calendar birthday) {
         this.birthday = birthday;
-    }
-
-    public Calendar getStartDay() {
-        return startDay;
     }
 
     public void setStartDay(Calendar startDay) {
         this.startDay = startDay;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getHometown() {
-        return hometown;
     }
 
     public void setHometown(String hometown) {
         this.hometown = hometown;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public int getSalaryPerDay() {
-        return salaryPerDay;
     }
 
     public void setSalaryPerDay(int salaryPerDay) {
         this.salaryPerDay = salaryPerDay;
     }
 
-    public String getPortrait() {
-        return portrait;
-    }
-
     public void setPortrait(String portrait) {
         this.portrait = portrait;
-    }
-
-    public int getRoleId() {
-        return roleId;
     }
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+
+    public Integer getEmployeeID() {
+        return employeeID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public Calendar getBirthday() {
+        return birthday;
+    }
+
+    public Calendar getStartDay() {
+        return startDay;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getHometown() {
+        return hometown;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getSalaryPerDay() {
+        return salaryPerDay;
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+    
+    public Employee(){}
+    public Employee(Integer employeeID, String name, String phone){
+        this.employeeID = employeeID;
+        this.name = name;
+         this.phone = phone;
+    }
+   public Employee(int id)
+    {
+        this.employeeID = id;
+    }
+    public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
+        this.employeeID = employeeID;
+        this.name = fullName;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.startDay = startDay;
+        this.address = address;
+        this.hometown = hometown;
+        this.password = password;
+        this.salaryPerDay = salaryPerDay;
+        this.portrait = portrait;
+        this.roleId = roleId;
+    }
+    
+
+
     
     public void addEmployee(Employee employee) throws SQLException
     {
@@ -151,8 +159,8 @@ public class Employee {
                     + "start_day, address, hometown, password, salary_per_day, role_id) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlInsert);
-            statement.setInt(1, employee.getEmployeeId());
-            statement.setString(2, employee.getFullName());
+            statement.setInt(1, employee.getEmployeeID());
+            statement.setString(2, employee.getName());
             statement.setString(3, employee.getPhone());
             statement.setDate(4, employee.getBirthday() == null ? null : new java.sql.Date(employee.getBirthday().getTimeInMillis()));
             statement.setDate(5, employee.getStartDay() == null ? null : new java.sql.Date(employee.getStartDay().getTimeInMillis()));
@@ -305,7 +313,7 @@ public class Employee {
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlUpdate);
-            statement.setString(1, updatedEmployee.getFullName());
+            statement.setString(1, updatedEmployee.getName());
             statement.setString(2, updatedEmployee.getPhone());
             statement.setDate(3, updatedEmployee.getBirthday() == null ? null : new java.sql.Date(updatedEmployee.getBirthday().getTimeInMillis()));
             statement.setDate(4, updatedEmployee.getStartDay() == null ? null : new java.sql.Date(updatedEmployee.getStartDay().getTimeInMillis()));

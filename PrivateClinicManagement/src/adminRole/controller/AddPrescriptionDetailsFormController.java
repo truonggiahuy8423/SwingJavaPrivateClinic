@@ -18,7 +18,7 @@ public class AddPrescriptionDetailsFormController {
     Result resultModel = new Result();
     PrescriptionDetails prescModel = new PrescriptionDetails();
     public void queryData(String sql, List<Medicine> listOfMedicine) throws SQLException {
-        medicineModel.getListOfMedicine(sql, listOfMedicine);
+        medicineModel.getListOfMedicine_(sql, listOfMedicine);
     }
     public Result getAResult(Integer result_id) throws SQLException {
         return resultModel.getAResult(result_id);

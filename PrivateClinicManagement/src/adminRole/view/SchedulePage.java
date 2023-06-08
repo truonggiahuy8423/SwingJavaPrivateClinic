@@ -119,7 +119,7 @@ public class SchedulePage extends javax.swing.JPanel {
         }
         
         for(Employee p: dataEmployee){
-            cbbDoctor.addItem(String.valueOf(p.getEmployeeId()));
+            cbbDoctor.addItem(String.valueOf(p.getEmployeeID()));
         }
         
         
@@ -147,7 +147,7 @@ public class SchedulePage extends javax.swing.JPanel {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
             String dateString = sdf.format(p.getScheduleDate());
             dataOftable.addRow(new Object[] {p.getScheduleID(), dateString, p.getState(), p.getNextOrinalNumber(), 
-                p.getServiceID(), p.getRoomID(), p.getEmployeeID()});
+                p.getServiceID(), p.getRoomID(), p.getDoctorID()});
         }
     }
 

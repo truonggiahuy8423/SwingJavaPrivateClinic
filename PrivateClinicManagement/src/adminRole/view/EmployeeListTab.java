@@ -46,9 +46,9 @@ public class EmployeeListTab extends javax.swing.JPanel {
                 Collections.sort(listOfEmployee, new Comparator<Employee>() {
             @Override
             public int compare(Employee o1, Employee o2) {
-                if (o1.getEmployeeId() > o2.getEmployeeId())
+                if (o1.getEmployeeID()> o2.getEmployeeID())
                     return 1;
-                else if (o1.getEmployeeId() < o2.getEmployeeId())
+                else if (o1.getEmployeeID()< o2.getEmployeeID())
                     return -1;
                 else return 0;
             }
@@ -58,9 +58,9 @@ public class EmployeeListTab extends javax.swing.JPanel {
                 Collections.sort(listOfEmployee, new Comparator<Employee>() {
             @Override
             public int compare(Employee o1, Employee o2) {
-                if (o1.getEmployeeId() < o2.getEmployeeId())
+                if (o1.getEmployeeID()< o2.getEmployeeID())
                     return 1;
-                else if (o1.getEmployeeId() > o2.getEmployeeId())
+                else if (o1.getEmployeeID()> o2.getEmployeeID())
                     return -1;
                 else return 0;
             }
@@ -123,7 +123,7 @@ public class EmployeeListTab extends javax.swing.JPanel {
         for (Employee p : this.listOfEmployee)
             {
 
-                dataOftable.addRow(new Object[] {p.getEmployeeId() , p.getFullName(), p.getPhone(),
+                dataOftable.addRow(new Object[] {p.getEmployeeID(), p.getEmployeeID(), p.getPhone(),
                     convert_calendar(p.getBirthday()), convert_calendar(p.getStartDay()), 
                     p.getAddress() == null ? "None" : p.getAddress(), p.getHometown() == null ? "None" : p.getHometown(), p.getPassword() == null ? "None" : p.getPassword()});
 
