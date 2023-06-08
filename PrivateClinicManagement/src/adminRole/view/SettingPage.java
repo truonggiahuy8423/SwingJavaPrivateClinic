@@ -4,6 +4,18 @@
  */
 package adminRole.view;
 
+import Model.Room;
+import Model.Service;
+import Model.Unit;
+import adminRole.controller.RoomController;
+import adminRole.controller.ServiceController;
+import adminRole.controller.UnitController;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author GIAHUY
@@ -13,10 +25,86 @@ public class SettingPage extends javax.swing.JPanel {
     /**
      * Creates new form SettingPage
      */
+    private final RoomController roomController;
+    private final ServiceController serviceController;
+    private final UnitController unitController; 
+    private List<Room> listOfRoom;
+    private List<Service> listOfService;
+    private List<Unit> listOfUnit;
+    private final DefaultTableModel dataOfRoomTable;
+    private final DefaultTableModel dataOfServiceTable;
+    private final DefaultTableModel dataOfUnitTable;
+    
     public SettingPage() {
         initComponents();
+        
+        roomController = new RoomController();
+        serviceController = new ServiceController();
+        unitController = new UnitController();
+        listOfRoom = new ArrayList<>();
+        listOfService = new ArrayList<>();
+        listOfUnit = new ArrayList<>();
+        
+        btnAddRoom.setBackground(Color.white);
+        btnDeleteRoom.setBackground(Color.white);
+        btnAddService.setBackground(Color.white);
+        btnDeleteService.setBackground(Color.white);
+        btnAddUnit.setBackground(Color.white);
+        btnDeleteUnit.setBackground(Color.white);
+        
+        dataOfRoomTable = (DefaultTableModel)this.tbRoom.getModel();
+        dataOfRoomTable.setColumnIdentifiers(new Object[]{"Room ID"});
+        
+        dataOfServiceTable = (DefaultTableModel)this.tbService.getModel();
+        dataOfServiceTable.setColumnIdentifiers(new Object[]{"Service ID", "Name", "Cost"});
+        
+        dataOfUnitTable = (DefaultTableModel)this.tbUnit.getModel();
+        dataOfUnitTable.setColumnIdentifiers(new Object[]{"Unit ID", "Name"});
+        
+        queryDataRoom();
+        queryDataService();
+        queryDataUnit();
+        displayDataRoom();
+        displayDataService();
+        displayDataUnit();
     }
 
+    public void queryDataRoom(){
+        this.listOfRoom.clear();
+        roomController.queryData(this.listOfRoom);
+    }
+    
+    public void queryDataService(){
+        this.listOfService.clear();
+        serviceController.queryData(this.listOfService);
+    }
+    
+    public void queryDataUnit(){
+        this.listOfUnit.clear();
+        unitController.queryData(this.listOfUnit);
+    }
+    
+    public void displayDataRoom(){
+        dataOfRoomTable.setRowCount(0);
+        
+        for(Room r : listOfRoom){
+            dataOfRoomTable.addRow(new Object[]{r.getRoomID()});
+        }
+    }
+    public void displayDataService(){
+        dataOfServiceTable.setRowCount(0);
+        for(Service s : listOfService){
+            dataOfServiceTable.addRow(new Object[]{s.getServiceID(), s.getServiceName(), s.getServiceCost()});
+        }
+    }
+    public void displayDataUnit(){
+        dataOfUnitTable.setRowCount(0);        
+
+        for(Unit u : listOfUnit){
+            dataOfUnitTable.addRow(new Object[]{u.getUnitID(), u.getUnitName()});
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +114,360 @@ public class SettingPage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbRoom = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tbService = new javax.swing.JTable();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tbUnit = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtRoomID = new javax.swing.JTextField();
+        txtServiceID = new javax.swing.JTextField();
+        txtUnitID = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtNameService = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtCost = new javax.swing.JTextField();
+        btnAddService = new javax.swing.JButton();
+        btnDeleteService = new javax.swing.JButton();
+        btnAddRoom = new javax.swing.JButton();
+        btnDeleteRoom = new javax.swing.JButton();
+        btnDeleteUnit = new javax.swing.JButton();
+        btnAddUnit = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        txtNameUnit = new javax.swing.JTextField();
+
+        setPreferredSize(new java.awt.Dimension(1590, 765));
+
+        tbRoom.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbRoom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRoomMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tbRoom);
+
+        tbService.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbService.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbServiceMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tbService);
+
+        tbUnit.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbUnit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbUnitMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tbUnit);
+
+        jLabel1.setText("Room Managemet");
+
+        jLabel2.setText("Service Management");
+
+        jLabel3.setText("Unit of Medicine Management");
+
+        jLabel4.setText("Room ID:");
+
+        jLabel5.setText("Service ID:");
+
+        jLabel6.setText("Unit ID:");
+
+        jLabel7.setText("Name:");
+
+        jLabel8.setText("Cost:");
+
+        btnAddService.setText("Add");
+        btnAddService.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAddService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddServiceActionPerformed(evt);
+            }
+        });
+
+        btnDeleteService.setText("Delete");
+        btnDeleteService.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDeleteService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteServiceActionPerformed(evt);
+            }
+        });
+
+        btnAddRoom.setText("Add");
+        btnAddRoom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAddRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRoomActionPerformed(evt);
+            }
+        });
+
+        btnDeleteRoom.setText("Delete");
+        btnDeleteRoom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDeleteRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteRoomActionPerformed(evt);
+            }
+        });
+
+        btnDeleteUnit.setText("Delete");
+        btnDeleteUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDeleteUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUnitActionPerformed(evt);
+            }
+        });
+
+        btnAddUnit.setText("Add");
+        btnAddUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAddUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUnitActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Name:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAddRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDeleteRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel7)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtNameService, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAddService, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnDeleteService, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(58, 58, 58))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtNameUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(474, 474, 474)))
+                                .addGap(8, 8, 8)
+                                .addComponent(btnAddUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDeleteUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(txtRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtNameService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddService)
+                    .addComponent(btnDeleteService)
+                    .addComponent(btnAddRoom)
+                    .addComponent(btnDeleteRoom))
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)
+                        .addComponent(txtNameUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnDeleteUnit)
+                        .addComponent(btnAddUnit)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoomActionPerformed
+        Long roomID = Long.valueOf(txtRoomID.getText());
+        roomController.addRoom(new Room(roomID));
+        queryDataRoom();
+        displayDataRoom();
+    }//GEN-LAST:event_btnAddRoomActionPerformed
+
+    private void btnDeleteRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRoomActionPerformed
+        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+        if(confirmOption == JOptionPane.YES_OPTION){
+            roomController.deleteRoom(txtRoomID.getText());
+            queryDataRoom();
+            displayDataRoom();
+        }
+    }//GEN-LAST:event_btnDeleteRoomActionPerformed
+
+    private void btnAddServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServiceActionPerformed
+        Long serviceID = Long.valueOf(txtServiceID.getText());
+        Long serviceCost = Long.valueOf(txtCost.getText());
+        serviceController.addService(new Service(serviceID, txtNameService.getText(), serviceCost));
+        queryDataService();
+        displayDataService();
+    }//GEN-LAST:event_btnAddServiceActionPerformed
+
+    private void btnDeleteServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteServiceActionPerformed
+        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+        if(confirmOption == JOptionPane.YES_OPTION){
+            serviceController.deleteService(txtServiceID.getText());
+            queryDataService();
+            displayDataService();
+        }
+    }//GEN-LAST:event_btnDeleteServiceActionPerformed
+
+    private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnitActionPerformed
+        Integer unitID = Integer.valueOf(txtUnitID.getText());
+        unitController.addUnit(new Unit(unitID, txtNameUnit.getText()));
+        queryDataUnit();
+        displayDataUnit();
+    }//GEN-LAST:event_btnAddUnitActionPerformed
+
+    private void btnDeleteUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUnitActionPerformed
+        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+        if(confirmOption == JOptionPane.YES_OPTION){
+            unitController.deleteUnit(txtUnitID.getText());
+            queryDataUnit();
+            displayDataUnit();
+        }
+    }//GEN-LAST:event_btnDeleteUnitActionPerformed
+
+    private void tbRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRoomMouseClicked
+        int n = tbRoom.getSelectedRow();
+        txtRoomID.setText(String.valueOf(tbRoom.getValueAt(n, 0)));
+    }//GEN-LAST:event_tbRoomMouseClicked
+
+    private void tbServiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbServiceMouseClicked
+        int n = tbService.getSelectedRow();
+        txtServiceID.setText(String.valueOf(tbService.getValueAt(n, 0)));
+        txtNameService.setText(String.valueOf(tbService.getValueAt(n, 1)));
+        txtCost.setText(String.valueOf(tbService.getValueAt(n, 2)));
+    }//GEN-LAST:event_tbServiceMouseClicked
+
+    private void tbUnitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUnitMouseClicked
+        int n = tbUnit.getSelectedRow();
+        txtUnitID.setText(String.valueOf(tbUnit.getValueAt(n, 0)));
+        txtNameUnit.setText(String.valueOf(tbUnit.getValueAt(n, 1)));  
+    }//GEN-LAST:event_tbUnitMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddRoom;
+    private javax.swing.JButton btnAddService;
+    private javax.swing.JButton btnAddUnit;
+    private javax.swing.JButton btnDeleteRoom;
+    private javax.swing.JButton btnDeleteService;
+    private javax.swing.JButton btnDeleteUnit;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable tbRoom;
+    private javax.swing.JTable tbService;
+    private javax.swing.JTable tbUnit;
+    private javax.swing.JTextField txtCost;
+    private javax.swing.JTextField txtNameService;
+    private javax.swing.JTextField txtNameUnit;
+    private javax.swing.JTextField txtRoomID;
+    private javax.swing.JTextField txtServiceID;
+    private javax.swing.JTextField txtUnitID;
     // End of variables declaration//GEN-END:variables
 }

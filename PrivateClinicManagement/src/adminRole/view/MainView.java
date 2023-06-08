@@ -63,13 +63,13 @@ public class MainView extends javax.swing.JFrame {
         this.paneList = new JPanel[9]; 
         paneList[0] = new PatientPage(); //patient
         paneList[1] = new JPanel(); //appointment
-        paneList[2] = new JPanel(); 
-        paneList[3] = new JPanel(); //employee
-        paneList[4] = new JPanel();
-        paneList[5] = new JPanel();
+        paneList[2] = new JPanel(); //
+        paneList[3] = new JPanel();
+        paneList[4] =  new JPanel();//new SchedulePage();
+        paneList[5] =  new JPanel();//new MedicinePage();
         paneList[6] = new JPanel();
         paneList[7] = new JPanel();
-        paneList[8] = new JPanel();
+        paneList[8] = new SettingPage();
         
         patientSwitchPaneButton.setBackground(Color.WHITE);
         appointmentSwitchPaneButton.setBackground(Color.WHITE);
@@ -88,10 +88,10 @@ public class MainView extends javax.swing.JFrame {
         paneList[1].setBackground(new Color(255, 0, 255));
         paneList[2].setBackground(new Color(0, 255, 255));
 //        paneList[4].setBackground(new Color(255, 0, 255));
-        paneList[5].setBackground(new Color(255, 255, 100));
+//        paneList[5].setBackground(new Color(255, 255, 100));
         paneList[6].setBackground(new Color(255, 100, 255));
         paneList[7].setBackground(new Color(100, 255, 255));
-        paneList[8].setBackground(new Color(255, 200, 255));
+//        paneList[8].setBackground(new Color(255, 200, 255));
         this.switchPane(0);
         
     }

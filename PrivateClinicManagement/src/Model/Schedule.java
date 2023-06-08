@@ -24,7 +24,7 @@ public class Schedule {
     private Integer scheduleID;
     private Date scheduleDate;
     private Integer state;
-    private Integer nextOrinalNumber;
+    private Integer nextOrdinalNumber;
     private Integer serviceID;
     private Integer roomID;
     private Integer doctorID;
@@ -33,23 +33,20 @@ public class Schedule {
     private Integer cost;
     public Schedule(){}
     public Schedule( Integer scheduleID, Date scheduleDate, Integer state, Integer nextOrdinalNumber,  Integer serviceID, Integer roomID, Integer doctorID){
-     this.scheduleID = scheduleID;
+        this.scheduleID = scheduleID;
         this.scheduleDate = scheduleDate;
         this.state = state;
-        this.nextOrinalNumber = nextOrinalNumber;
+        this.nextOrdinalNumber = nextOrdinalNumber;
         this.serviceID = serviceID;
-        this.roomID = roomID;
-        this.doctorName = doctorName;
+        this.roomID = roomID;    
         this.doctorID = doctorID;
-        this.serviceName = serviceName;
-        this.cost = cost;
     }
 
     public Schedule(Integer scheduleID, Date scheduleDate, Integer state, Integer nextOrinalNumber,  Integer serviceID, String serviceName, Integer roomID, Integer doctorID, String doctorName, Integer cost){
         this.scheduleID = scheduleID;
         this.scheduleDate = scheduleDate;
         this.state = state;
-        this.nextOrinalNumber = nextOrinalNumber;
+        this.nextOrdinalNumber = nextOrinalNumber;
         this.serviceID = serviceID;
         this.roomID = roomID;
         this.doctorName = doctorName;
@@ -317,8 +314,8 @@ public class Schedule {
         this.state = state;
     }
 
-    public void setNextOrinalNumber(Integer nextOrinalNumber) {
-        this.nextOrinalNumber = nextOrinalNumber;
+    public void setNextOrdinalNumber(Integer nextOrinalNumber) {
+        this.nextOrdinalNumber = nextOrinalNumber;
     }
 
     public void setServiceID(Integer serviceID) {
@@ -357,8 +354,8 @@ public class Schedule {
         return state;
     }
 
-    public Integer getNextOrinalNumber() {
-        return nextOrinalNumber;
+    public Integer getNextOrdinalNumber() {
+        return nextOrdinalNumber;
     }
 
     public Integer getServiceID() {

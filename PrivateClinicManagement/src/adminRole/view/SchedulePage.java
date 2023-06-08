@@ -94,8 +94,8 @@ public class SchedulePage extends javax.swing.JPanel {
         employeeController = new EmployeeController();
         controller.queryData("select * from schedule order by schedule_id asc",dataSchedule);
         controller.queryData("select * from schedule order by next_ordinal_number asc",dataNextOrinalNumber);
-        serviceController.queryData("select * from service", dataService);
-        roomController.queryData("select * from room",dataRoom);
+        serviceController.queryData(dataService);
+        roomController.queryData(dataRoom);
         employeeController.queryData("select * from employee",dataEmployee);
         
         // Add data into combobox
@@ -132,12 +132,7 @@ public class SchedulePage extends javax.swing.JPanel {
         controller.queryData(sql, this.listOfSchedule);
     }
     
-    // Used for Add, Delete and Update features
-    private void executeData(String sql){
-        this.listOfSchedule.clear();
-        controller.executeData(sql);
-    }
-    
+
     // Load từ list vào bảng
     private void displayData(){
         dataOftable.setNumRows(0);

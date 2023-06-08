@@ -51,7 +51,7 @@ public class AddAppointmentForm extends javax.swing.JDialog {
         finalCostField.setText("");
         dataOfScheduleTable.setRowCount(0);
         for (Schedule schedule : listOfSchedule) {
-            dataOfScheduleTable.addRow(new Object[]{schedule.getScheduleID(), schedule.getScheduleDate(), schedule.getDoctorID(), schedule.getNextOrinalNumber(), schedule.getServiceName(), (schedule.getState() == 1 ? "Available" : "Closed"), schedule.getCost()});
+            dataOfScheduleTable.addRow(new Object[]{schedule.getScheduleID(), schedule.getScheduleDate(), schedule.getDoctorID(), schedule.getNextOrdinalNumber(), schedule.getServiceName(), (schedule.getState() == 1 ? "Available" : "Closed"), schedule.getCost()});
         }
     }
 
