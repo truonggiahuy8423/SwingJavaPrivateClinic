@@ -67,7 +67,7 @@ public class MainView extends javax.swing.JFrame {
         paneList[3] = new JPanel();
         paneList[4] = new SchedulePage();
         paneList[5] = new MedicinePage();
-        paneList[6] = new JPanel();
+        paneList[6] = new AttendancePage();
         paneList[7] = new JPanel();
         paneList[8] = new SettingPage();
         
@@ -89,7 +89,7 @@ public class MainView extends javax.swing.JFrame {
         paneList[2].setBackground(new Color(0, 255, 255));
 //        paneList[4].setBackground(new Color(255, 0, 255));
 //        paneList[5].setBackground(new Color(255, 255, 100));
-        paneList[6].setBackground(new Color(255, 100, 255));
+//        paneList[6].setBackground(new Color(255, 100, 255));
         paneList[7].setBackground(new Color(100, 255, 255));
 //        paneList[8].setBackground(new Color(255, 200, 255));
         this.switchPane(0);

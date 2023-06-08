@@ -4,6 +4,17 @@
  */
 package adminRole.view;
 
+import Model.Attendance;
+import Model.Employee;
+import Model.Schedule;
+import adminRole.controller.AttendancePageController;
+import adminRole.controller.EmployeeController;
+import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author GIAHUY
@@ -13,10 +24,79 @@ public class AttendancePage extends javax.swing.JPanel {
     /**
      * Creates new form AttendancePage
      */
+    private List<Attendance> listOfAttendance;
+    private List<Employee> listOfEmployee;
+    private Attendance currentAttendance;
+    private AttendancePageController controller;
+    private EmployeeController employeeController;  
+    private DefaultTableModel dataOftable;
+    
     public AttendancePage() {
         initComponents();
+        
+        controller = new AttendancePageController(this);
+        
+        cbbAttendanceID.setBackground(Color.WHITE);
+        txtAttendDate.setBackground(Color.WHITE);
+        cbbEmployeeID.setBackground(Color.WHITE);
+        btnAdd.setBackground(Color.WHITE);
+        btnDelete.setBackground(Color.WHITE);
+        btnUpdate.setBackground(Color.WHITE);
+        btnSearch.setBackground(Color.WHITE);
+        btnRefresh.setBackground(Color.WHITE);
+        
+        dataOftable = (DefaultTableModel)this.tbAttendance.getModel();
+        dataOftable.setColumnIdentifiers(new Object[]{"Attendance ID", "Attend Date", "Employee ID", "Employee Name"});
+        
+        
+        setUpComboboxData();
+        queryData("SELECT a.ATTENDANCE_ID, a.ATTEND_DATE, a.EMPLOYEE_ID, e.FULL_NAME "
+                        + "FROM ATTENDANCE a, EMPLOYEE e "
+                        + "WHERE a.EMPLOYEE_ID = e.EMPLOYEE_ID");
     }
+    
+    private void setUpComboboxData(){
+        List<Attendance> dataAttendance = new ArrayList();
+        List<Employee> dataEmployee = new ArrayList();
+        
+        // Clear data in List and combobox before load/reload
+        dataAttendance.clear();
+        dataEmployee.clear();
+        
+        // Load data
+        employeeController = new EmployeeController();
+        employeeController.queryData("select * from employee",dataEmployee);
+        controller.queryData("select * from attendance order by attendance_id asc", listOfAttendance);
+        
+        // Add data into combobox      
+        cbbAttendanceID.insertItemAt(null, 0);
+        for(Attendance p: dataAttendance){
+            cbbAttendanceID.addItem(String.valueOf(p.getAttendanceID()));
+        }
+        
+        cbbEmployeeID.insertItemAt(null, 0);
+        for(Employee p: dataEmployee){
+            cbbEmployeeID.addItem(String.valueOf(p.getEmployeeID()));
+        }
+        
+        txtAttendDate.setDate(null);
+   } 
+    
+    public void queryData(String sql){
+        this.listOfAttendance.clear();
+        controller.queryData(sql, this.listOfAttendance);
+    }
+    
+    private void displayData(List<Attendance> listOfAttendance){
+        dataOftable.setNumRows(0);
+//        queryData("select * from schedule order by schedule_id asc");
 
+        for (Attendance p : listOfAttendance){
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            String dateString = sdf.format(p.getAttendDate());
+            dataOftable.addRow(new Object[] {p.getAttendanceID(), dateString, p.getEmployeeID(), p.getEmployeeName()});
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,19 +106,175 @@ public class AttendancePage extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbAttendance = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cbbAttendanceID = new javax.swing.JComboBox<>();
+        cbbEmployeeID = new javax.swing.JComboBox<>();
+        txtAttendDate = new com.toedter.calendar.JDateChooser();
+        btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(1625, 765));
+
+        tbAttendance.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbAttendance);
+
+        jLabel1.setText("Attendance ID:");
+
+        jLabel2.setText("Attend date:");
+
+        jLabel3.setText("EmployeeID:");
+
+        cbbAttendanceID.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        cbbEmployeeID.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btnAdd.setText("Add");
+        btnAdd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Delete");
+        btnDelete.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnSearch.setText("Search");
+        btnSearch.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbbAttendanceID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtAttendDate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbbEmployeeID, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
+                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(133, 133, 133))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(cbbAttendanceID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbEmployeeID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdd)
+                        .addComponent(btnDelete)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnSearch)
+                        .addComponent(btnRefresh))
+                    .addComponent(txtAttendDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cbbAttendanceID;
+    private javax.swing.JComboBox<String> cbbEmployeeID;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbAttendance;
+    private com.toedter.calendar.JDateChooser txtAttendDate;
     // End of variables declaration//GEN-END:variables
 }
