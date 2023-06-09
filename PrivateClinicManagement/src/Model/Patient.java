@@ -58,7 +58,8 @@ public class Patient{
             String password = "88888888";  // Replace with your password
             String sqlInsert = "insert into patient(patient_id, full_name, phone, birthday, "
                     + "registration_day, insurance_expiration, address, underlying_disease) values(patient_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             statement = connection.prepareStatement(sqlInsert);
             statement.setString(1, patient.getFullname());
             statement.setString(2, patient.getPhone());
@@ -163,7 +164,8 @@ public class Patient{
         String username = "AD";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             //System.out.println(connection.isClosed());
             statement = connection.createStatement() ;  
             result = statement.executeQuery(sql);
@@ -217,7 +219,9 @@ public class Patient{
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "AD";  // Replace with your username
             String password = "88888888";  // Replace with your password
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+
             statement = connection.createStatement() ;  
             result = statement.executeQuery("select * from PATIENT where patient_id = " + String.valueOf(patient_id));
             if (!result.next())
@@ -260,7 +264,9 @@ public class Patient{
             String username = "AD";  // Replace with your username
             String password = "88888888";
             String sql = "delete PATIENT where patient_id = " + patientID;
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+
             statement = connection.createStatement();
             statement.executeUpdate(sql);
             if (statement.getUpdateCount() == 0) throw new SQLException();
@@ -293,7 +299,9 @@ public class Patient{
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "AD";  // Replace with your username
             String password = "88888888";  // Replace with your password
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+
             statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, updatedPatient.getFullname());
             statement.setString(2, updatedPatient.getPhone());

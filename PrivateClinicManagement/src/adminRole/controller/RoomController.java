@@ -24,6 +24,9 @@ public class RoomController {
     
     public void deleteRoom(String roomID){
         roomModel.deleteRoom(roomID);
-
+    }
+    
+    public void updateRoom(Room updateRoom, Room currentRoom){
+        roomModel.updateRoom(updateRoom, currentRoom);
     }
 }

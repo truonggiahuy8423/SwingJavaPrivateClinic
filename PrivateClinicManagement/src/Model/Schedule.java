@@ -67,7 +67,8 @@ public class Schedule {
         String username = "AD";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             //System.out.println(connection.isClosed());
             statement = connection.createStatement() ;  
             result = statement.executeQuery(sql);
@@ -105,7 +106,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
             System.out.println(sql);
@@ -129,7 +130,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             String sql = "INSERT INTO SCHEDULE VALUES(schedule_id_sequence.nextval, ?, ?, 1, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;
 
@@ -155,7 +156,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             String sql = "DELETE FROM SCHEDULE WHERE SCHEDULE_ID = " + scheduleID;
             Statement statement = connection.createStatement() ;
             statement.executeUpdate(sql);
@@ -176,7 +177,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             sql = "UPDATE SCHEDULE SET ";
             Statement statement = connection.createStatement() ;
             boolean check = false;
@@ -229,7 +230,7 @@ public class Schedule {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             String sql = "SELECT * FROM SCHEDULE "
                             + "WHERE "
                                     + "SCHEDULE_ID = "        + "?"  +" OR "
