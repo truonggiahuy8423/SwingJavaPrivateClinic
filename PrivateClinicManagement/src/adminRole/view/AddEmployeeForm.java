@@ -196,7 +196,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             }
             
             if (formatIsOk)
-                jDialogcloseForm.setVisible(true);
+                jDialogcloseAddForm.setVisible(true);
         });
         
         //Edit Noti
@@ -204,17 +204,17 @@ public class AddEmployeeForm extends javax.swing.JDialog {
         this.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e) {
-                jDialogcloseForm.setVisible(true);
+                jDialogcloseAddForm.setVisible(true);
             }           
         });
             
         jButtonNosave.addActionListener (e -> {
-            jDialogcloseForm.dispose();
+            jDialogcloseAddForm.dispose();
             this.dispose();
             
         });
         jButtonCancel.addActionListener (e -> {
-            jDialogcloseForm.dispose();
+            jDialogcloseAddForm.dispose();
         });
         jButtonSave.addActionListener (e -> {
             jLabelNameNoti.setText("");
@@ -259,20 +259,20 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             {
                 Calendar startDate = Calendar.getInstance(); startDate.setTimeInMillis(System.currentTimeMillis());
                 Employee employee = new Employee('0', sname, srole_id, sphone,
-                        spassword, startDate, saddress, shometown, startDate);
+                        spassword, insBirthday, saddress, shometown, startDate);
                 try {
                     new EmployeePageController(null).addEmployee(employee);
                     JOptionPane.showMessageDialog(null, "Add new employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);
                     parent2.refreshData();                          
                     this.dispose();
-                    jDialogcloseForm.dispose();
+                    jDialogcloseAddForm.dispose();
                 } catch (SQLException ex)
                 {
                     JOptionPane.showMessageDialog(null, "Error: " + ex.toString(),"", JOptionPane.OK_OPTION);
                 } catch (Exception ee) {ee.printStackTrace();}   
             }
             else 
-                jDialogcloseForm.dispose();
+                jDialogcloseAddForm.dispose();
         });
     }
 
@@ -285,7 +285,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialogcloseForm = new javax.swing.JDialog();
+        jDialogcloseAddForm = new javax.swing.JDialog();
         jLabelNoti = new javax.swing.JLabel();
         jButtonCancel = new javax.swing.JButton();
         jButtonNosave = new javax.swing.JButton();
@@ -321,8 +321,8 @@ public class AddEmployeeForm extends javax.swing.JDialog {
         jLabelPhoneNoti = new javax.swing.JLabel();
         jLabelPasswordNoti = new javax.swing.JLabel();
 
-        jDialogcloseForm.setMinimumSize(new java.awt.Dimension(500, 217));
-        jDialogcloseForm.setModal(true);
+        jDialogcloseAddForm.setMinimumSize(new java.awt.Dimension(500, 217));
+        jDialogcloseAddForm.setModal(true);
 
         jLabelNoti.setText("Do you want to save this new employee?");
 
@@ -337,31 +337,31 @@ public class AddEmployeeForm extends javax.swing.JDialog {
 
         jButtonSave.setText("Save");
 
-        javax.swing.GroupLayout jDialogcloseFormLayout = new javax.swing.GroupLayout(jDialogcloseForm.getContentPane());
-        jDialogcloseForm.getContentPane().setLayout(jDialogcloseFormLayout);
-        jDialogcloseFormLayout.setHorizontalGroup(
-            jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialogcloseFormLayout.createSequentialGroup()
-                .addGroup(jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+        javax.swing.GroupLayout jDialogcloseAddFormLayout = new javax.swing.GroupLayout(jDialogcloseAddForm.getContentPane());
+        jDialogcloseAddForm.getContentPane().setLayout(jDialogcloseAddFormLayout);
+        jDialogcloseAddFormLayout.setHorizontalGroup(
+            jDialogcloseAddFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogcloseAddFormLayout.createSequentialGroup()
+                .addGroup(jDialogcloseAddFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialogcloseAddFormLayout.createSequentialGroup()
                         .addGap(185, 185, 185)
                         .addComponent(jButtonCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonNosave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonSave))
-                    .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                    .addGroup(jDialogcloseAddFormLayout.createSequentialGroup()
                         .addGap(99, 99, 99)
                         .addComponent(jLabelNoti)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
-        jDialogcloseFormLayout.setVerticalGroup(
-            jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+        jDialogcloseAddFormLayout.setVerticalGroup(
+            jDialogcloseAddFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogcloseAddFormLayout.createSequentialGroup()
                 .addContainerGap(99, Short.MAX_VALUE)
                 .addComponent(jLabelNoti)
                 .addGap(42, 42, 42)
-                .addGroup(jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jDialogcloseAddFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
                     .addComponent(jButtonNosave)
                     .addComponent(jButtonSave))
@@ -663,7 +663,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxStartdayDate;
     private javax.swing.JComboBox<String> jComboBoxStartdayMonth;
     private javax.swing.JComboBox<String> jComboBoxStartdayYear;
-    private javax.swing.JDialog jDialogcloseForm;
+    private javax.swing.JDialog jDialogcloseAddForm;
     private javax.swing.JLabel jLabelAddress;
     private javax.swing.JLabel jLabelBirthday;
     private javax.swing.JLabel jLabelBirthdayDate;
