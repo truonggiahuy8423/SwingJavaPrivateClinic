@@ -139,81 +139,81 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         jButtonConfirm.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
 
-//        jTextFieldName.getDocument().addDocumentListener(new DocumentListener() {
-//                @Override
-//                public void insertUpdate(DocumentEvent e) {jLabelNameNoti.setText("");
-//                }
-//
-//                @Override
-//                public void removeUpdate(DocumentEvent e) {jLabelNameNoti.setText("");
-//                }
-//
-//                @Override
-//                public void changedUpdate(DocumentEvent e) {
-//                    jLabelNameNoti.setText("");
-//                }
-//            });
-//        jTextFieldPhone.getDocument().addDocumentListener(new DocumentListener() {
-//                @Override
-//                public void insertUpdate(DocumentEvent e) {jLabelPhoneNoti.setText("");
-//                }
-//
-//                @Override
-//                public void removeUpdate(DocumentEvent e) {jLabelPhoneNoti.setText("");
-//                }
-//
-//                @Override
-//                public void changedUpdate(DocumentEvent e) {
-//                    jLabelPhoneNoti.setText("");
-//                }
-//            });
-//        jButtonConfirm.addActionListener(e -> {
-//            jLabelNameNoti.setText("");
-//            jLabelPasswordNoti.setText("");
-//            jLabelPhoneNoti.setText("");
-//            boolean formatIsOk = true;
-//            // check name format
-//            String sname = jTextFieldName.getText(); boolean c = sname.equals("");
-//            if (c || !checkName(sname)) {
-//                this.jLabelNameNoti.setText(c ? "Enter name" : "Name format is invalid");
-//                formatIsOk = false;
-//            }
-//        
-//            // check phone format
-//            String sphone = jTextFieldPhone.getText(); c = sphone.equals("");
-//            if (c || !phoneCheck(sphone)) {
-//                jLabelPhoneNoti.setText(c ? "Enter phone number" : "Phone format is invalid");
-//                formatIsOk = false;
-//            }
-//            
-//            // check password format
-//            String spassword = jTextFieldPassword.getText(); c = spassword.equals("");
-//            if (c) {
-//                jLabelPasswordNoti.setText("Enter password");
-//                formatIsOk = false;
-//            }
-//            
-//            if (formatIsOk)
-//                jDialogcloseForm.setVisible(true);
-//        });
-//        
-//        //Edit Noti
-//        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-//        this.addWindowListener(new WindowAdapter(){
-//            @Override
-//            public void windowClosing(WindowEvent e) {
-//                jDialogcloseForm.setVisible(true);
-//            }           
-//        });
-//            
-//        jButtonNosave.addActionListener (e -> {
-//            jDialogcloseForm.dispose();
-//            this.dispose();
-//            
-//        });
-//        jButtonCancel.addActionListener (e -> {
-//            jDialogcloseForm.dispose();
-//        });
+        jTextFieldName.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {jLabelNameNoti.setText("");
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {jLabelNameNoti.setText("");
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    jLabelNameNoti.setText("");
+                }
+            });
+        jTextFieldPhone.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {jLabelPhoneNoti.setText("");
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {jLabelPhoneNoti.setText("");
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    jLabelPhoneNoti.setText("");
+                }
+            });
+        jButtonConfirm.addActionListener(e -> {
+            jLabelNameNoti.setText("");
+            jLabelPasswordNoti.setText("");
+            jLabelPhoneNoti.setText("");
+            boolean formatIsOk = true;
+            // check name format
+            String sname = jTextFieldName.getText(); boolean c = sname.equals("");
+            if (c || !checkName(sname)) {
+                this.jLabelNameNoti.setText(c ? "Enter name" : "Name format is invalid");
+                formatIsOk = false;
+            }
+        
+            // check phone format
+            String sphone = jTextFieldPhone.getText(); c = sphone.equals("");
+            if (c || !phoneCheck(sphone)) {
+                jLabelPhoneNoti.setText(c ? "Enter phone number" : "Phone format is invalid");
+                formatIsOk = false;
+            }
+            
+            // check password format
+            String spassword = jTextFieldPassword.getText(); c = spassword.equals("");
+            if (c) {
+                jLabelPasswordNoti.setText("Enter password");
+                formatIsOk = false;
+            }
+            
+            if (formatIsOk)
+                jDialogcloseForm.setVisible(true);
+        });
+        
+        //Edit Noti
+        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                jDialogcloseForm.setVisible(true);
+            }           
+        });
+            
+        jButtonNosave.addActionListener (e -> {
+            jDialogcloseForm.dispose();
+            this.dispose();
+            
+        });
+        jButtonCancel.addActionListener (e -> {
+            jDialogcloseForm.dispose();
+        });
 //        jButtonSave.addActionListener (e -> {
 //            jLabelNameNoti.setText("");
 //            jLabelPasswordNoti.setText("");
@@ -282,6 +282,11 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialogcloseForm = new javax.swing.JDialog();
+        jLabelNoti = new javax.swing.JLabel();
+        jButtonCancel = new javax.swing.JButton();
+        jButtonNosave = new javax.swing.JButton();
+        jButtonSave = new javax.swing.JButton();
         jTextFieldHometown = new javax.swing.JTextField();
         jLabelStartdayDate = new javax.swing.JLabel();
         jLabelBirthdayDate = new javax.swing.JLabel();
@@ -310,6 +315,48 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         jTextFieldPhone = new javax.swing.JTextField();
         jLabelPasswordNoti = new javax.swing.JLabel();
         jTextFieldAddress = new javax.swing.JTextField();
+
+        jLabelNoti.setText("Do you want to save this new employee?");
+
+        jButtonCancel.setText("Cancel");
+
+        jButtonNosave.setText("Don't save");
+        jButtonNosave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNosaveActionPerformed(evt);
+            }
+        });
+
+        jButtonSave.setText("Save");
+
+        javax.swing.GroupLayout jDialogcloseFormLayout = new javax.swing.GroupLayout(jDialogcloseForm.getContentPane());
+        jDialogcloseForm.getContentPane().setLayout(jDialogcloseFormLayout);
+        jDialogcloseFormLayout.setHorizontalGroup(
+            jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addGroup(jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelNoti)
+                    .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                        .addComponent(jButtonCancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonNosave)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSave)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jDialogcloseFormLayout.setVerticalGroup(
+            jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogcloseFormLayout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addComponent(jLabelNoti)
+                .addGap(43, 43, 43)
+                .addGroup(jDialogcloseFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonCancel)
+                    .addComponent(jButtonNosave)
+                    .addComponent(jButtonSave))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -535,6 +582,10 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
+    private void jButtonNosaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNosaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonNosaveActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -578,13 +629,17 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonConfirm;
+    private javax.swing.JButton jButtonNosave;
+    private javax.swing.JButton jButtonSave;
     private javax.swing.JComboBox<String> jComboBoxBirthdayDate;
     private javax.swing.JComboBox<String> jComboBoxBirthdayMonth;
     private javax.swing.JComboBox<String> jComboBoxBirthdayYear;
     private javax.swing.JComboBox<String> jComboBoxStartdayDate;
     private javax.swing.JComboBox<String> jComboBoxStartdayMonth;
     private javax.swing.JComboBox<String> jComboBoxStartdayYear;
+    private javax.swing.JDialog jDialogcloseForm;
     private javax.swing.JLabel jLabelAddress;
     private javax.swing.JLabel jLabelBirthday;
     private javax.swing.JLabel jLabelBirthdayDate;
@@ -593,6 +648,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelHometown;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelNameNoti;
+    private javax.swing.JLabel jLabelNoti;
     private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelPasswordNoti;
     private javax.swing.JLabel jLabelPhone;
