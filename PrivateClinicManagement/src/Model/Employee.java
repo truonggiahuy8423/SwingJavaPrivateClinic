@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.time.LocalDate;
 import java.util.Date;
+
 /**
  *
  * @author GIAHUY
@@ -161,6 +162,7 @@ public class Employee {
     }
     
     public Employee(){}
+
     public Employee(Integer employeeID, String name, String phone){
         this.employeeID = employeeID;
         this.name = name;
@@ -382,6 +384,28 @@ public class Employee {
             if (connection != null) connection.close();
         }
         
+    }
+    
+    public void getListOfEmployee(String sql, List<Employee> listOfEmployee){
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Statement statement = connection.createStatement() ;  
+            ResultSet result = statement.executeQuery(sql);
+
+            while (result.next()){
+                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3));
+                listOfEmployee.add(p);
+            }
+            connection.close();
+        } 
+        catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.toString()); 
+        }
+        finally{
+            System.out.println("Successful"); 
+        }        
     }
 }
 
