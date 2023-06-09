@@ -252,23 +252,23 @@ public class Employee {
             String password = "123";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement() ;  
-            result = statement.executeQuery("select * from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
+            result = statement.executeQuery("select employee_id, full_name, phone, password, birthday, address, hometown, start_day from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
             if (!result.next())
                 return employee;
             
             Calendar birthday = null;
-            if (result.getDate(6) != null)
+            if (result.getDate(5) != null)
             {
                 birthday = Calendar.getInstance();
-                birthday.setTimeInMillis(result.getDate(6).getTime());
+                birthday.setTimeInMillis(result.getDate(5).getTime());
             }
             Calendar start_date =null;
-            if (result.getDate(9) != null)
+            if (result.getDate(8) != null)
             {
                 start_date = Calendar.getInstance();
-                start_date.setTimeInMillis(result.getDate(9).getTime());
+                start_date.setTimeInMillis(result.getDate(8).getTime());
             }
-            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8), start_date);
+            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), birthday, result.getString(6), result.getString(7), start_date);
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();
@@ -306,14 +306,11 @@ public class Employee {
         String sqlUpdate = "update employee "
                                 + "set full_name = " + "?"
                                 + ", phone = " + "?"
+                                + ", password = " + "?"
                                 + ", birthday = " + "?"
-                                + ", start_day = " + "?"
                                 + ", address = " + "?"
                                 + ", hometown = " + "?"
-                                + ", password = " + "?"
-                                + ", salary_per_day = " + "?"
-                                
-                                + ", role_id = " + "?"
+                                + ", start_day = " + "?"
                                 + "where employee_id = " + "?";
         Connection connection = null;
         PreparedStatement statement = null; 
@@ -327,13 +324,15 @@ public class Employee {
             statement = connection.prepareStatement(sqlUpdate);
             statement.setString(1, updatedEmployee.getFullName());
             statement.setString(2, updatedEmployee.getPhone());
-            statement.setDate(3, updatedEmployee.getBirthday() == null ? null : new java.sql.Date(updatedEmployee.getBirthday().getTimeInMillis()));
-            statement.setDate(4, updatedEmployee.getStartDay() == null ? null : new java.sql.Date(updatedEmployee.getStartDay().getTimeInMillis()));
-            statement.setString(6, updatedEmployee.getAddress());
-            statement.setString(7, updatedEmployee.getHometown());
-            statement.setString(8, updatedEmployee.getPassword());
-            statement.setInt(9, updatedEmployee.getSalaryPerDay());
-            statement.setInt(10, updatedEmployee.getRoleId());
+            statement.setString(3, updatedEmployee.getPassword());
+            statement.setDate(4, updatedEmployee.getBirthday() == null ? null : new java.sql.Date(updatedEmployee.getBirthday().getTimeInMillis()));
+            statement.setString(5, updatedEmployee.getAddress());
+            statement.setString(6, updatedEmployee.getHometown());
+            statement.setDate(7, updatedEmployee.getStartDay() == null ? null : new java.sql.Date(updatedEmployee.getStartDay().getTimeInMillis()));
+            
+            
+//            statement.setInt(9, updatedEmployee.getSalaryPerDay());
+//            statement.setInt(10, updatedEmployee.getRoleId());
             statement.executeUpdate();
         }
         catch (ClassNotFoundException e)

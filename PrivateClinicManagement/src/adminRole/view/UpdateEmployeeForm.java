@@ -50,8 +50,18 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        Controller = new EmployeePageController();
- //       employee = new Controller.getEmployee();
+//        Controller = new EmployeePageController();
+//        try {
+//            employee = Controller.getEmployee(employeeID); 
+//        } catch (SQLException e) {e.printStackTrace();} catch (Exception e) {e.printStackTrace();}
+//        
+//        //Add data to textfield
+//        jTextFieldName.setText(employee.getFullName());
+//        jTextFieldPhone.setText(employee.getPhone());
+//        jTextFieldAddress.setText(employee.getAddress());
+//        jTextFieldHometown.setText(employee.getHometown());
+//        jTextFieldPassword.setText(employee.getPassword());
+        
         //clear data of combobox
         jComboBoxStartdayDate.removeAllItems();
         jComboBoxStartdayMonth.removeAllItems();
@@ -73,7 +83,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         for (int i = 1; i < 32; i++) {
             jComboBoxBirthdayDate.addItem(String.valueOf(i));
         }
-        for (int i = 1; i < 12; i++) {
+        for (int i = 1; i < 13; i++) {
             jComboBoxBirthdayMonth.addItem(String.valueOf(i));
         }
         for (int i = 1955; i < 2024; i++) {
@@ -263,10 +273,10 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
             
             if (formatIsOk)
             {
-                Employee employee = new Employee('0', sname, sphone,
+                Employee employee = new Employee('6', sname, sphone,
                         spassword, insBirthday, saddress, shometown, insStartday);
                 try {
-                    new EmployeePageController(null).addEmployee(employee);
+                    new EmployeePageController(null).updateEmployee(employee);
                     JOptionPane.showMessageDialog(null, "Update employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);
                     parent3.refreshData();                          
                     this.dispose();
