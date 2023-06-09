@@ -6,13 +6,7 @@ package adminRole.controller;
 
 import Model.Schedule;
 import adminRole.view.SchedulePage;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,53 +14,33 @@ import javax.swing.JOptionPane;
  */
 public class SchedulePageController {
     private SchedulePage view;
+    private Schedule scheduleModel = new Schedule();
 
     public SchedulePageController(SchedulePage view) {
          this.view = view;
     }
     
     public void queryData(String sql, List<Schedule> listOfSchedule){
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Statement statement = connection.createStatement() ;  
-            ResultSet result = statement.executeQuery(sql);
-            System.out.println(sql);
-            while (result.next()){
-                java.util.Date  utilDate = new java.util.Date(result.getDate(2).getTime());
-                Schedule p = new Schedule(result.getLong(1), utilDate, result.getString(3), result.getLong(4), result.getLong(5), result.getLong(6), result.getLong(7));
-                listOfSchedule.add(p);
-            }
-            connection.close();
-        } 
-        catch (SQLException | ClassNotFoundException e){
-            JOptionPane.showMessageDialog(null, e.toString() + "\n" + sql);
-        }
-        finally{
-            System.out.println("Successful"); 
-        }        
+        scheduleModel.getListOfSchedule(sql, listOfSchedule);
     }
     
-    public void executeData(String sql){
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Statement statement = connection.createStatement() ;  
-            System.out.println(sql);
-            statement.executeUpdate(sql);
-            
-            connection.close();
-        } 
-        catch (SQLException | ClassNotFoundException e){
-            JOptionPane.showMessageDialog(null, e.toString() + "\n" + sql);
-            
-        }
-        finally{
-            System.out.println("Successful"); 
-        }        
+//    public void executeData(String sql){
+//        scheduleModel.executeDataOfSchedule(sql);
+//    }
+    
+    public void addData(Schedule addSchedule){
+        scheduleModel.addSchedule(addSchedule);
+    }
+        
+    public void deleteData(String scheduleID){
+        scheduleModel.deleteSchedule(scheduleID);
     }
     
-
+    public void updateData(Schedule updateSchedule, Schedule currentSchedule){
+        scheduleModel.updateSchedule(updateSchedule, currentSchedule);
+    }
+    
+    public void searchData(Schedule searchSchedule, List<Schedule> listSearchSchedule){
+        scheduleModel.searchSchedule(searchSchedule, listSearchSchedule);
+    }
 }
