@@ -27,9 +27,26 @@ public class Employee {
     private String address;
     private String hometown;
     private String password;
-    private int salaryPerDay;
+    private Integer salaryPerDay;
     private String portrait;
-    private int roleId;
+    private Integer roleId;
+    private String roleName;
+
+    public void setSalaryPerDay(Integer salaryPerDay) {
+        this.salaryPerDay = salaryPerDay;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
 
     public void setEmployeeID(Integer employeeID) {
         this.employeeID = employeeID;
@@ -74,7 +91,7 @@ public class Employee {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
-
+    
     public Integer getEmployeeID() {
         return employeeID;
     }
@@ -107,7 +124,7 @@ public class Employee {
         return password;
     }
 
-    public int getSalaryPerDay() {
+    public Integer getSalaryPerDay() {
         return salaryPerDay;
     }
 
@@ -115,8 +132,32 @@ public class Employee {
         return portrait;
     }
 
-    public int getRoleId() {
+    public Integer getRoleId() {
         return roleId;
+    }
+    
+     public Employee(int employeeId, String fullName, String roleName, String phone, String password, Calendar birthday, String address, String hometown, Calendar startDay) {
+        this.employeeID = employeeId;
+        this.name = fullName;
+        this.roleName = roleName;
+        this.phone = phone;
+        this.password = password;
+        this.birthday = birthday;
+        this.address = address;
+        this.hometown = hometown;
+        this.startDay = startDay;
+    }
+    
+    public Employee(int employeeId, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown, Calendar startDay) {
+        this.employeeID = employeeId;
+        this.name = fullName;
+        this.roleId = roleId;
+        this.phone = phone;
+        this.password = password;
+        this.birthday = birthday;
+        this.address = address;
+        this.hometown = hometown;
+        this.password = password;
     }
     
     public Employee(){}
@@ -129,7 +170,7 @@ public class Employee {
     {
         this.employeeID = id;
     }
-    public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
+    public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId, String roleName) {
         this.employeeID = employeeId;
         this.name = fullName;
         this.phone = phone;
@@ -141,6 +182,7 @@ public class Employee {
         this.salaryPerDay = salaryPerDay;
         this.portrait = portrait;
         this.roleId = roleId;
+        this.roleName = roleName;
     }
     
 
@@ -153,25 +195,30 @@ public class Employee {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
-            String sqlInsert = "insert into employee(employee_id, full_name, phone, birthday, "
-                    + "start_day, address, hometown, password, salary_per_day, role_id) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            String username = "c##uni4";  // Replace with your username
+            String password = "123";  // Replace with your password
+            String sqlInsert = "insert into employee(employee_id, full_name, role_id, phone, password, birthday, "
+                    + "address, hometown) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
+
+//            String username = "AD";  // Replace with your username
+//            String password = "88888888";  // Replace with your password
+//            String sqlInsert = "insert into employee(employee_id, full_name, phone, birthday, "
+//                    + "start_day, address, hometown, password, salary_per_day, role_id) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlInsert);
-            statement.setInt(1, employee.getEmployeeID());
-            statement.setString(2, employee.getName());
+//            statement.setInt(1, employee.getEmployeeId());
+            statement.setString(1, employee.getName());
+            statement.setInt(2, employee.getRoleId());
             statement.setString(3, employee.getPhone());
-            statement.setDate(4, employee.getBirthday() == null ? null : new java.sql.Date(employee.getBirthday().getTimeInMillis()));
-            statement.setDate(5, employee.getStartDay() == null ? null : new java.sql.Date(employee.getStartDay().getTimeInMillis()));
+            statement.setString(4, employee.getPassword());
+            statement.setDate(5, employee.getBirthday() == null ? null : new java.sql.Date(employee.getBirthday().getTimeInMillis()));
+//            statement.setDate(5, employee.getStartDay() == null ? null : new java.sql.Date(employee.getStartDay().getTimeInMillis()));
             statement.setString(6, employee.getAddress());
-            statement.setString(7, employee.getHometown());
-            statement.setString(8, employee.getPassword());
-            statement.setInt(1, employee.getSalaryPerDay());
-            statement.setInt(1, employee.getRoleId());
+            statement.setString(7, employee.getHometown());          
+//            statement.setInt(1, employee.getSalaryPerDay());
             statement.executeUpdate(); // co van de o day
-            
-
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
@@ -211,7 +258,8 @@ public class Employee {
                     start_date = Calendar.getInstance();
                     start_date.setTimeInMillis(result.getDate(5).getTime());
                 }
-                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), " ", result.getInt(10));
+                //"select employee.*, role.role_name from employee inner join role on employee.role_id = role.role_id"
+                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), " ", result.getInt(10), result.getString(11));
                 listOfEmployee.add(p);
             }         
         }
@@ -256,7 +304,7 @@ public class Employee {
                 start_date = Calendar.getInstance();
                 start_date.setTimeInMillis(result.getDate(5).getTime());
             }
-            employee = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), result.getString(10), result.getInt(11));
+            employee = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), "", result.getInt(10), result.getString(11));
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();
