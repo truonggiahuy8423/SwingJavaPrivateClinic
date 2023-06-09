@@ -204,6 +204,25 @@ public class EmployeePage extends javax.swing.JPanel {
             refreshData();
 
         });
+        this.updateButton.addActionListener(e -> {
+            int[] selectedRow = this.tableOfEmployee.getSelectedRows(); 
+            if (selectedRow.length != 0)
+            {
+                int id = (int)(tableOfEmployee.getValueAt(selectedRow[0], 0));
+                if (JOptionPane.showConfirmDialog(this, "Update employee " + id, "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.CANCEL_OPTION)
+                    return;
+                
+                new UpdateEmployeeForm(null, true, this, id).setVisible(true);
+                
+                sortMode = NEWEST;
+                //tableOfEmployee.get
+                refreshData();
+            }
+            else 
+            {
+                JOptionPane.showMessageDialog(this, "Please choose employee to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
         this.deleteButton.addActionListener(e -> {
             int[] selectedRow = this.tableOfEmployee.getSelectedRows(); 
             if (selectedRow.length != 0)
@@ -289,6 +308,7 @@ public class EmployeePage extends javax.swing.JPanel {
         refreshButton = new javax.swing.JButton();
         sortChooser = new javax.swing.JComboBox<>();
         searchTextField = new javax.swing.JTextField();
+        updateButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(1230, 718));
         setMinimumSize(new java.awt.Dimension(1230, 718));
@@ -330,6 +350,8 @@ public class EmployeePage extends javax.swing.JPanel {
 
         searchTextField.setText("Employee ID");
 
+        updateButton.setText("Update");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -343,7 +365,9 @@ public class EmployeePage extends javax.swing.JPanel {
                 .addComponent(sortChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(134, 134, 134)
                 .addComponent(addButton)
-                .addGap(146, 146, 146)
+                .addGap(34, 34, 34)
+                .addComponent(updateButton)
+                .addGap(37, 37, 37)
                 .addComponent(deleteButton)
                 .addGap(30, 30, 30)
                 .addComponent(refreshButton))
@@ -360,7 +384,9 @@ public class EmployeePage extends javax.swing.JPanel {
                     .addComponent(searchTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sortChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addButton)
-                    .addComponent(deleteButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(deleteButton)
+                        .addComponent(updateButton))
                     .addComponent(refreshButton))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -385,5 +411,6 @@ public class EmployeePage extends javax.swing.JPanel {
     private javax.swing.JTextField searchTextField;
     private javax.swing.JComboBox<String> sortChooser;
     private javax.swing.JTable tableOfEmployee;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }
