@@ -60,29 +60,15 @@ public class Employee {
         this.hometown = hometown;
         this.password = password;
     }
-//    public Employee(int employeeId, String fullName, int roleId, String phone, String password, Calendar birthday, String address, String hometown) {
-//        this.employeeId = employeeId;
-//        this.fullName = fullName;
-//        this.roleId = roleId;
-//        this.phone = phone;
-//        this.password = password;
-//        this.birthday = birthday;
-//        this.address = address;
-//        this.hometown = hometown;  
-//    }
-//    public Employee(int employeeId, String fullName, String phone, Calendar birthday, Calendar startDay, String address, String hometown, String password, int salaryPerDay, String portrait, int roleId) {
-//        this.employeeId = employeeId;
-//        this.fullName = fullName;
-//        this.phone = phone;
-//        this.birthday = birthday;
-//        this.startDay = startDay;
-//        this.address = address;
-//        this.hometown = hometown;
-//        this.password = password;
-//        this.salaryPerDay = salaryPerDay;
-//        this.portrait = portrait;
-//        this.roleId = roleId;
-//    }
+    public Employee(int employeeId, String fullName, String phone, String password, Calendar birthday, String address, String hometown, Calendar startDay) {
+        this.employeeId = employeeId;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.password = password;
+        this.birthday = birthday;
+        this.address = address;
+        this.hometown = hometown;  
+    }
     
     public int getEmployeeId() {
         return employeeId;
@@ -282,7 +268,7 @@ public class Employee {
                 start_date = Calendar.getInstance();
                 start_date.setTimeInMillis(result.getDate(9).getTime());
             }
-            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8), start_date);
+            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(4), result.getString(5), birthday, result.getString(7), result.getString(8), start_date);
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();

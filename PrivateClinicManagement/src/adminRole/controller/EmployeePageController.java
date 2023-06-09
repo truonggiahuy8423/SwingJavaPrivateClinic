@@ -39,4 +39,8 @@ public class EmployeePageController {
         employeeModel.deleteEmployee(employeeID);
     }
     
+    public Employee addEmployee(int employeeID) throws SQLException
+    {
+        return employeeModel.getAEmployee(employeeID);
+    }   
 }

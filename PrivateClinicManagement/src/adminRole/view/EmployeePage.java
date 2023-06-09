@@ -220,7 +220,7 @@ public class EmployeePage extends javax.swing.JPanel {
             }
             else 
             {
-                JOptionPane.showMessageDialog(this, "Please choose employee to be deleted!", "", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please choose employee to be updated!", "", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         this.deleteButton.addActionListener(e -> {
