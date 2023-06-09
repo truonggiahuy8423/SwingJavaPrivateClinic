@@ -136,7 +136,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
             }
         });
         
-        jButtonConfirm.setBackground(Color.WHITE);
+        jButtonConfirmUpdate.setBackground(Color.WHITE);
         this.setLocationRelativeTo(null);
 
         jTextFieldName.getDocument().addDocumentListener(new DocumentListener() {
@@ -167,7 +167,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
                     jLabelPhoneNoti.setText("");
                 }
             });
-        jButtonConfirm.addActionListener(e -> {
+        jButtonConfirmUpdate.addActionListener(e -> {
             jLabelNameNoti.setText("");
             jLabelPasswordNoti.setText("");
             jLabelPhoneNoti.setText("");
@@ -198,7 +198,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         });
         
         //Edit Noti
-        //this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e) {
@@ -256,29 +256,28 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
             Integer sday = Integer.valueOf((String) jComboBoxStartdayDate.getSelectedItem());
             Integer smon = Integer.valueOf((String) jComboBoxStartdayMonth.getSelectedItem());
             Integer syear = Integer.valueOf((String) jComboBoxStartdayYear.getSelectedItem());
-            insBirthday = Calendar.getInstance();
-            insBirthday.setLenient(false);
-            insBirthday.set(syear, smon, sday);
-            insBirthday.getTime();
+            insStartday = Calendar.getInstance();
+            insStartday.setLenient(false);
+            insStartday.set(syear, smon, sday);
+            insStartday.getTime();
             
             if (formatIsOk)
             {
-                Calendar startDate = Calendar.getInstance(); startDate.setTimeInMillis(System.currentTimeMillis());
                 Employee employee = new Employee('0', sname, sphone,
-                        spassword, startDate, saddress, shometown, startDate);
+                        spassword, insBirthday, saddress, shometown, insStartday);
                 try {
                     new EmployeePageController(null).addEmployee(employee);
-                    JOptionPane.showMessageDialog(null, "Add new employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);
-                    parent2.refreshData();                          
+                    JOptionPane.showMessageDialog(null, "Update employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);
+                    parent3.refreshData();                          
                     this.dispose();
-                    jDialogcloseForm.dispose();
+                    jDialogcloseUpdateForm.dispose();
                 } catch (SQLException ex)
                 {
                     JOptionPane.showMessageDialog(null, "Error: " + ex.toString(),"", JOptionPane.OK_OPTION);
                 } catch (Exception ee) {ee.printStackTrace();}   
             }
             else 
-                jDialogcloseForm.dispose();
+                jDialogcloseUpdateForm.dispose();
         });
     }
 
@@ -316,7 +315,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         jLabelHometown = new javax.swing.JLabel();
         jTextFieldPassword = new javax.swing.JTextField();
         jLabelStartday = new javax.swing.JLabel();
-        jButtonConfirm = new javax.swing.JButton();
+        jButtonConfirmUpdate = new javax.swing.JButton();
         jLabelBirthday = new javax.swing.JLabel();
         jTextFieldName = new javax.swing.JTextField();
         jLabelNameNoti = new javax.swing.JLabel();
@@ -324,6 +323,9 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         jTextFieldPhone = new javax.swing.JTextField();
         jLabelPasswordNoti = new javax.swing.JLabel();
         jTextFieldAddress = new javax.swing.JTextField();
+
+        jDialogcloseUpdateForm.setMinimumSize(new java.awt.Dimension(500, 217));
+        jDialogcloseUpdateForm.setModal(true);
 
         jLabelNoti.setText("Do you want to save this new employee?");
 
@@ -418,10 +420,10 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
 
         jLabelStartday.setText("Start day:");
 
-        jButtonConfirm.setText("Confirm");
-        jButtonConfirm.addActionListener(new java.awt.event.ActionListener() {
+        jButtonConfirmUpdate.setText("Confirm");
+        jButtonConfirmUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonConfirmActionPerformed(evt);
+                jButtonConfirmUpdateActionPerformed(evt);
             }
         });
 
@@ -506,7 +508,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelPasswordNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonConfirmUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53)))))
                 .addGap(28, 28, Short.MAX_VALUE))
         );
@@ -572,7 +574,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPasswordNoti, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonConfirm))
+                    .addComponent(jButtonConfirmUpdate))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -587,9 +589,9 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPasswordActionPerformed
 
-    private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
+    private void jButtonConfirmUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmUpdateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonConfirmActionPerformed
+    }//GEN-LAST:event_jButtonConfirmUpdateActionPerformed
 
     private void jButtonNosaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNosaveActionPerformed
         // TODO add your handling code here:
@@ -639,7 +641,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancel;
-    private javax.swing.JButton jButtonConfirm;
+    private javax.swing.JButton jButtonConfirmUpdate;
     private javax.swing.JButton jButtonNosave;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JComboBox<String> jComboBoxBirthdayDate;

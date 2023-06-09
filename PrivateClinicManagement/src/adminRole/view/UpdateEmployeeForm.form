@@ -3,6 +3,12 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JDialog" name="jDialogcloseUpdateForm">
+      <Properties>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[500, 217]"/>
+        </Property>
+        <Property name="modal" type="boolean" value="true"/>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -163,7 +169,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabelPasswordNoti" min="-2" pref="140" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButtonConfirm" min="-2" pref="86" max="-2" attributes="0"/>
+                              <Component id="jButtonConfirmUpdate" min="-2" pref="86" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -250,7 +256,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabelPasswordNoti" alignment="0" min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jButtonConfirm" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonConfirmUpdate" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="15" max="32767" attributes="0"/>
           </Group>
@@ -421,12 +427,12 @@
         <Property name="text" type="java.lang.String" value="Start day:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonConfirm">
+    <Component class="javax.swing.JButton" name="jButtonConfirmUpdate">
       <Properties>
         <Property name="text" type="java.lang.String" value="Confirm"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConfirmActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConfirmUpdateActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelBirthday">
