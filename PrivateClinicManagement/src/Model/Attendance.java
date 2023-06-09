@@ -48,8 +48,8 @@ public class Attendance {
         return this.attendDate;
     }
     
-    public void setAttendanceDate(Date attendanceDate){
-        this.attendDate = attendanceDate;
+    public void setAttendDate(Date attendDate){
+        this.attendDate = attendDate;
     }
     
     public Integer getEmployeeID(){
@@ -65,7 +65,7 @@ public class Attendance {
     }
     
     public void setEmployeeName(String employeeName){
-        this.employeeID = employeeID;
+        this.employeeName = employeeName;
     }
     
     public void getListOfAttendance(String sql, List<Attendance> listOfAttendance){
@@ -75,7 +75,7 @@ public class Attendance {
             Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
-            System.out.println(sql);
+//            System.out.println(sql);
             while (result.next()){
                 java.util.Date  utilDate = new java.util.Date(result.getDate(2).getTime());
                 Attendance p = new Attendance(result.getInt(1), utilDate, result.getInt(3), result.getString(4));
@@ -147,7 +147,7 @@ public class Attendance {
             if(updateAttendance.getAttendDate().compareTo(currentAttendance.getAttendDate()) != 0){
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
                 String dateString = sdf.format(updateAttendance.getAttendDate());
-                sql += "ATTENDANCE_DATE = \'" + dateString + "\' ";
+                sql += "ATTEND_DATE = \'" + dateString + "\' ";
                 check = true;
             }
             
@@ -174,11 +174,12 @@ public class Attendance {
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
-            String sql = "SELECT a.ATTENDANCE_ID, a.ATTEND_DATE, a.EMPLOYEE_ID, e.FULL_NAME FROM ATTENDANCE a, EMPLOYEE e"
-                            + "WHERE a.EMPLOYEE_ID = e.EMPLOYEE_ID AND ("
-                                    + "ATTENDANCE_ID = " + "?"  +" OR "
-                                    + "ATTEND_DATE = " + "?" + " OR "
-                                    + "EMPLOYEE_ID = " + "?" + ")" ;
+            String sql = "SELECT a.ATTENDANCE_ID, a.ATTEND_DATE, a.EMPLOYEE_ID, e.FULL_NAME "
+                            + "FROM ATTENDANCE a, EMPLOYEE e "
+                            + "WHERE a.EMPLOYEE_ID = e.EMPLOYEE_ID AND "
+                                    + "(a.ATTENDANCE_ID = " + "?"  +" OR "
+                                    + "a.ATTEND_DATE = " + "?" + " OR "
+                                    + "a.EMPLOYEE_ID = " + "?"  + ")";
                                     
             PreparedStatement statement = connection.prepareStatement(sql) ;  
             if(searchAttendance.getAttendanceID() == null ){

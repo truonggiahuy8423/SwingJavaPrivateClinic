@@ -24,10 +24,6 @@ public class AttendancePageController {
         attendanceModel.getListOfAttendance(sql, listOfAttendance);
     }
     
-//    public void executeData(String sql){
-//        attendanceModel.executeDataOfAttendance(sql);
-//    }
-    
     public void addData(Attendance addAttendance){
         attendanceModel.addAttendance(addAttendance);
     }
