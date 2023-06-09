@@ -142,11 +142,11 @@ public class Appointment {
         ResultSet result2 = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
-
+//            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+//            String username = "AD";  // Replace with your username
+//            String password = "88888888";  // Replace with your password
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             // query list of Appointment of this patient
             statement2 = connection.createStatement();
             result2 = statement2.executeQuery(sql);
@@ -188,10 +188,11 @@ public class Appointment {
         ResultSet result = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+//            String username = "AD";  // Replace with your username
+//            String password = "88888888";  // Replace with your password
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             String sql = "insert into appointment(appointment_id, schedule_id, patient_id, fee, ordinal_number) values(appointment_id_sequence.nextval, ?, ?, 0, 0)";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, appointment.getScheduleID());
@@ -217,11 +218,12 @@ public class Appointment {
         Statement statement = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
-            String password = "88888888";
+//            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+//            String username = "AD";  // Replace with your username
+//            String password = "88888888";
             String sql = "delete APPOINTMENT where appointment_id = " + appointment_id;
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             statement = connection.createStatement();
             statement.executeUpdate(sql);
             if (statement.getUpdateCount() == 0) {
@@ -247,10 +249,11 @@ public class Appointment {
         ResultSet result = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
-            String password = "88888888";  // Replace with your password
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+//            String username = "AD";  // Replace with your username
+//            String password = "88888888";  // Replace with your password
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             statement = connection.createStatement();
             result = statement.executeQuery("select a.appointment_id, s.schedule_id, p.patient_id, p.full_name, e.employee_id, e.full_name, a.ordinal_number, s.schedule_date, s.room_id, sv.service_name, a.fee "
                     + "from Appointment a inner join Patient p on a.patient_id = p.patient_id "

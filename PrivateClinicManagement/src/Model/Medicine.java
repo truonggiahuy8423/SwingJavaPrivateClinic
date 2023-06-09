@@ -94,7 +94,8 @@ public class Medicine {
         String username = "AD";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             //System.out.println(connection.isClosed());
             statement = connection.createStatement() ;  
             result = statement.executeQuery(sql);
@@ -122,7 +123,7 @@ public class Medicine {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
             
@@ -144,7 +145,8 @@ public class Medicine {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+ 
             String sql = "INSERT INTO MEDICINE VALUES (medicine_id_sequence.nextval, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;
             
@@ -168,7 +170,7 @@ public class Medicine {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             sql = "UPDATE MEDICINE SET ";
             Statement statement = connection.createStatement() ;
             boolean check = false;
@@ -212,7 +214,7 @@ public class Medicine {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             String sql = "DELETE FROM MEDICINE WHERE MEDICINE_ID = " + medicineID;
             Statement statement = connection.createStatement() ;
             statement.executeUpdate(sql);
@@ -234,7 +236,7 @@ public class Medicine {
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             String sql = "SELECT * FROM MEDICINE "
                             + "WHERE "
                                 + "MEDICINE_ID = " + " ? " + " OR "

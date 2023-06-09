@@ -36,8 +36,9 @@ public class Room {
     public void getListOfRoom(List<Room> listOfRoom){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery("select * from room order by room_id asc");
 
@@ -58,8 +59,9 @@ public class Room {
     public void addRoom(Room room){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+
             String sql = "insert into room values(?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;  
             statement.setLong(1, room.getRoomID());
@@ -77,8 +79,8 @@ public class Room {
     public void deleteRoom(String roomID){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             String sql = "delete from room where room_id =" + roomID;
             Statement statement = connection.createStatement() ;  
             statement.executeUpdate(sql);
