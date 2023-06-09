@@ -33,4 +33,7 @@ public class UnitController {
         unitModel.deleteUnit(unitID);
     }
     
+    public void updateUnit(Unit updateUnit, Unit currentUnit){
+        unitModel.updateUnit(updateUnit, currentUnit);
+    }
 }

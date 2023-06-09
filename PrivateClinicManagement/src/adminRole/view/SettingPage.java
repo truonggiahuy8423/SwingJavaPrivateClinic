@@ -31,6 +31,9 @@ public class SettingPage extends javax.swing.JPanel {
     private List<Room> listOfRoom;
     private List<Service> listOfService;
     private List<Unit> listOfUnit;
+    private Room currentRoom;
+    private Service currentService;
+    private Unit currentUnit;
     private final DefaultTableModel dataOfRoomTable;
     private final DefaultTableModel dataOfServiceTable;
     private final DefaultTableModel dataOfUnitTable;
@@ -47,10 +50,14 @@ public class SettingPage extends javax.swing.JPanel {
         
         btnAddRoom.setBackground(Color.white);
         btnDeleteRoom.setBackground(Color.white);
+        btnUpdateRoom.setBackground(Color.white);
         btnAddService.setBackground(Color.white);
         btnDeleteService.setBackground(Color.white);
+        btnUpdateService.setBackground(Color.white);
         btnAddUnit.setBackground(Color.white);
         btnDeleteUnit.setBackground(Color.white);
+        btnUpdateUnit.setBackground(Color.white);
+        btnRefreshPage.setBackground(Color.white);
         
         dataOfRoomTable = (DefaultTableModel)this.tbRoom.getModel();
         dataOfRoomTable.setColumnIdentifiers(new Object[]{"Room ID"});
@@ -61,12 +68,7 @@ public class SettingPage extends javax.swing.JPanel {
         dataOfUnitTable = (DefaultTableModel)this.tbUnit.getModel();
         dataOfUnitTable.setColumnIdentifiers(new Object[]{"Unit ID", "Name"});
         
-        queryDataRoom();
-        queryDataService();
-        queryDataUnit();
-        displayDataRoom();
-        displayDataService();
-        displayDataUnit();
+        refreshPage();
     }
 
     public void queryDataRoom(){
@@ -105,6 +107,83 @@ public class SettingPage extends javax.swing.JPanel {
         }
     }
     
+    public boolean checkNullRoom(){
+        boolean isOk = true;
+        if(String.valueOf(txtRoomID.getText()).length() <= 0){
+            errorRoomID.setText("No empty allowed");
+            isOk = false;
+        }
+        return isOk;
+    }
+    
+    public boolean checkNullService(){
+        boolean isOk = true;
+        if(String.valueOf(txtServiceID.getText()).length() <= 0){
+            errorServiceID.setText("No empty allowed");
+            isOk = false;
+        }
+        
+        if(String.valueOf(txtServiceName.getText()).length() <= 0){
+            errorServiceName.setText("No empty allowed");
+            isOk = false;
+        }
+        
+        if(String.valueOf(txtCost.getText()).length() <= 0){
+            errorServiceCost.setText("No empty allowed");
+        }
+        return isOk;
+    }
+
+    public boolean checkNullUnit(){
+        boolean isOk = true;
+        if(String.valueOf(txtUnitID.getText()).length() <= 0){
+            errorUnitID.setText("No empty allowed");
+            isOk = false;
+        }
+        
+        if(String.valueOf(txtUnitName.getText()).length() <= 0){
+            errorUnitName.setText("No empty allowed");
+            isOk = false;
+        }
+        
+        return isOk;
+    }
+    
+    public void setNullErrorRoom(){
+        errorRoomID.setText("");
+    }
+    
+    public void setNullErrorService(){
+        errorServiceID.setText("");
+        errorServiceName.setText("");
+        errorServiceCost.setText("");
+    }
+    
+    public void setNullErrorUnit(){
+        errorUnitID.setText("");
+        errorUnitName.setText("");
+    }
+    
+    public void refreshPage(){
+        txtRoomID.setText("");
+        txtServiceID.setText("");
+        txtServiceName.setText("");
+        txtCost.setText("");
+        txtUnitID.setText("");
+        txtUnitName.setText("");
+
+        setNullErrorRoom();
+        setNullErrorService();
+        setNullErrorUnit();
+        
+        queryDataRoom();
+        queryDataService();
+        queryDataUnit();
+        displayDataRoom();
+        displayDataService();
+        displayDataUnit();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,7 +209,7 @@ public class SettingPage extends javax.swing.JPanel {
         txtServiceID = new javax.swing.JTextField();
         txtUnitID = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtNameService = new javax.swing.JTextField();
+        txtServiceName = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtCost = new javax.swing.JTextField();
         btnAddService = new javax.swing.JButton();
@@ -140,7 +219,17 @@ public class SettingPage extends javax.swing.JPanel {
         btnDeleteUnit = new javax.swing.JButton();
         btnAddUnit = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        txtNameUnit = new javax.swing.JTextField();
+        txtUnitName = new javax.swing.JTextField();
+        btnUpdateRoom = new javax.swing.JButton();
+        btnUpdateService = new javax.swing.JButton();
+        btnUpdateUnit = new javax.swing.JButton();
+        errorRoomID = new javax.swing.JLabel();
+        errorServiceID = new javax.swing.JLabel();
+        errorServiceName = new javax.swing.JLabel();
+        errorServiceCost = new javax.swing.JLabel();
+        errorUnitID = new javax.swing.JLabel();
+        errorUnitName = new javax.swing.JLabel();
+        btnRefreshPage = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1590, 765));
 
@@ -264,6 +353,62 @@ public class SettingPage extends javax.swing.JPanel {
 
         jLabel9.setText("Name:");
 
+        btnUpdateRoom.setText("Update");
+        btnUpdateRoom.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnUpdateRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateRoomActionPerformed(evt);
+            }
+        });
+
+        btnUpdateService.setText("Update");
+        btnUpdateService.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnUpdateService.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateServiceActionPerformed(evt);
+            }
+        });
+
+        btnUpdateUnit.setText("Update");
+        btnUpdateUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnUpdateUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateUnitActionPerformed(evt);
+            }
+        });
+
+        errorRoomID.setForeground(new java.awt.Color(255, 0, 0));
+        errorRoomID.setText("error");
+        errorRoomID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        errorServiceID.setForeground(new java.awt.Color(255, 0, 0));
+        errorServiceID.setText("error");
+        errorServiceID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        errorServiceName.setForeground(new java.awt.Color(255, 0, 0));
+        errorServiceName.setText("error");
+        errorServiceName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        errorServiceCost.setForeground(new java.awt.Color(255, 0, 0));
+        errorServiceCost.setText("error");
+        errorServiceCost.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        errorUnitID.setForeground(new java.awt.Color(255, 0, 0));
+        errorUnitID.setText("error");
+        errorUnitID.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        errorUnitName.setForeground(new java.awt.Color(255, 0, 0));
+        errorUnitName.setText("error");
+        errorUnitName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        btnRefreshPage.setText("Refresh Page");
+        btnRefreshPage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnRefreshPage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshPageActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -271,64 +416,88 @@ public class SettingPage extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAddRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeleteRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(errorRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtNameService, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAddRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnDeleteRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnUpdateRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addGap(588, 588, 588))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel9))
+                                .addComponent(errorUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtUnitName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(errorUnitName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAddUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnDeleteUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnUpdateUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel7))
+                                .addComponent(errorServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtServiceName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel8))
+                                .addComponent(errorServiceName, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(errorServiceCost, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                                     .addComponent(btnAddService, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnDeleteService, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(58, 58, 58))
+                                    .addComponent(btnDeleteService, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnUpdateService, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addContainerGap(52, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtNameUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(474, 474, 474)))
-                                .addGap(8, 8, 8)
-                                .addComponent(btnAddUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeleteUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(btnRefreshPage, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,108 +506,205 @@ public class SettingPage extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(txtRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(txtNameService, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtServiceName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddService)
-                    .addComponent(btnDeleteService)
                     .addComponent(btnAddRoom)
-                    .addComponent(btnDeleteRoom))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(jLabel3)
+                    .addComponent(btnDeleteRoom)
+                    .addComponent(btnUpdateRoom)
+                    .addComponent(btnUpdateService)
+                    .addComponent(btnDeleteService))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorRoomID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorServiceID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorServiceName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(errorServiceCost, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9)
-                        .addComponent(txtNameUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDeleteUnit)
-                        .addComponent(btnAddUnit)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(txtUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9)
+                                .addComponent(txtUnitName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnDeleteUnit)
+                                .addComponent(btnUpdateUnit)
+                                .addComponent(btnAddUnit)))
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(errorUnitID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorUnitName, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 30, Short.MAX_VALUE)
+                        .addComponent(btnRefreshPage, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRoomActionPerformed
-        Long roomID = Long.valueOf(txtRoomID.getText());
-        roomController.addRoom(new Room(roomID));
-        queryDataRoom();
-        displayDataRoom();
+        if(checkNullRoom()){
+            Integer roomID = Integer.valueOf(txtRoomID.getText());
+            roomController.addRoom(new Room(roomID));
+            queryDataRoom();
+            displayDataRoom();
+            setNullErrorRoom();
+        }
     }//GEN-LAST:event_btnAddRoomActionPerformed
 
     private void btnDeleteRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRoomActionPerformed
-        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
-        if(confirmOption == JOptionPane.YES_OPTION){
-            roomController.deleteRoom(txtRoomID.getText());
-            queryDataRoom();
-            displayDataRoom();
+        if(checkNullRoom()){
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+            if(confirmOption == JOptionPane.YES_OPTION){
+                roomController.deleteRoom(txtRoomID.getText());
+                queryDataRoom();
+                displayDataRoom();
+                setNullErrorRoom();
+            }
         }
     }//GEN-LAST:event_btnDeleteRoomActionPerformed
 
     private void btnAddServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServiceActionPerformed
-        Long serviceID = Long.valueOf(txtServiceID.getText());
-        Long serviceCost = Long.valueOf(txtCost.getText());
-        serviceController.addService(new Service(serviceID, txtNameService.getText(), serviceCost));
-        queryDataService();
-        displayDataService();
+        if(checkNullService()){
+            Integer serviceID = Integer.valueOf(txtServiceID.getText());
+            Integer serviceCost = Integer.valueOf(txtCost.getText());
+            serviceController.addService(new Service(serviceID, txtServiceName.getText(), serviceCost));
+            queryDataService();
+            displayDataService();
+            setNullErrorService();
+        }
     }//GEN-LAST:event_btnAddServiceActionPerformed
 
     private void btnDeleteServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteServiceActionPerformed
-        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
-        if(confirmOption == JOptionPane.YES_OPTION){
-            serviceController.deleteService(txtServiceID.getText());
-            queryDataService();
-            displayDataService();
+        if(checkNullService()){
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+            if(confirmOption == JOptionPane.YES_OPTION){
+                serviceController.deleteService(txtServiceID.getText());
+                queryDataService();
+                displayDataService();
+                setNullErrorService();
+            }
         }
     }//GEN-LAST:event_btnDeleteServiceActionPerformed
 
     private void btnAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUnitActionPerformed
-        Integer unitID = Integer.valueOf(txtUnitID.getText());
-        unitController.addUnit(new Unit(unitID, txtNameUnit.getText()));
-        queryDataUnit();
-        displayDataUnit();
+        if(checkNullUnit()){
+            Integer unitID = Integer.valueOf(txtUnitID.getText());
+            unitController.addUnit(new Unit(unitID, txtUnitName.getText()));
+            queryDataUnit();
+            displayDataUnit();
+            setNullErrorUnit();
+        }
     }//GEN-LAST:event_btnAddUnitActionPerformed
 
     private void btnDeleteUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUnitActionPerformed
-        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
-        if(confirmOption == JOptionPane.YES_OPTION){
-            unitController.deleteUnit(txtUnitID.getText());
-            queryDataUnit();
-            displayDataUnit();
+        if(checkNullUnit()){
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+            if(confirmOption == JOptionPane.YES_OPTION){
+                unitController.deleteUnit(txtUnitID.getText());
+                queryDataUnit();
+                displayDataUnit();
+                setNullErrorUnit();
+            }
         }
     }//GEN-LAST:event_btnDeleteUnitActionPerformed
 
     private void tbRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRoomMouseClicked
         int n = tbRoom.getSelectedRow();
         txtRoomID.setText(String.valueOf(tbRoom.getValueAt(n, 0)));
+        
+        currentRoom = new Room();
+        currentRoom.setRoomID(Integer.valueOf(String.valueOf(txtRoomID.getText())));
     }//GEN-LAST:event_tbRoomMouseClicked
 
     private void tbServiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbServiceMouseClicked
         int n = tbService.getSelectedRow();
         txtServiceID.setText(String.valueOf(tbService.getValueAt(n, 0)));
-        txtNameService.setText(String.valueOf(tbService.getValueAt(n, 1)));
+        txtServiceName.setText(String.valueOf(tbService.getValueAt(n, 1)));
         txtCost.setText(String.valueOf(tbService.getValueAt(n, 2)));
+        
+        currentService = new Service();
+        currentService.setServiceID(Integer.valueOf(String.valueOf(txtServiceID.getText())));
+        currentService.setServiceName(String.valueOf(txtServiceName.getText()));
+        currentService.setServiceCost(Integer.valueOf(String.valueOf(txtCost.getText())));
     }//GEN-LAST:event_tbServiceMouseClicked
 
     private void tbUnitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUnitMouseClicked
         int n = tbUnit.getSelectedRow();
         txtUnitID.setText(String.valueOf(tbUnit.getValueAt(n, 0)));
-        txtNameUnit.setText(String.valueOf(tbUnit.getValueAt(n, 1)));  
+        txtUnitName.setText(String.valueOf(tbUnit.getValueAt(n, 1)));  
+        
+        currentUnit = new Unit();
+        currentUnit.setUnitID(Integer.valueOf(String.valueOf(txtServiceID.getText())));
+        currentUnit.setUnitName(String.valueOf(txtServiceName.getText()));
     }//GEN-LAST:event_tbUnitMouseClicked
+
+    private void btnUpdateRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateRoomActionPerformed
+        if(checkNullRoom()){
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn cập nhật?", "Cập nhật", JOptionPane.YES_NO_OPTION);
+            if(confirmOption == JOptionPane.YES_OPTION){
+                Room updateRoom = new Room();
+                updateRoom.setRoomID(Integer.valueOf(String.valueOf(txtRoomID.getText())));
+                roomController.updateRoom(updateRoom, currentRoom);
+                queryDataRoom();
+                displayDataRoom();
+                setNullErrorRoom();
+            }
+        }
+    }//GEN-LAST:event_btnUpdateRoomActionPerformed
+
+    private void btnUpdateServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateServiceActionPerformed
+        if(checkNullService()){
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn cập nhật?", "Cập nhật", JOptionPane.YES_NO_OPTION);
+            if(confirmOption == JOptionPane.YES_OPTION){
+                Service updateService = new Service();
+                updateService.setServiceID(Integer.valueOf(String.valueOf(txtServiceID.getText())));
+                updateService.setServiceName(String.valueOf(txtServiceName.getText()));
+                updateService.setServiceCost(Integer.valueOf(String.valueOf(txtCost.getText())));
+                serviceController.updateService(updateService, currentService);
+                queryDataService();
+                displayDataService();
+                setNullErrorService();
+            }
+        }
+    }//GEN-LAST:event_btnUpdateServiceActionPerformed
+
+    private void btnUpdateUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUnitActionPerformed
+        if(checkNullUnit()){
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn cập nhật?", "Cập nhật", JOptionPane.YES_NO_OPTION);
+            if(confirmOption == JOptionPane.YES_OPTION){
+                Unit updateUnit = new Unit();
+                updateUnit.setUnitID(Integer.valueOf(String.valueOf(txtUnitID.getText())));
+                updateUnit.setUnitName(String.valueOf(txtUnitName.getText()));
+                unitController.updateUnit(updateUnit, currentUnit);
+                queryDataUnit();
+                displayDataUnit();
+                setNullErrorUnit();
+            }
+        }
+    }//GEN-LAST:event_btnUpdateUnitActionPerformed
+
+    private void btnRefreshPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshPageActionPerformed
+        refreshPage();
+    }//GEN-LAST:event_btnRefreshPageActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -448,6 +714,16 @@ public class SettingPage extends javax.swing.JPanel {
     private javax.swing.JButton btnDeleteRoom;
     private javax.swing.JButton btnDeleteService;
     private javax.swing.JButton btnDeleteUnit;
+    private javax.swing.JButton btnRefreshPage;
+    private javax.swing.JButton btnUpdateRoom;
+    private javax.swing.JButton btnUpdateService;
+    private javax.swing.JButton btnUpdateUnit;
+    private javax.swing.JLabel errorRoomID;
+    private javax.swing.JLabel errorServiceCost;
+    private javax.swing.JLabel errorServiceID;
+    private javax.swing.JLabel errorServiceName;
+    private javax.swing.JLabel errorUnitID;
+    private javax.swing.JLabel errorUnitName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -464,10 +740,10 @@ public class SettingPage extends javax.swing.JPanel {
     private javax.swing.JTable tbService;
     private javax.swing.JTable tbUnit;
     private javax.swing.JTextField txtCost;
-    private javax.swing.JTextField txtNameService;
-    private javax.swing.JTextField txtNameUnit;
     private javax.swing.JTextField txtRoomID;
     private javax.swing.JTextField txtServiceID;
+    private javax.swing.JTextField txtServiceName;
     private javax.swing.JTextField txtUnitID;
+    private javax.swing.JTextField txtUnitName;
     // End of variables declaration//GEN-END:variables
 }

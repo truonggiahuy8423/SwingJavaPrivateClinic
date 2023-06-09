@@ -67,7 +67,8 @@ public class Schedule {
         String username = "AD";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
             //System.out.println(connection.isClosed());
             statement = connection.createStatement() ;  
             result = statement.executeQuery(sql);

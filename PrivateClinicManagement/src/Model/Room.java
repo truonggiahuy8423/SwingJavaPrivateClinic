@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.Types;
 import java.util.List;
 import java.sql.PreparedStatement;
 
@@ -17,19 +19,19 @@ import java.sql.PreparedStatement;
  * @author GIAHUY
  */
 public class Room {
-    private Long roomID;
+    private Integer roomID;
     
     public Room(){}
     
-    public Room(Long roomID){
+    public Room(Integer roomID){
         this.roomID = roomID;
     }
     
-    public Long getRoomID(){
+    public Integer getRoomID(){
         return this.roomID;
     }
     
-    public void setRoomID(Long roomID){
+    public void setRoomID(Integer roomID){
         this.roomID = roomID;
     }
     
@@ -43,7 +45,7 @@ public class Room {
             ResultSet result = statement.executeQuery("select * from room order by room_id asc");
 
             while (result.next()){
-                Room p = new Room(result.getLong(1));
+                Room p = new Room(result.getInt(1));
                 listOfRoom.add(p);
             }
             connection.close();
@@ -64,7 +66,7 @@ public class Room {
 
             String sql = "insert into room values(?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;  
-            statement.setLong(1, room.getRoomID());
+            statement.setInt(1, room.getRoomID());
             statement.executeUpdate();
             connection.close();
         } 
@@ -92,5 +94,33 @@ public class Room {
         finally{
             System.out.println("Successful"); 
         }        
+    }
+    
+    public void updateRoom(Room updateRoom, Room currentRoom){
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "c##phongkham", "phongkham");
+            String sql = "UPDATE ROOM "
+                            + "SET ROOM_ID = " + "?"
+                            + " WHERE ROOM_ID = "+ "?";
+            PreparedStatement statement = connection.prepareStatement(sql) ;  
+            if(updateRoom.getRoomID() == currentRoom.getRoomID()){
+                statement.setNull(1, Types.INTEGER);
+            }
+            else{
+                statement.setInt(1, updateRoom.getRoomID());
+            }
+            
+            statement.setInt(2, currentRoom.getRoomID());
+            statement.executeUpdate();
+            connection.close();
+        } 
+        catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.toString()); 
+        }
+        finally{
+            System.out.println("Successful"); 
+        }      
     }
 }

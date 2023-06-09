@@ -24,6 +24,9 @@ public class ServiceController {
     
     public void deleteService(String serviceID){
         serviceModel.deleteService(serviceID);
-
+    }
+    
+    public void updateService(Service updateService, Service currentService){
+        serviceModel.updateService(updateService, currentService);
     }
 }
