@@ -250,7 +250,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
                 formatIsOk = false;
             }
             
-            String saddress = jTextFieldPassword.getText();
+            String saddress = jTextFieldAddress.getText();
             String shometown = jTextFieldHometown.getText();
             
             Calendar insBirthday = null;
@@ -273,8 +273,8 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
             
             if (formatIsOk)
             {
-                Employee employee = new Employee('6', sname, sphone,
-                        spassword, insBirthday, saddress, shometown, insStartday);
+                Employee employee = new Employee(sname, sphone,
+                        spassword, insBirthday, saddress, shometown, insStartday, employeeID);
                 try {
                     new EmployeePageController(null).updateEmployee(employee);
                     JOptionPane.showMessageDialog(null, "Update employee successfully!", "", JOptionPane.INFORMATION_MESSAGE);

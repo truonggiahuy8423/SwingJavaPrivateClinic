@@ -60,7 +60,7 @@ public class Employee {
         this.hometown = hometown;
         this.password = password;
     }
-    public Employee(int employeeId, String fullName, String phone, String password, Calendar birthday, String address, String hometown, Calendar startDay) {
+    public Employee(String fullName, String phone, String password, Calendar birthday, String address, String hometown, Calendar startDay, int employeeId) {
         this.employeeId = employeeId;
         this.fullName = fullName;
         this.phone = phone;
@@ -268,7 +268,7 @@ public class Employee {
                 start_date = Calendar.getInstance();
                 start_date.setTimeInMillis(result.getDate(8).getTime());
             }
-            Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), result.getString(4), birthday, result.getString(6), result.getString(7), start_date);
+            Employee p = new Employee(result.getString(1), result.getString(2), result.getString(3), birthday, result.getString(5), result.getString(6), start_date, result.getInt(8));
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();
@@ -329,7 +329,7 @@ public class Employee {
             statement.setString(5, updatedEmployee.getAddress());
             statement.setString(6, updatedEmployee.getHometown());
             statement.setDate(7, updatedEmployee.getStartDay() == null ? null : new java.sql.Date(updatedEmployee.getStartDay().getTimeInMillis()));
-            
+            statement.setInt(8, updatedEmployee.getEmployeeId());
             
 //            statement.setInt(9, updatedEmployee.getSalaryPerDay());
 //            statement.setInt(10, updatedEmployee.getRoleId());

@@ -242,7 +242,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
                 formatIsOk = false;
             }
             
-            String saddress = jTextFieldPassword.getText();
+            String saddress = jTextFieldAddress.getText();
             String shometown = jTextFieldHometown.getText();
             int srole_id = jComboBoxPositionTitle.getSelectedIndex() + 1; 
             
