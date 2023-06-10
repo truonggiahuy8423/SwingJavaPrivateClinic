@@ -35,7 +35,7 @@ public class SchedulePageController {
             System.out.println(sql);
             while (result.next()){
                 java.util.Date  utilDate = new java.util.Date(result.getDate(2).getTime());
-                Schedule p = new Schedule(result.getLong(1), utilDate, result.getString(3), result.getLong(4), result.getLong(5), result.getLong(6), result.getLong(7));
+                Schedule p = new Schedule(result.getInt(1), utilDate, result.getInt(3), result.getInt(4), result.getInt(5), result.getInt(6), result.getInt(7));
                 listOfSchedule.add(p);
             }
             connection.close();

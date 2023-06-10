@@ -173,10 +173,17 @@ public class Employee {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+
             String username = "c##uni4";  // Replace with your username
             String password = "123";  // Replace with your password
             String sqlInsert = "insert into employee(employee_id, full_name, role_id, phone, password, birthday, "
                     + "address, hometown) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
+
+//            String username = "c##uni4";  // Replace with your username
+//            String password = "123";  // Replace with your password
+//            String sqlInsert = "insert into employee(employee_id, full_name, phone, birthday, "
+//                    + "start_day, address, hometown, password, salary_per_day, role_id) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlInsert);
 //            statement.setInt(1, employee.getEmployeeId());
@@ -205,12 +212,20 @@ public class Employee {
         Statement statement = null;
         ResultSet result = null;
         try
+
         {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "c##uni4";  // Replace with your username
             String password = "123";  // Replace with your password
             connection = null; statement = null; result = null;
+
+//        {Class.forName("oracle.jdbc.driver.OracleDriver");
+//        String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+//        String username = "c##uni4";  // Replace with your username
+//        String password = "123";  // Replace with your password
+//        connection = null; statement = null; result = null;
+
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             //System.out.println(connection.isClosed());
             statement = connection.createStatement() ;  
@@ -247,6 +262,8 @@ public class Employee {
             
         }        
     }
+    
+    //employee
     public Employee getAEmployee(int employee_id) throws SQLException
     {
         Employee employee = null;

@@ -33,7 +33,7 @@ public class PatientListTabController {
     {
         patientModel.addPatient(patient);
     }
-    public void deletePatient(Long patientID) throws SQLException
+    public void deletePatient(Integer patientID) throws SQLException
     {
         patientModel.deletePatient(patientID);
     }
