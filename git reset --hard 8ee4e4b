@@ -1,0 +1,26 @@
+[33m8ee4e4b[m[33m ([m[1;36mHEAD -> [m[1;32memployee-update[m[33m)[m HEAD@{0}: commit: Done update now fix insert
+[33mf7f0933[m HEAD@{1}: commit: bug update
+[33mf0a4d01[m HEAD@{2}: commit: fix 5 fix bug close form
+[33mb0a2d2d[m HEAD@{3}: commit: fix 4 close form + day
+[33m9a6453a[m HEAD@{4}: commit: fix 3
+[33mb29ab24[m HEAD@{5}: commit: fix 2
+[33m6b80ca8[m HEAD@{6}: commit: fix 1
+[33m01c429b[m HEAD@{7}: reset: moving to 01c429b
+[33m1286c66[m[33m ([m[1;31morigin/employee-update[m[33m)[m HEAD@{8}: commit (merge): newest
+[33m01c429b[m HEAD@{9}: commit: last one
+[33me483a3c[m HEAD@{10}: commit: update sort
+[33m0913523[m HEAD@{11}: commit: vjp
+[33m48b10b5[m HEAD@{12}: commit: hi
+[33m2b46e7f[m HEAD@{13}: reset: moving to 2b46e7f
+[33m8725052[m HEAD@{14}: commit (merge): employee update
+[33m2b46e7f[m HEAD@{15}: commit: employee update
+[33m637e7d4[m[33m ([m[1;32memployee[m[33m)[m HEAD@{16}: checkout: moving from employee-update to employee-update
+[33m637e7d4[m[33m ([m[1;32memployee[m[33m)[m HEAD@{17}: checkout: moving from employee to employee-update
+[33m637e7d4[m[33m ([m[1;32memployee[m[33m)[m HEAD@{18}: commit: employee update
+[33m147b1d8[m HEAD@{19}: commit: employee
+[33mde48b28[m HEAD@{20}: commit: employee
+[33m7408ee0[m HEAD@{21}: checkout: moving from employee to employee
+[33m7408ee0[m HEAD@{22}: commit: employee
+[33me496cc5[m HEAD@{23}: commit: employee
+[33m55f8dd9[m[33m ([m[1;32mmain[m[33m)[m HEAD@{24}: checkout: moving from main to employee
+[33m55f8dd9[m[33m ([m[1;32mmain[m[33m)[m HEAD@{25}: clone: from https://github.com/truonggiahuy8423/SwingJavaPrivateClinic.git

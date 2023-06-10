@@ -49,7 +49,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
     public UpdateEmployeeForm(java.awt.Frame parent, boolean modal, EmployeePage parent3, int employeeID) {
         super(parent, modal);
         initComponents();
-        
+         System.out.println(employeeID);
 //        Controller = new EmployeePageController();
 //        try {
 //            employee = Controller.getEmployee(employeeID); 
@@ -224,6 +224,8 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         jButtonCancel.addActionListener (e -> {
             jDialogcloseUpdateForm.dispose();
         });
+        
+        //Update when save
         jButtonSave.addActionListener (e -> {
             jLabelNameNoti.setText("");
             jLabelPasswordNoti.setText("");

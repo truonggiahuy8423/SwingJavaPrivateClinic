@@ -69,6 +69,14 @@ public class Employee {
         this.address = address;
         this.hometown = hometown;  
     }
+
+    public Employee(String fullName, String phone, String address, String hometown, String password) {
+        this.fullName = fullName;
+        this.phone = phone;
+        this.address = address;
+        this.hometown = hometown;
+        this.password = password;
+    }
     
     public int getEmployeeId() {
         return employeeId;
@@ -252,23 +260,23 @@ public class Employee {
             String password = "123";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement() ;  
-            result = statement.executeQuery("select employee_id, full_name, phone, password, birthday, address, hometown, start_day from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
+            result = statement.executeQuery("select full_name, phone, address, hometown, password from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
             if (!result.next())
                 return employee;
             
-            Calendar birthday = null;
-            if (result.getDate(5) != null)
-            {
-                birthday = Calendar.getInstance();
-                birthday.setTimeInMillis(result.getDate(5).getTime());
-            }
-            Calendar start_date =null;
-            if (result.getDate(8) != null)
-            {
-                start_date = Calendar.getInstance();
-                start_date.setTimeInMillis(result.getDate(8).getTime());
-            }
-            Employee p = new Employee(result.getString(1), result.getString(2), result.getString(3), birthday, result.getString(5), result.getString(6), start_date, result.getInt(8));
+//            Calendar birthday = null;
+//            if (result.getDate(5) != null)
+//            {
+//                birthday = Calendar.getInstance();
+//                birthday.setTimeInMillis(result.getDate(5).getTime());
+//            }
+//            Calendar start_date =null;
+//            if (result.getDate(8) != null)
+//            {
+//                start_date = Calendar.getInstance();
+//                start_date.setTimeInMillis(result.getDate(8).getTime());
+//            }
+            Employee p = new Employee(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();
