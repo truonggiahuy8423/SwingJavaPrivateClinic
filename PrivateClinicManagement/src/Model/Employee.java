@@ -261,8 +261,8 @@ public class Employee {
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement() ;  
             result = statement.executeQuery("select full_name, phone, address, hometown, password from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
-            if (!result.next())
-                return employee;
+//            if (!result.next())
+//                return employee;
             
 //            Calendar birthday = null;
 //            if (result.getDate(5) != null)
@@ -277,13 +277,15 @@ public class Employee {
 //                start_date.setTimeInMillis(result.getDate(8).getTime());
 //            }
             Employee p = new Employee(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
+            System.out.println(employeeId);
+            return p;
         } catch (ClassNotFoundException e) {}
         finally {
             if (result != null) result.close();
             if (statement != null) statement.close();
             if (connection != null) connection.close();
         }
-        return employee;
+        return null;
     }
     public void deleteEmployee(int employeeID) throws SQLException
     {

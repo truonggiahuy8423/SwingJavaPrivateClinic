@@ -50,17 +50,17 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
          System.out.println(employeeID);
-//        Controller = new EmployeePageController();
-//        try {
-//            employee = Controller.getEmployee(employeeID); 
-//        } catch (SQLException e) {e.printStackTrace();} catch (Exception e) {e.printStackTrace();}
-//        
-//        //Add data to textfield
-//        jTextFieldName.setText(employee.getFullName());
-//        jTextFieldPhone.setText(employee.getPhone());
-//        jTextFieldAddress.setText(employee.getAddress());
-//        jTextFieldHometown.setText(employee.getHometown());
-//        jTextFieldPassword.setText(employee.getPassword());
+        Controller = new EmployeePageController();
+        try {
+            employee = Controller.getEmployee(employeeID); 
+        } catch (SQLException e) {e.printStackTrace();} catch (Exception e) {e.printStackTrace();}
+        
+        //Add data to textfield
+        jTextFieldName.setText(employee.getFullName());
+        jTextFieldPhone.setText(employee.getPhone());
+        jTextFieldAddress.setText(employee.getAddress());
+        jTextFieldHometown.setText(employee.getHometown());
+        jTextFieldPassword.setText(employee.getPassword());
         
         //clear data of combobox
         jComboBoxStartdayDate.removeAllItems();
