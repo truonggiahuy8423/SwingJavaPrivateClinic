@@ -264,43 +264,71 @@ public class Employee {
     }
     
     //employee
+//    public Employee getAEmployee(int employee_id) throws SQLException
+//    {
+//        Employee employee = new Employee();
+//        Connection connection = null;
+//        Statement statement = null; 
+//        ResultSet result = null;
+//        try {
+//            Class.forName("oracle.jdbc.driver.OracleDriver");
+//            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+//            String username = "c##uni4";  // Replace with your username
+//            String password = "123";  // Replace with your password
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            statement = connection.createStatement() ;  
+//            result = statement.executeQuery("select full_name, phone, address, hometown, password from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
+////            if (!result.next())
+////                return employee;
+//            
+////            Calendar birthday = null;
+////            if (result.getDate(5) != null)
+////            {
+////                birthday = Calendar.getInstance();
+////                birthday.setTimeInMillis(result.getDate(5).getTime());
+////            }
+////            Calendar start_date =null;
+////            if (result.getDate(8) != null)
+////            {
+////                start_date = Calendar.getInstance();
+////                start_date.setTimeInMillis(result.getDate(8).getTime());
+////            }
+//            Employee p = new Employee(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
+//            System.out.println(employeeId);
+//            return p;
+//        } catch (ClassNotFoundException e) {}
+//        finally {
+//            if (result != null) result.close();
+//            if (statement != null) statement.close();
+//            if (connection != null) connection.close();
+//        }
+//        return null;
+//    }
     public Employee getAEmployee(int employee_id) throws SQLException
     {
-        Employee employee = null;
         Connection connection = null;
-        Statement statement = null; 
-        ResultSet result = null;
+        String sql = "select * from EMPLOYEE where employee_id = " + String.valueOf(employee_id);
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
             String username = "c##uni4";  // Replace with your username
             String password = "123";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
-            statement = connection.createStatement() ;  
-            result = statement.executeQuery("select full_name, phone, address, hometown, password from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
-//            if (!result.next())
-//                return employee;
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             
-//            Calendar birthday = null;
-//            if (result.getDate(5) != null)
-//            {
-//                birthday = Calendar.getInstance();
-//                birthday.setTimeInMillis(result.getDate(5).getTime());
-//            }
-//            Calendar start_date =null;
-//            if (result.getDate(8) != null)
-//            {
-//                start_date = Calendar.getInstance();
-//                start_date.setTimeInMillis(result.getDate(8).getTime());
-//            }
-            Employee p = new Employee(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5));
-            System.out.println(employeeId);
-            return p;
-        } catch (ClassNotFoundException e) {}
-        finally {
-            if (result != null) result.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
+            while (rs.next()) {
+                Employee p = new Employee();
+                p.setFullName(rs.getString("full_name"));
+                p.setPhone(rs.getString("phone"));
+                p.setAddress(rs.getString("address"));
+                p.setHometown(rs.getString("hometown"));
+                p.setPassword(rs.getString("password"));
+                return p;
+            }
+            
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return null;
     }
