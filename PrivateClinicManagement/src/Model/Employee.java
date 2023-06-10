@@ -32,6 +32,24 @@ public class Employee {
     private String portrait;
     private Integer roleId;
     private String roleName;
+    private Integer workingDay;
+    private Long salary;
+
+    public Integer getWorkingDay() {
+        return workingDay;
+    }
+
+    public Long getSalary() {
+        return salary;
+    }
+
+    public void setWorkingDay(Integer workingDay) {
+        this.workingDay = workingDay;
+    }
+
+    public void setSalary(Long salary) {
+        this.salary = salary;
+    }
 
     public void setSalaryPerDay(Integer salaryPerDay) {
         this.salaryPerDay = salaryPerDay;
@@ -277,7 +295,13 @@ public class Employee {
             
         }        
     }
-    public Employee getAEmployee(int employee_id) throws SQLException
+
+    @Override
+    public String toString() {
+        return getName() + " - " + getEmployeeID(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
+    public Employee getAnEmployee(int employee_id) throws SQLException
     {
         Employee employee = null;
         Connection connection = null;
@@ -290,7 +314,7 @@ public class Employee {
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement() ;  
-            result = statement.executeQuery("select * from EMPLOYEE where employee_id = " + String.valueOf(employee_id));
+            result = statement.executeQuery("select employee.*, role.role_name from employee inner join role on employee.role_id = role.role_id where employee_id = " + String.valueOf(employee_id));
             if (!result.next())
                 return employee;
             
@@ -405,6 +429,55 @@ public class Employee {
         }
         finally{
             System.out.println("Successful"); 
+        }        
+    }
+    public void getListOfEmployeesForStatistic(String sql, List<Employee> listOfEmployee) throws SQLException
+    {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        try
+        {Class.forName("oracle.jdbc.driver.OracleDriver");
+        String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
+        String username = "AD";  // Replace with your username
+        String password = "88888888";  // Replace with your password
+        connection = null; statement = null; result = null;
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            //System.out.println(connection.isClosed());
+            statement = connection.createStatement() ;  
+            result = statement.executeQuery(sql);
+            //System.out.println(rs.next()); 
+            while (result.next())
+            {
+                Calendar birthday = null;
+                if (result.getDate(4) != null)
+                {
+                    birthday = Calendar.getInstance();
+                    birthday.setTimeInMillis(result.getDate(4).getTime());
+                }
+                Calendar start_date = null;
+                if (result.getDate(5) != null)
+                {
+                    start_date = Calendar.getInstance();
+                    start_date.setTimeInMillis(result.getDate(5).getTime());
+                }
+                //"select employee.*, role.role_name from employee inner join role on employee.role_id = role.role_id"
+                Employee p = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), " ", result.getInt(10), result.getString(11));
+                p.setSalary(result.getLong(13));
+                p.setWorkingDay(result.getInt(12));
+                listOfEmployee.add(p);
+            }         
+        }
+        catch (ClassNotFoundException e)
+        { 
+
+            System.out.println(e);
+        }
+        finally { 
+            if (result != null) result.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+            
         }        
     }
 }

@@ -11,10 +11,20 @@ package Model;
 public class UserModel {
     private String account;
     private String passwword;
+    private Integer role;
 
-    public UserModel(String account, String passwword) {
+    public void setRole(Integer role) {
+        this.role = role;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public UserModel(String account, String passwword, Integer role) {
         this.account = account;
         this.passwword = passwword;
+        this.role = role;
     }
 
     public String getAccount() {

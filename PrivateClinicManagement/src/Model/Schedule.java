@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 
 /**
  *
@@ -102,10 +103,11 @@ public class Schedule {
     }
 
     public void getListOfSchedule(String sql, List<Schedule> listOfSchedule){
+        Connection connection = null;
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
 //            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+           connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
             System.out.println(sql);
@@ -121,7 +123,7 @@ public class Schedule {
             JOptionPane.showMessageDialog(null, e.toString() + "\n" + sql);
         }
         finally{
-            System.out.println("Successful"); 
+            
         }        
     }
 
@@ -225,15 +227,50 @@ public class Schedule {
             System.out.println("Successful"); 
         }        
     }
+    private String convert_calendar2(Calendar c)
+    {
+        return c == null ? "'----/--/--'" : "" + String.format("'%04d", c.get(Calendar.YEAR)) + "-" + String.format("%02d", c.get(Calendar.MONTH) + 1) + "-"+ String.format("%02d'", c.get(Calendar.DATE));
+
+    }
+    public Schedule getAScheduleWithEmpIDAnDate(Integer employeeID, Calendar date) throws SQLException {
+        Schedule schedule = null;
+        Connection connection = null;
+        try{
+            
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            String sql = "SELECT * FROM SCHEDULE "
+                            + "WHERE "
+                                    + "trunc(SCHEDULE_DATE) = TRUNC(DATE " + convert_calendar2(date) + ") AND "
+                                    + "EMPLOYEE_ID = "        + "?" ;
+                                    
+            PreparedStatement statement = connection.prepareStatement(sql) ;  
+            statement.setInt(1, employeeID);
+            ResultSet result = statement.executeQuery();
+            
+            while (result.next()){
+                java.util.Date  utilDate = new java.util.Date(result.getDate(2).getTime());
+                schedule = new Schedule(result.getInt(1), utilDate, result.getInt(3), result.getInt(4), 
+                        result.getInt(5), result.getInt(6), result.getInt(7));
+                
+            }
+        } 
+        catch (ClassNotFoundException e){
+                JOptionPane.showMessageDialog(null, e.toString());
+        }
+        finally{
+            if (connection != null) connection.close();
+        }
+        return schedule;
+    }
     public void searchSchedule(Schedule searchSchedule, List<Schedule> listSearchSchedule){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
             String sql = "SELECT * FROM SCHEDULE "
                             + "WHERE "
                                     + "SCHEDULE_ID = "        + "?"  +" OR "
-                                    + "SCHEDULE_DATE = " + "?" + " OR "
+                                    + "trunc(SCHEDULE_DATE) = " + "trunc(?)" + " OR "
                                     + "STATE = "                     + "?" +" OR "
                                     + "SERVICE_ID = "            + "?" + " OR "
                                     + "ROOM_ID = "                + "?" + " OR "
@@ -293,14 +330,15 @@ public class Schedule {
             connection.close();
 //                System.out.println(sql);
         } 
-        catch (SQLException | ClassNotFoundException e){
+        catch (Exception e){
                 JOptionPane.showMessageDialog(null, e.toString());
-
         }
         finally{
             System.out.println("Successful"); 
         }        
     }
+    
+    
 
     public void setScheduleID(Integer scheduleID) {
         this.scheduleID = scheduleID;

@@ -5,6 +5,7 @@
 package adminRole.view;
 
 import Model.Medicine;
+import Model.UserModel;
 import adminRole.controller.MedicinePageController;
 import adminRole.controller.UnitController;
 import java.awt.Color;
@@ -26,20 +27,25 @@ public class MedicinePage extends javax.swing.JPanel {
     private MedicinePageController controller;
     private UnitController unitController;
     private DefaultTableModel dataOftable;
-    
-    public MedicinePage() {
+    private UserModel user;
+    public MedicinePage(UserModel user) {
         initComponents();
-        
+        this.user = user;
         listOfMedicine = new ArrayList<>();
         controller = new MedicinePageController(this);
         
         txtMedicineID.setBackground(Color.WHITE);
         txtMedicineName.setBackground(Color.WHITE);
-        btnAdd.setBackground(Color.WHITE);;
+        btnAdd.setBackground(Color.WHITE);
         btnDelete.setBackground(Color.WHITE);
         btnUpdate.setBackground(Color.WHITE);
         btnSearch.setBackground(Color.WHITE);
         btnRefresh.setBackground(Color.WHITE);
+        if (user.getRole() != 3) {
+            btnAdd.setVisible(false);
+            btnDelete.setVisible(false);
+            btnUpdate.setVisible(false);
+        }
         errorID.setText("");
         errorName.setText("");
         dataOftable = (DefaultTableModel)this.tbMedicine.getModel();
@@ -199,16 +205,16 @@ public class MedicinePage extends javax.swing.JPanel {
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(12, 12, 12)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(150, 150, 150))))
+                        .addGap(156, 156, 156))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtMedicineID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

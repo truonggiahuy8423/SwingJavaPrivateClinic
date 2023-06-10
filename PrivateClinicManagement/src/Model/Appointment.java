@@ -181,6 +181,57 @@ public class Appointment {
             }
         }
     }
+    public void getListOfAppointmentsOfSchedule(Integer schedule_id, List<Appointment> listOfAppointment) throws SQLException {
+        Connection connection = null;
+        Statement statement2 = null;
+        ResultSet result2 = null;
+        try {
+            String sql = "select a.appointment_id, s.schedule_id, p.patient_id, p.full_name, e.employee_id, e.full_name, a.ordinal_number, s.schedule_date, s.room_id, sv.service_name, a.fee "
+                + "from Appointment a inner join Patient p on a.patient_id = p.patient_id "
+                + "inner join Schedule s on a.schedule_id = s.schedule_id "
+                + "inner join Employee e on s.employee_id = e.employee_id "
+                + "inner join Service sv on s.service_id = sv.service_id "
+                + "where s.schedule_id = " + String.valueOf(schedule_id) + " order by a.ordinal_number asc";
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
+            String username = "AD";  // Replace with your username
+            String password = "88888888";  // Replace with your password
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+
+            // query list of Appointment of this patient
+            statement2 = connection.createStatement();
+            result2 = statement2.executeQuery(sql);
+            while (result2.next()) {
+                Integer appointmentID = result2.getInt(1);
+                Integer scheduleID = result2.getInt(2);
+                Integer patientID = result2.getInt(3);
+                Integer doctorID = result2.getInt(5);
+                String doctorName = result2.getString(6);
+                String patientName = result2.getString(4);
+                Integer ordinalNumber = result2.getInt(7);
+                Calendar date = Calendar.getInstance();
+                date.setTimeInMillis(result2.getDate(8).getTime());
+                Integer room = result2.getInt(9);
+                String service = result2.getString(10);
+                Integer final_cost = result2.getInt(11);
+
+                Appointment appointment = new Appointment(appointmentID, scheduleID, patientID, doctorID, doctorName, patientName, ordinalNumber, date, room, service, final_cost);
+                listOfAppointment.add(appointment);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (result2 != null) {
+                result2.close();
+            }
+            if (statement2 != null) {
+                statement2.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 
     public void addAnAppointment(Appointment appointment) throws SQLException {
         Connection connection = null;
@@ -211,6 +262,7 @@ public class Appointment {
             }
         }
     }
+
 
     public void deleteAppointment(Integer appointment_id) throws SQLException {
         Connection connection = null;

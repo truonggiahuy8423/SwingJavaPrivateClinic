@@ -17,7 +17,6 @@ import javax.swing.*;
  */
 public class PrivateClinicManagement {
     public static void main(String[] args) {   
-        //System.out.println(Integer.MAX_VALUE);
         LoginView loginView = new LoginView();
         loginView.setVisible(true);
     }

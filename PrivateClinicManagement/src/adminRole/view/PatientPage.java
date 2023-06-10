@@ -4,6 +4,7 @@
  */
 package adminRole.view;
 
+import Model.UserModel;
 import adminRole.controller.PatientPageController;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -14,7 +15,7 @@ import javax.swing.JTabbedPane;
  * @author GIAHUY
  */
 public class PatientPage extends javax.swing.JPanel {
-
+    private UserModel user;
     /**
      * Creates new form PatientPane
      */
@@ -28,15 +29,47 @@ public class PatientPage extends javax.swing.JPanel {
     public JTabbedPane getTabbedPane() {
         return tabbedPane;
     }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
     
-    public PatientPage() {
+    public PatientPage(UserModel user) {
         initComponents();
+        this.user = user;
         controller = new PatientPageController(this);
         
         addNewTab(new PatientListTab(this));
         tabbedPane.addChangeListener(e -> {
             ((Tab)tabbedPane.getSelectedComponent()).refreshData();
         });
+        
+        
+        // set left content pane
+        if (user.getRole() == 1) {
+            // doc
+            leftContentPane.removeAll();
+            leftContentPane.add(new LeftContentPaneDocter(this));
+            leftContentPane.revalidate();
+            leftContentPane.repaint();
+        } else if (user.getRole() == 2) {
+            // recep
+            leftContentPane.removeAll();
+            leftContentPane.add(new LeftContentPaneReceptionist(this));
+            leftContentPane.revalidate();
+            leftContentPane.repaint();
+        } else if (user.getRole() == 3) {
+            // admin
+            leftContentPane.removeAll();
+            leftContentPane.add(new JPanel());
+            leftContentPane.revalidate();
+            leftContentPane.repaint();
+        }
+        
     }
 
     /**
@@ -49,6 +82,8 @@ public class PatientPage extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        leftContentPane = new javax.swing.JLayeredPane();
+        pane = new javax.swing.JPanel();
         tabbedPane = new javax.swing.JTabbedPane();
 
         setBackground(new java.awt.Color(204, 204, 204));
@@ -63,15 +98,33 @@ public class PatientPage extends javax.swing.JPanel {
 
         jPanel1.setMaximumSize(new java.awt.Dimension(300, 793));
 
+        leftContentPane.setLayout(new java.awt.CardLayout());
+
+        pane.setMaximumSize(new java.awt.Dimension(300, 793));
+        pane.setMinimumSize(new java.awt.Dimension(300, 793));
+
+        javax.swing.GroupLayout paneLayout = new javax.swing.GroupLayout(pane);
+        pane.setLayout(paneLayout);
+        paneLayout.setHorizontalGroup(
+            paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        paneLayout.setVerticalGroup(
+            paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 793, Short.MAX_VALUE)
+        );
+
+        leftContentPane.add(pane, "card2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(leftContentPane)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 793, Short.MAX_VALUE)
+            .addComponent(leftContentPane)
         );
 
         add(jPanel1);
@@ -85,6 +138,8 @@ public class PatientPage extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLayeredPane leftContentPane;
+    private javax.swing.JPanel pane;
     private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 }

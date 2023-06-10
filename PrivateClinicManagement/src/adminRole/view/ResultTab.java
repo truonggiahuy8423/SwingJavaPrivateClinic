@@ -88,6 +88,7 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
                 refreshData();
             } catch (SQLException ee) {
                 JOptionPane.showMessageDialog(this, "This prescription no longer exists", "", JOptionPane.ERROR_MESSAGE);
+                ee.printStackTrace();
             } catch (Exception ee) {
                 ee.printStackTrace();
             }}
@@ -398,7 +399,7 @@ public class ResultTab extends javax.swing.JPanel implements Tab{
     @Override
     public void refreshData() {
         setModifyingState(false);
-        String sql = "select m.medicine_id, rd.result_id, m.medicine_name, m.description, rd.quantity, u.unit_name, rd.instruction "
+        String sql = "select rd.result_id, m.medicine_id, m.medicine_name, m.description, rd.quantity, u.unit_name, rd.instruction "
                 + " from result_detail rd inner join medicine m on rd.medicine_id = m.medicine_id "
                 + "inner join unit u on m.unit_id = u.unit_id where rd.result_id = " + result_id;
         queryData(sql);

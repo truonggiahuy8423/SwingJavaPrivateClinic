@@ -122,7 +122,7 @@ public class AddAppointmentForm extends javax.swing.JDialog {
                 queryData("select sc.schedule_id, sc.schedule_date, sc.state, sc.next_ordinal_number, sc.service_id, sv.service_name, sc.room_id, sc.employee_id, e.full_name, sv.cost "
                         + "from Schedule sc inner join employee e on sc.employee_id = e.employee_id "
                         + "inner join service sv on sc.service_id = sv.service_id "
-                        + "where schedule_date = DATE " + String.format("'%04d-%02d-%02d'", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE)));
+                        + "where trunc(schedule_date) = trunc(DATE " + String.format("'%04d-%02d-%02d'", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE)) + ")");
                 displayData();
             } else {
                 refreshData();
@@ -168,13 +168,14 @@ public class AddAppointmentForm extends javax.swing.JDialog {
         //load bảng
         refreshData();
     }
-    private Long calculateFinalCost(Integer cost, Date sche_date) {
-        Long final_cost = (long)0;
+    private Integer calculateFinalCost(Integer cost, Date sche_date) {
+        Integer final_cost = 0;
         try {
             Patient patient = new AddAppointmentFormController().getAPatient(parent2.getPatientId());
             if (patient != null)
             {
-                final_cost = ((Double)(patient.getInsuranceExpiration().getTimeInMillis() > sche_date.getTime()? cost*0.5 : cost)).longValue();
+                if (patient.getInsuranceExpiration() == null) return cost;
+                final_cost = ((Double)(patient.getInsuranceExpiration().getTimeInMillis() > sche_date.getTime()? cost*0.5 : cost)).intValue();
             }
             else
             {
