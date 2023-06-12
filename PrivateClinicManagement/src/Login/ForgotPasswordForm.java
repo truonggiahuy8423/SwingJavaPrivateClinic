@@ -69,6 +69,7 @@ public class ForgotPasswordForm extends javax.swing.JDialog {
                     if (userAccount != null) {
                         if (userAccount.getPhone().equals(user.getPasswword())) {
                             userAccount.setPassword(String.valueOf(passField.getPassword()));
+                            //System.out.println();
                             new ForgotPasswordFormController().updatePassword(userAccount);
                             JOptionPane.showMessageDialog(this, "Change password successfully", "", JOptionPane.INFORMATION_MESSAGE);
                             ForgotPasswordForm.this.dispose();
