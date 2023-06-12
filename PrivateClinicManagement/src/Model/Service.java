@@ -60,8 +60,8 @@ public class Service {
     public void getListOfService(List<Service> listOfService){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery("select * from SERVICE order by service_id asc");
 
@@ -82,8 +82,8 @@ public class Service {
     public void addService(Service service){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "insert into SERVICE values(?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;  
             statement.setLong(1, service.getServiceID());
@@ -104,8 +104,8 @@ public class Service {
     public void deleteService(String serviceID){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "delete from SERVICE where service_id =" + serviceID;
             Statement statement = connection.createStatement() ;  
             statement.executeUpdate(sql);

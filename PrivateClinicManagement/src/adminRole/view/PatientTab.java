@@ -218,6 +218,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             ageField.setText(patient.getBirthday() != null ? String.valueOf(cur.get(Calendar.YEAR)- patient.getBirthday().get(Calendar.YEAR)) : "--");
             birthdayField.setCalendar(patient.getBirthday());
             regisField.setCalendar(patient.getRegistrationDay());
+            addressField.setText(patient.getAddress());
             insField.setCalendar(patient.getInsuranceExpiration());
             this.isPatientExistNoti.setText("");
             // load appointment

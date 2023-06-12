@@ -65,7 +65,7 @@ public class Schedule {
         try
         {Class.forName("oracle.jdbc.driver.OracleDriver");
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-        String username = "AD";  // Replace with your username
+        String username = "UNI4";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -106,8 +106,8 @@ public class Schedule {
         Connection connection = null;
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-           connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+           connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
             System.out.println(sql);
@@ -130,8 +130,8 @@ public class Schedule {
     public void addSchedule(Schedule addSchedule){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "INSERT INTO SCHEDULE VALUES(schedule_id_sequence.nextval, ?, ?, 1, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;
 
@@ -156,8 +156,8 @@ public class Schedule {
     public void deleteSchedule(String scheduleID){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "DELETE FROM SCHEDULE WHERE SCHEDULE_ID = " + scheduleID;
             Statement statement = connection.createStatement() ;
             statement.executeUpdate(sql);
@@ -177,8 +177,8 @@ public class Schedule {
         String sql = "";
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             sql = "UPDATE SCHEDULE SET ";
             Statement statement = connection.createStatement() ;
             boolean check = false;
@@ -238,7 +238,7 @@ public class Schedule {
         try{
             
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "SELECT * FROM SCHEDULE "
                             + "WHERE "
                                     + "trunc(SCHEDULE_DATE) = TRUNC(DATE " + convert_calendar2(date) + ") AND "
@@ -266,7 +266,7 @@ public class Schedule {
     public void searchSchedule(Schedule searchSchedule, List<Schedule> listSearchSchedule){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "SELECT * FROM SCHEDULE "
                             + "WHERE "
                                     + "SCHEDULE_ID = "        + "?"  +" OR "
@@ -284,7 +284,7 @@ public class Schedule {
                 statement.setInt(1, searchSchedule.getScheduleID());
             }
             
-            if(searchSchedule.getState() == null ){
+            if(searchSchedule.getScheduleDate() == null ){
                 statement.setNull(2, Types.DATE);
             }
             else{

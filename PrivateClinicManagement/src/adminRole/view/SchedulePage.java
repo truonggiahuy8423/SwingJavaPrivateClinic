@@ -509,13 +509,12 @@ public class SchedulePage extends javax.swing.JPanel {
         String scheduleID = String.valueOf(cbbScheduleID.getSelectedItem());
         String service = String.valueOf(cbbService.getSelectedItem());
         String room =String.valueOf(cbbRoom.getSelectedItem());
-        String doctor = String.valueOf(((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
         searchSchedule.setScheduleID(scheduleID.equals("null") ? null : Integer.valueOf(scheduleID));
         searchSchedule.setScheduleDate(txtDate.getDate());
         searchSchedule.setServiceID(service.equals("null") ? null : Integer.valueOf(service));
         searchSchedule.setRoomID(room.equals("null") ? null : Integer.valueOf(room));
-        searchSchedule.setDoctorID(doctor.equals("null") ? null : Integer.valueOf(doctor));
-        
+        searchSchedule.setDoctorID(cbbDoctor.getSelectedItem() == null ? null : ((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
+        searchSchedule.setScheduleDate(this.txtDate.getDate() != null ? txtDate.getDate() : null);
         controller.searchData(searchSchedule, listSearchSchedule);
         displayData(listSearchSchedule);
     }//GEN-LAST:event_btnSearchActionPerformed

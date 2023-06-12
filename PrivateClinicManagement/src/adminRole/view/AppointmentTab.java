@@ -83,6 +83,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
                     new AppointmentTabController().addResult(result);
                     JOptionPane.showMessageDialog(this, "Add a new result successfully!", "", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException ex) {
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(this, "This appointment was deleted!", "", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -102,6 +103,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
                     JOptionPane.showMessageDialog(this, "Delete result " + String.format("%08d", result_id) + "successfully!", "", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (SQLException ee) {
+                    ee.printStackTrace();
                     JOptionPane.showMessageDialog(this, "Result " + String.format("%08d", appointment_id) + " no longer exists", "", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ee) {
                     ee.printStackTrace();

@@ -107,7 +107,7 @@ public class StatisticPage extends javax.swing.JPanel {
         String sql = "SELECT a.ATTENDANCE_ID, a.ATTEND_DATE, a.EMPLOYEE_ID, e.FULL_NAME "
                         + "FROM ATTENDANCE a, EMPLOYEE e "
                         + "WHERE a.EMPLOYEE_ID = e.EMPLOYEE_ID AND a.ATTEND_DATE >= " + "DATE " + convert_calendar2(begin.getCalendar()) + " AND a.ATTEND_DATE <= " + "DATE " + convert_calendar2(end.getCalendar())
-                        + "ORDER BY a.ATTEND_DATE ASC";
+                        + " and e.role_id <> 3 ORDER BY a.ATTEND_DATE ASC";
         String sql2 = "select employee.*, role.role_name, count(*), count(*)*employee.salary_per_day from employee inner join role on employee.role_id = role.role_id "
                 + "inner join attendance a on employee.employee_id = a.employee_id where trunc(a.attend_date) >= trunc(DATE " + convert_calendar2(begin.getCalendar()) + ") and trunc(a.attend_date) <= trunc(DATE " + convert_calendar2(end.getCalendar())
                 + ") group by employee.employee_id, employee.full_name, employee.phone, employee.birthday, employee.start_day, employee.address, employee.hometown, employee.password, employee.salary_per_day, employee.role_id, role.role_name";

@@ -279,7 +279,7 @@ public class MedicinePage extends javax.swing.JPanel {
         List<Medicine> listSearchMedicine = new ArrayList<>();
         Medicine medicine = new Medicine();
         String medicineID = String.valueOf(txtMedicineID.getText());
-        medicine.setMedicineID(medicineID.equals("null") ? null : Integer.valueOf(medicineID));
+        medicine.setMedicineID(medicineID.equals("") ? null : Integer.valueOf(medicineID));
         medicine.setMedicineName(String.valueOf(txtMedicineName.getText()));
         
         controller.searchData(medicine, listSearchMedicine);

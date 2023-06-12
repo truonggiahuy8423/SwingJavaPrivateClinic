@@ -102,7 +102,7 @@ public class PrescriptionDetails {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             //System.out.println(connection.isClosed());
@@ -136,7 +136,7 @@ public class PrescriptionDetails {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";
             String sql = "delete RESULT_DETAIL where result_id = " + result_id.toString() + " and medicine_id = " + medicine_id.toString();
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -164,7 +164,7 @@ public class PrescriptionDetails {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             String sql = "insert into result_detail(result_id, medicine_id, quantity, instruction) values(?, ?, ?, ?)";

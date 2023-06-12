@@ -237,10 +237,13 @@ public class EmployeePage extends javax.swing.JPanel {
                 {
                     int id = (int)tableOfEmployee.getValueAt(tableOfEmployee.getSelectedRow(), 0);
                     queryData("select employee.*, role.role_name from employee inner join role on employee.role_id = role.role_id");
-                    if (listOfEmployee.indexOf(new Employee(id)) == -1)
+                    int index;
+                    if ((index = listOfEmployee.indexOf(new Employee(id))) == -1)
                     {
                         JOptionPane.showMessageDialog(parent, "Employee doesn't exist", "",  JOptionPane.INFORMATION_MESSAGE);
                         refreshData();
+                    } else {
+                        new UpdateEmployeeForm(null, true, listOfEmployee.get(index), EmployeePage.this).setVisible(true);
                     }
                 }
             }
@@ -254,7 +257,7 @@ public class EmployeePage extends javax.swing.JPanel {
                 return;
             }
             
-            String sql = "select employee_id, full_name, phone, role_id, password, birthday, address, hometown from employee "
+            String sql = "select employee.*, role.role_name from employee inner join role on employee.role_id = role.role_id "
                     +(searchTextField.getText().equals("") ? "" : ("where employee_id = " + searchTextField.getText()));
             //System.out.println(sql);
             queryData(sql);

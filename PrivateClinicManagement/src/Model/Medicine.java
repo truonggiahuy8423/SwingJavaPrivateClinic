@@ -91,7 +91,7 @@ public class Medicine {
         try
         {Class.forName("oracle.jdbc.driver.OracleDriver");
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-        String username = "AD";  // Replace with your username
+        String username = "UNI4";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -121,8 +121,8 @@ public class Medicine {
     public void getListOfMedicine(String sql, List<Medicine> listOfMedicine){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
             
@@ -143,8 +143,8 @@ public class Medicine {
     public void addMedicine(Medicine addMedicine, Integer unitID){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "INSERT INTO MEDICINE VALUES (medicine_id_sequence.nextval, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;
             
@@ -167,8 +167,8 @@ public class Medicine {
         String sql = "";
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             sql = "UPDATE MEDICINE SET ";
             Statement statement = connection.createStatement() ;
             boolean check = false;
@@ -211,8 +211,8 @@ public class Medicine {
     public void deleteMedicine(String medicineID){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "DELETE FROM MEDICINE WHERE MEDICINE_ID = " + medicineID;
             Statement statement = connection.createStatement() ;
             statement.executeUpdate(sql);
@@ -233,9 +233,9 @@ public class Medicine {
     public  void searchMedicine(Medicine searchMedicine, List<Medicine> listSearchMedicine){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            String sql = "SELECT * FROM MEDICINE "
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            String sql = "SELECT m.*, u.unit_name FROM MEDICINE m inner join unit u on m.unit_id = u.unit_id "
                             + "WHERE "
                                 + "MEDICINE_ID = " + " ? " + " OR "
                                 + "MEDICINE_NAME = " + " ? " ;
@@ -251,21 +251,12 @@ public class Medicine {
             statement.setString(2, searchMedicine.getMedicineName());
             
             ResultSet result = statement.executeQuery();
-            String unitName = "";
-            //UnitController unitController = new UnitController();
-            List<Unit>listOfUnit = new ArrayList<>();
-            //unitController.queryData(listOfUnit);
-
             
-//            while (result.next()){
-//                for(Unit u: listOfUnit){
-//                    if(u.getUnitID() == result.getInt(4)){
-//                        unitName += u.getUnitName();
-//                    }
-//                }
-//                Medicine p = new Medicine(result.getInt(1), result.getString(2), unitName, result.getString(3));
-//                listSearchMedicine.add(p);
-//            }
+            
+            while (result.next()){
+                Medicine p = new Medicine(result.getInt(1), result.getString(2),  result.getString(3),  result.getString(4));
+                listSearchMedicine.add(p);
+            }
             connection.close();
         } 
         catch(NumberFormatException e){

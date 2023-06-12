@@ -71,8 +71,8 @@ public class Attendance {
     public void getListOfAttendance(String sql, List<Attendance> listOfAttendance){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
 //            System.out.println(sql);
@@ -94,8 +94,8 @@ public class Attendance {
     public void addAttendance(Attendance addAttendance){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "INSERT INTO ATTENDANCE VALUES(attendance_id_sequence.nextval, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql) ;
 
@@ -117,8 +117,8 @@ public class Attendance {
     public void deleteAttendance(String attendanceID){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "DELETE FROM ATTENDANCE WHERE ATTENDANCE_ID = " + attendanceID;
             Statement statement = connection.createStatement() ;
             statement.executeUpdate(sql);
@@ -138,8 +138,8 @@ public class Attendance {
         String sql = "";
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             sql = "UPDATE ATTENDANCE SET ";
             Statement statement = connection.createStatement() ;
             boolean check = false;
@@ -172,13 +172,13 @@ public class Attendance {
     public void searchAttendance(Attendance searchAttendance, List<Attendance> listSearchAttendance){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+//                Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             String sql = "SELECT a.ATTENDANCE_ID, a.ATTEND_DATE, a.EMPLOYEE_ID, e.FULL_NAME "
                             + "FROM ATTENDANCE a, EMPLOYEE e "
                             + "WHERE a.EMPLOYEE_ID = e.EMPLOYEE_ID AND "
                                     + "(a.ATTENDANCE_ID = " + "?"  +" OR "
-                                    + "a.ATTEND_DATE = " + "?" + " OR "
+                                    + "trunc(a.ATTEND_DATE) = " + "trunc(?)" + " OR "
                                     + "a.EMPLOYEE_ID = " + "?"  + ")";
                                     
             PreparedStatement statement = connection.prepareStatement(sql) ;  

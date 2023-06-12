@@ -48,7 +48,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
     public AddEmployeeForm(java.awt.Frame parent, boolean modal, EmployeePage parent2) {
         super(parent, modal);
         initComponents();
-        
+        this.jDialogcloseForm.setLocationRelativeTo(null);
         //clear data of combobox
         jComboBoxStartdayDate.removeAllItems();
         jComboBoxStartdayMonth.removeAllItems();
@@ -244,7 +244,7 @@ public class AddEmployeeForm extends javax.swing.JDialog {
             
             String saddress = jTextFieldPassword.getText();
             String shometown = jTextFieldHometown.getText();
-            int srole_id = jComboBoxPositionTitle.getSelectedIndex() + 1; 
+            int srole_id = jComboBoxPositionTitle.getSelectedIndex() == 0 ? 3 : (jComboBoxPositionTitle.getSelectedIndex() == 1 ? 1 : 2); 
             
             Calendar insBirthday = null;
             Integer day = Integer.valueOf((String) jComboBoxBirthdayDate.getSelectedItem());

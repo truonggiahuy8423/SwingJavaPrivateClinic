@@ -54,7 +54,7 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             String sqlInsert = "insert into patient(patient_id, full_name, phone, birthday, "
                     + "registration_day, insurance_expiration, address, underlying_disease) values(patient_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
@@ -160,7 +160,7 @@ public class Patient{
         try
         {Class.forName("oracle.jdbc.driver.OracleDriver");
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-        String username = "AD";  // Replace with your username
+        String username = "UNI4";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -215,7 +215,7 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement() ;  
@@ -257,7 +257,7 @@ public class Patient{
         try {
         Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";
             String sql = "delete PATIENT where patient_id = " + patientID;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -291,7 +291,7 @@ public class Patient{
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlUpdate);

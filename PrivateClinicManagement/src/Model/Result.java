@@ -143,7 +143,7 @@ public class Result {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             //System.out.println(connection.isClosed());
@@ -181,18 +181,18 @@ public class Result {
     public void addResult(Result result) throws SQLException
     {
         Connection connection = null;
-        PreparedStatement statement = null;
+        Statement statement = null;
         ResultSet resultSet = null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
-            String sql = "insert into result(result_id, appointment_id) values(result_id_sequence.nextval, ?)";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, result.getAppointment_id());
-            statement.executeUpdate();
+            String sql = "insert into result(result_id, appointment_id) values(result_id_sequence.nextval, "+ result.getAppointment_id() + ")";
+            statement = connection.createStatement();
+            //System.out.println("appid " + result.getAppointment_id());
+            statement.executeUpdate(sql);
         } catch (ClassNotFoundException e) {
 
         } finally {
@@ -213,7 +213,7 @@ public class Result {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";
             String sql = "delete result where result_id = " + result_id;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -242,7 +242,7 @@ public class Result {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement();
@@ -283,7 +283,7 @@ public class Result {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlUpdate);

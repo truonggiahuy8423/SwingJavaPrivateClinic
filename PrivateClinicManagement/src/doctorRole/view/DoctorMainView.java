@@ -63,7 +63,7 @@ public class DoctorMainView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setSize(1550, 830); 
         this.setResizable(false);
-        this.setIconImage(new ImageIcon("C:\\Users\\GIAHUY\\Pictures\\Screenshots\\logo.png").getImage());
+        this.setIconImage(new ImageIcon("src/image/logo.png").getImage());
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         this.controller = new DoctorMainViewController(this); // controller

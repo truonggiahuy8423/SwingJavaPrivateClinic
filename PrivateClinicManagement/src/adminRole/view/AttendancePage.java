@@ -130,7 +130,7 @@ public class AttendancePage extends javax.swing.JPanel {
         String sql = "SELECT a.ATTENDANCE_ID, a.ATTEND_DATE, a.EMPLOYEE_ID, e.FULL_NAME "
                         + "FROM ATTENDANCE a, EMPLOYEE e "
                         + "WHERE a.EMPLOYEE_ID = e.EMPLOYEE_ID "
-                        + "ORDER BY a.ATTENDANCE_ID ASC";
+                        + "ORDER BY trunc(a.ATTEND_DATE) ASC";
 
         setUpComboboxData();
         setNullError();
@@ -317,20 +317,21 @@ public class AttendancePage extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(cbbAttendanceID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbEmployeeID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdd)
-                    .addComponent(btnDelete)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnSearch)
-                    .addComponent(btnRefresh)
-                    .addComponent(jLabel4)
-                    .addComponent(txtEmployeeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAttendDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtAttendDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(cbbAttendanceID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbEmployeeID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdd)
+                        .addComponent(btnDelete)
+                        .addComponent(btnUpdate)
+                        .addComponent(btnSearch)
+                        .addComponent(btnRefresh)
+                        .addComponent(jLabel4)
+                        .addComponent(txtEmployeeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(errorAttendanceID, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
@@ -357,11 +358,11 @@ public class AttendancePage extends javax.swing.JPanel {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(cbbAttendanceID.getSelectedItem() == null){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn attendance muốn xóa");
+            JOptionPane.showMessageDialog(null, "Choose 1 attendance record to be deleted");
             errorAttendanceID.setText("ID must not be null");
         }
         else{
-            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Delete this attendance record?", "", JOptionPane.YES_NO_OPTION);
             if(confirmOption == JOptionPane.YES_OPTION){
                 controller.deleteData(String.valueOf(cbbAttendanceID.getSelectedItem()));
                 refreshData(this.listOfAttendance);
@@ -371,11 +372,11 @@ public class AttendancePage extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         if(cbbAttendanceID.getSelectedItem() == null){
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn attendance muốn cập nhật");
+            JOptionPane.showMessageDialog(null, "Choose 1 attendance record to be updated");
             errorAttendanceID.setText("ID must not be null");
         }
         else if(checkNull()){
-            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn cập nhật?", "Cập nhật", JOptionPane.YES_NO_OPTION);
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Update this attendance record?", "", JOptionPane.YES_NO_OPTION);
             if(confirmOption == JOptionPane.YES_OPTION){
                 Attendance updateAttendance = new Attendance();
                 updateAttendance.setAttendanceID(Integer.valueOf(String.valueOf(cbbAttendanceID.getSelectedItem())));
@@ -396,7 +397,7 @@ public class AttendancePage extends javax.swing.JPanel {
         searchAttendance.setAttendanceID(attendanceID.equals("null") ? null : Integer.valueOf(attendanceID));
         searchAttendance.setAttendDate(txtAttendDate.getDate());
         searchAttendance.setEmployeeID(empID.equals("null") ? null : Integer.valueOf(empID));
-        
+        System.out.println(searchAttendance.getAttendDate());
         controller.searchData(searchAttendance, listSearchAttendance);
         displayData(listSearchAttendance);
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -445,14 +446,13 @@ public class AttendancePage extends javax.swing.JPanel {
         if(EmpID.equals("null")){
             txtEmployeeName.setText("");
         }else{
-            employeeController.queryData("select * from employee where employee_id = " + EmpID, listOfEmployee);
+            employeeController.queryData("select employee.*, role.role_name from employee inner join role on employee.role_id = role.role_id where employee_id = " + EmpID, listOfEmployee);
             for(Employee p: listOfEmployee){
                 if(Integer.parseInt(EmpID) == p.getEmployeeID()){
                     txtEmployeeName.setText(p.getName());
                 }
             }
         }
-        
     }//GEN-LAST:event_cbbEmployeeIDActionPerformed
 
 

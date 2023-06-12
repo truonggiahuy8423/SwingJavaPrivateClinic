@@ -35,6 +35,11 @@ public class Employee {
     private Integer workingDay;
     private Long salary;
 
+    @Override
+    public boolean equals(Object obj) {
+        return ((Employee)obj).getEmployeeID().equals(this.getEmployeeID()); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
     public Integer getWorkingDay() {
         return workingDay;
     }
@@ -216,12 +221,12 @@ public class Employee {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
 
-            String username = "c##uni4";  // Replace with your username
-            String password = "123";  // Replace with your password
+            String username = "UNI4";  // Replace with your username
+            String password = "88888888";  // Replace with your password
             String sqlInsert = "insert into employee(employee_id, full_name, role_id, phone, password, birthday, "
                     + "address, hometown) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?)";
 
-//            String username = "AD";  // Replace with your username
+//            String username = "UNI4";  // Replace with your username
 //            String password = "88888888";  // Replace with your password
 //            String sqlInsert = "insert into employee(employee_id, full_name, phone, birthday, "
 //                    + "start_day, address, hometown, password, salary_per_day, role_id) values(employee_id_sequence.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -256,7 +261,7 @@ public class Employee {
         try
         {Class.forName("oracle.jdbc.driver.OracleDriver");
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-        String username = "AD";  // Replace with your username
+        String username = "UNI4";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -310,7 +315,7 @@ public class Employee {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.createStatement() ;  
@@ -331,7 +336,9 @@ public class Employee {
                 start_date.setTimeInMillis(result.getDate(5).getTime());
             }
             employee = new Employee(result.getInt(1), result.getString(2), result.getString(3), birthday, start_date, result.getString(6), result.getString(7), result.getString(8), result.getInt(9), "", result.getInt(10), result.getString(11));
-        } catch (ClassNotFoundException e) {}
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         finally {
             if (result != null) result.close();
             if (statement != null) statement.close();
@@ -346,7 +353,7 @@ public class Employee {
         try {
         Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";
             String sql = "delete EMPLOYEE where employee_id = " + employeeID;
             connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -374,7 +381,6 @@ public class Employee {
                                 + ", hometown = " + "?"
                                 + ", password = " + "?"
                                 + ", salary_per_day = " + "?"
-                                
                                 + ", role_id = " + "?"
                                 + "where employee_id = " + "?";
         Connection connection = null;
@@ -383,7 +389,7 @@ public class Employee {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-            String username = "AD";  // Replace with your username
+            String username = "UNI4";  // Replace with your username
             String password = "88888888";  // Replace with your password
             connection = DriverManager.getConnection(jdbcUrl, username, password);
             statement = connection.prepareStatement(sqlUpdate);
@@ -391,11 +397,13 @@ public class Employee {
             statement.setString(2, updatedEmployee.getPhone());
             statement.setDate(3, updatedEmployee.getBirthday() == null ? null : new java.sql.Date(updatedEmployee.getBirthday().getTimeInMillis()));
             statement.setDate(4, updatedEmployee.getStartDay() == null ? null : new java.sql.Date(updatedEmployee.getStartDay().getTimeInMillis()));
-            statement.setString(6, updatedEmployee.getAddress());
-            statement.setString(7, updatedEmployee.getHometown());
-            statement.setString(8, updatedEmployee.getPassword());
-            statement.setInt(9, updatedEmployee.getSalaryPerDay());
-            statement.setInt(10, updatedEmployee.getRoleId());
+            statement.setString(5, updatedEmployee.getAddress());
+            statement.setString(6, updatedEmployee.getHometown());
+            statement.setString(7, updatedEmployee.getPassword());
+            statement.setInt(8, updatedEmployee.getSalaryPerDay());
+            statement.setInt(9, updatedEmployee.getRoleId());
+            statement.setInt(10, updatedEmployee.getEmployeeID());
+            
             statement.executeUpdate();
         }
         catch (ClassNotFoundException e)
@@ -413,8 +421,8 @@ public class Employee {
     public void getListOfEmployee(String sql, List<Employee> listOfEmployee){
         try{
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
-//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "AD", "88888888");
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
+//            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "UNI4", "88888888");
             Statement statement = connection.createStatement() ;  
             ResultSet result = statement.executeQuery(sql);
 
@@ -439,7 +447,7 @@ public class Employee {
         try
         {Class.forName("oracle.jdbc.driver.OracleDriver");
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:orcl";  
-        String username = "AD";  // Replace with your username
+        String username = "UNI4";  // Replace with your username
         String password = "88888888";  // Replace with your password
         connection = null; statement = null; result = null;
             connection = DriverManager.getConnection(jdbcUrl, username, password);

@@ -91,7 +91,7 @@ public class LeftContentPaneReceptionist extends javax.swing.JPanel {
     private void refreshData() {
         String sql = "select sc.schedule_id, sc.schedule_date, sc.state, sc.next_ordinal_number, sc.service_id, sv.service_name, sc.room_id, sc.employee_id, e.full_name, sv.cost "
                 + "from Schedule sc inner join employee e on sc.employee_id = e.employee_id "
-                + "inner join service sv on sc.service_id = sv.service_id";
+                + "inner join service sv on sc.service_id = sv.service_id order by trunc(sc.schedule_date) desc";
         queryData(sql);
         displayData();
     }
