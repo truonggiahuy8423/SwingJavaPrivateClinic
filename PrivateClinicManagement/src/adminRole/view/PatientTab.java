@@ -219,6 +219,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
             birthdayField.setCalendar(patient.getBirthday());
             regisField.setCalendar(patient.getRegistrationDay());
             addressField.setText(patient.getAddress());
+            underTextArea.setText(patient.getUnderlyingDisease());
             insField.setCalendar(patient.getInsuranceExpiration());
             this.isPatientExistNoti.setText("");
             // load appointment
@@ -230,7 +231,7 @@ public class PatientTab extends javax.swing.JPanel implements Tab{
     }
     private String convert_calendar(Calendar c)
     {
-        return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH)) + "/"+ String.format("%02d", c.get(Calendar.DATE));
+        return c == null ? "----/--/--" : "" + String.format("%02d", c.get(Calendar.YEAR)) + "/" + String.format("%02d", c.get(Calendar.MONTH) + 1) + "/"+ String.format("%02d", c.get(Calendar.DATE));
 
     }
     @Override

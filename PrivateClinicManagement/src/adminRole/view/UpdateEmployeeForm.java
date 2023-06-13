@@ -103,6 +103,7 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
                     updatedEmployee.setRoleId(employee.getRoleId());
                     updatedEmployee.setBirthday(birthdateField.getCalendar());
                     updatedEmployee.setStartDay(startDayField.getCalendar());
+                    updatedEmployee.setPassword(passField.getText());
                     new UpdateEmployeeFormController().updateEmployee(updatedEmployee);
                     JOptionPane.showMessageDialog(parent2, "Update successfully!", "", JOptionPane.INFORMATION_MESSAGE);
                     UpdateEmployeeForm.this.dispose();

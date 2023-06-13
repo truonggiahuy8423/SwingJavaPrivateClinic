@@ -46,6 +46,10 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         refreshButton.setBackground(Color.WHITE);
         closeButton.setBackground(Color.WHITE);        
         scheduleDateField.getCalendarButton().setBackground(Color.WHITE);
+        if (parent.getUser().getRole() == 2) {
+            deleteButton.setVisible(false);
+            addButton.setVisible(false);
+        }
         resultTable.setModel(new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -97,7 +101,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
                 return;
             }
             Integer result_id = (Integer) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
-            if (JOptionPane.showConfirmDialog(this, "Delele result " + String.format("%08d", appointment_id) + "?", "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+            if (JOptionPane.showConfirmDialog(this, "Delele result " + String.format("%08d", result_id) + "?", "", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                 try {
                     new AppointmentTabController().deleteResult(result_id);
                     JOptionPane.showMessageDialog(this, "Delete result " + String.format("%08d", result_id) + "successfully!", "", JOptionPane.INFORMATION_MESSAGE);
@@ -115,7 +119,7 @@ public class AppointmentTab extends javax.swing.JPanel implements Tab {
         this.resultTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2 && parent.getUser().getRole() != 3) {
                     parent.addNewTab(new ResultTab((Integer)resultTable.getValueAt(resultTable.getSelectedRow(), 0), parent));
                 }
             }

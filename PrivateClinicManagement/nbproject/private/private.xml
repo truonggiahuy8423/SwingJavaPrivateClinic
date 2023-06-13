@@ -4,51 +4,28 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/SchedulePageController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/LeftContentPaneDoctorController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Service.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/AttendancePageController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/LeftContentPaneDocter.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/UserModel.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/doctorRole/view/DoctorMainView.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Patient.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/doctorRole/controller/DoctorMainViewController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/receptionistRole/controller/ReceptionistMainViewController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Appointment.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/MedicinePageController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/EmployeeTabController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/receptionistRole/view/ReceptionistMainView.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/PrescriptionDetails.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Employee.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Room.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Login/LoginController.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/ResultTab.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientPage.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Medicine.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AttendancePage.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientTab.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/privateclinicmanagement/PrivateClinicManagement.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/EmployeePage.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/LeftContentPaneRecepController.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Login/ForgotPasswordForm.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AddEmployeeForm.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/EmployeePageController.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/EmployeeController.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/StatisticPage.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Unit.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/MedicineForm.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/MedicinePage.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/doctorRole/view/DoctorMainView.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Login/ForgotPasswordFormController.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Login/LoginView.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/SchedulePage.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Statistic.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/MedicinePageController.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/UpdateEmployeeForm.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Attendance.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Schedule.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Result.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/MainViewController.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/UpdateEmployeeFormController.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AppointmentTab.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/MainView.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/PatientListTab.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/LeftContentPaneReceptionist.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/receptionistRole/view/ReceptionistMainView.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Model/Employee.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/Login/LoginController.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/ResultTab.java</file>
             <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AddAppointmentForm.java</file>
-            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/controller/AddAppointmentFormController.java</file>
+            <file>file:/D:/NetBeansWorkSpace/SwingJavaPrivateClinic/PrivateClinicManagement/src/adminRole/view/AddPatientForm.java</file>
         </group>
     </open-files>
 </project-private>

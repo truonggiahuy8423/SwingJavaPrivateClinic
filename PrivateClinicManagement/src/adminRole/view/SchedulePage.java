@@ -114,7 +114,7 @@ public class SchedulePage extends javax.swing.JPanel {
         serviceController.queryData(dataService);
         roomController.queryData(dataRoom);
         employeeController.queryData("select employee.*, role.role_name from employee inner join role on employee.role_id = role.role_id",dataEmployee);
-        
+        System.out.println(dataEmployee.size());
         // Add data into combobox
         cbbState.insertItemAt(null, 0);
         cbbState.addItem(dataState[0]);
@@ -136,7 +136,7 @@ public class SchedulePage extends javax.swing.JPanel {
         }
         
         cbbDoctor.insertItemAt(null, 0);
-        for(Employee p: dataEmployee){
+        for(Employee p : dataEmployee){
             cbbDoctor.addItem(p);
         }
         
@@ -468,7 +468,7 @@ public class SchedulePage extends javax.swing.JPanel {
             addSchedule.setState(state);
             addSchedule.setServiceID(Integer.valueOf(String.valueOf(cbbService.getSelectedItem())));
             addSchedule.setRoomID(Integer.valueOf(String.valueOf(cbbRoom.getSelectedItem())));
-            addSchedule.setDoctorID(((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
+            addSchedule.setDoctorID(cbbDoctor.getSelectedItem() == null ? null : ((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
             controller.addData(addSchedule);
             setUpComboboxData();
             queryData("select * from schedule order by schedule_id asc");
@@ -480,7 +480,6 @@ public class SchedulePage extends javax.swing.JPanel {
         int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
         if(confirmOption == JOptionPane.YES_OPTION){
             controller.deleteData(String.valueOf(cbbScheduleID.getSelectedItem()));
-
             setUpComboboxData();
             queryData("select * from schedule order by schedule_id asc");
             displayData(this.listOfSchedule);
@@ -495,7 +494,7 @@ public class SchedulePage extends javax.swing.JPanel {
         updateSchedule.setState(state);
         updateSchedule.setServiceID(Integer.valueOf(String.valueOf(cbbService.getSelectedItem())));
         updateSchedule.setRoomID(Integer.valueOf(String.valueOf(cbbRoom.getSelectedItem())));
-        updateSchedule.setDoctorID(((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
+        updateSchedule.setDoctorID(cbbDoctor.getSelectedItem() == null ? null : ((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
         
         
         controller.updateData(updateSchedule, currentSchedule);
@@ -576,7 +575,7 @@ public class SchedulePage extends javax.swing.JPanel {
         currentSchedule.setState(state);
         currentSchedule.setServiceID(Integer.valueOf(String.valueOf(cbbService.getSelectedItem())));
         currentSchedule.setRoomID(Integer.valueOf(String.valueOf(cbbRoom.getSelectedItem())));
-        currentSchedule.setDoctorID(((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
+        currentSchedule.setDoctorID(cbbDoctor.getSelectedItem() == null ? null : ((Employee)cbbDoctor.getSelectedItem()).getEmployeeID());
     }//GEN-LAST:event_tbScheduleMouseClicked
 
 
