@@ -35,6 +35,13 @@ public class Employee {
     private Integer workingDay;
     private Long salary;
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null ? this.getEmployeeID().equals(((Employee)obj).getEmployeeID()) : super.equals(obj); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+
+    
+
     
     
     public Integer getWorkingDay() {
