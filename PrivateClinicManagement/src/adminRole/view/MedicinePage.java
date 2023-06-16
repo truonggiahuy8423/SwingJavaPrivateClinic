@@ -245,7 +245,7 @@ public class MedicinePage extends javax.swing.JPanel {
             errorID.setText("ID must not be empty");
         }
         else{
-            int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+            int confirmOption = JOptionPane.showConfirmDialog(null, "Delete this medicine?", "", JOptionPane.YES_NO_OPTION);
             if(confirmOption == JOptionPane.YES_OPTION){
                 controller.deleteData(txtMedicineID.getText());
                 refreshData();

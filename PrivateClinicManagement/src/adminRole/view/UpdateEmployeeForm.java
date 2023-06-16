@@ -124,10 +124,16 @@ public class UpdateEmployeeForm extends javax.swing.JDialog {
         this.hometownField.setText(employee.getHometown());
         this.roleField.setText(employee.getRoleName());
         this.salaryPerDayField.setText(employee.getSalaryPerDay().toString());
-        Calendar c = Calendar.getInstance(); c.setTimeInMillis(employee.getBirthday().getTimeInMillis());
-        this.birthdateField.setCalendar(c);
+        if (employee.getBirthday() != null)
+        {Calendar c = Calendar.getInstance(); c.setTimeInMillis(employee.getBirthday().getTimeInMillis());
+        this.birthdateField.setCalendar(c);} else {
+            this.birthdateField.setCalendar(null);
+        }
+        if (employee.getStartDay()!= null) {
         Calendar c2 = Calendar.getInstance(); c2.setTimeInMillis(employee.getStartDay().getTimeInMillis());
-        this.startDayField.setCalendar(c2);
+        this.startDayField.setCalendar(c2); } else {
+            this.startDayField.setCalendar(null);
+        }
         phoneNoti.setVisible(false);
         passNoti.setVisible(false);
         dateNoti.setVisible(false);

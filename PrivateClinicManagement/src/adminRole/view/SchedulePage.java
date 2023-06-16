@@ -481,7 +481,7 @@ public class SchedulePage extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        int confirmOption = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn xóa?", "Xóa", JOptionPane.YES_NO_OPTION);
+        int confirmOption = JOptionPane.showConfirmDialog(null, "Delete this schedule?", "Xóa", JOptionPane.YES_NO_OPTION);
         if(confirmOption == JOptionPane.YES_OPTION){
             controller.deleteData(String.valueOf(cbbScheduleID.getSelectedItem()));
             setUpComboboxData();
