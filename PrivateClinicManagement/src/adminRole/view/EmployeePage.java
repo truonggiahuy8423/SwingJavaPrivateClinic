@@ -177,7 +177,7 @@ public class EmployeePage extends javax.swing.JPanel {
         searchTextField.setBackground(Color.WHITE);
         sortChooser.setBackground(Color.WHITE);
         dataOftable = (DefaultTableModel)this.tableOfEmployee.getModel(); 
-        dataOftable.setColumnIdentifiers(new Object[]{"Employee ID", "Name", "Phone", "Position title", "Password", "Birthday", "Address", "Hometown"});
+        dataOftable.setColumnIdentifiers(new Object[]{"Employee ID", "Name", "Position title", "Phone", "Password", "Birthday", "Address", "Hometown"});
         refreshButton.setBackground(Color.WHITE);
         // set action event
         addButton.addActionListener(e -> {

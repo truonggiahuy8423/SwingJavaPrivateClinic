@@ -20,9 +20,7 @@ import java.util.List;
 public class Patient{
     private Integer patientId;
     private String fullname;
-
     private String phone;
-
     private Calendar birthday;
     private Calendar registrationDay;
     private Calendar insuranceExpiration;
